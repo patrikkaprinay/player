@@ -10,3 +10,5 @@
 ## Music Player
 
 Music player for a local NAS system, player connected to the central Hi-Fi system. Enables users on the same network to add songs to the queue, skips songs, etc.
+
+### Made with Laravel and Vue
