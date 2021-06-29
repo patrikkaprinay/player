@@ -1,0 +1,63 @@
+<template>
+    <div style="display: flex; justify-content: center">
+        <div
+            style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                width: 400px;
+                margin-top: 30px;
+            "
+        >
+            <p>Register</p>
+            <input v-model="user.name" type="text" placeholder="Name" />
+            <input v-model="user.email" type="text" placeholder="Email" />
+            <input
+                v-model="user.password"
+                type="password"
+                placeholder="Password"
+            />
+            <input
+                v-model="user.passwordRe"
+                type="password"
+                placeholder="Password Confirmation"
+            />
+            <button @click="register">Register</button>
+        </div>
+    </div>
+</template>
+
+<script>
+import { reactive, toRefs } from 'vue'
+import { useStore } from 'vuex'
+
+export default {
+    setup() {
+        const store = useStore()
+
+        const state = reactive({
+            user: {
+                name: '',
+                email: '',
+                password: '',
+                passwordRe: '',
+            },
+        })
+
+        function register() {
+            //console.log(state.user)
+            store.dispatch('registerUser', {
+                user: state.user,
+            })
+        }
+
+        return {
+            ...toRefs(state),
+            register,
+        }
+    },
+}
+</script>
+
+<style lang="scss" scoped></style>
