@@ -5,7 +5,7 @@
             style="display: flex; justify-content: space-between; width: 30%"
         >
             <router-link to="/" href="#">Home</router-link>
-            <!-- <router-link to="/search" href="#">Search</router-link> -->
+            <router-link to="/search" href="#">Search</router-link>
             <router-link v-if="!loggedin" to="/login" href="#"
                 >Login</router-link
             >
