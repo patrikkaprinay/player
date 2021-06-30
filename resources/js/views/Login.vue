@@ -11,7 +11,11 @@
             "
         >
             <p>Login</p>
-            <input type="text" v-model="user.email" placeholder="Email" />
+            <input
+                type="text"
+                v-model="user.email"
+                placeholder="Username or Email"
+            />
             <input type="text" v-model="user.password" placeholder="Password" />
             <label>
                 Remember me

@@ -12,6 +12,7 @@
         >
             <p>Register</p>
             <input v-model="user.name" type="text" placeholder="Name" />
+            <input v-model="user.username" type="text" placeholder="Username" />
             <input v-model="user.email" type="text" placeholder="Email" />
             <input
                 v-model="user.password"
@@ -39,6 +40,7 @@ export default {
         const state = reactive({
             user: {
                 name: '',
+                username: '',
                 email: '',
                 password: '',
                 passwordRe: '',

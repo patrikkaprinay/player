@@ -17,6 +17,9 @@ export default {
         Navbar,
         Player,
     },
+    mounted() {
+        this.$store.dispatch('amILoggedin')
+    },
     setup() {
         return {}
     },
