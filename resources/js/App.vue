@@ -19,6 +19,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('amILoggedin')
+        this.$store.dispatch('getToQueue')
     },
     setup() {
         return {}

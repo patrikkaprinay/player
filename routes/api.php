@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\QueueSongController;
+use App\Http\Controllers\SongController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +26,21 @@ Route::get('loggedin', function (){
     return Auth::user();
     //return response()->json(['user' => Auth::user()]);
 });
+
+Route::get('songs', [SongController::class, 'index']);
+
+//Queue
+Route::get('queue', [QueueSongController::class, 'index']);
+
+Route::post('queue/add', [QueueSongController::class, 'add']);
+
+Route::post('queue/remove', [QueueSongController::class, 'remove']);
+
+Route::post('queue/clear', [QueueSongController::class, 'clear']);
+
+
+
+//Artist
+Route::post('add/artist', [ArtistController ::class, 'add']);
+
+Route::post('artists', [ArtistController ::class, 'index']);

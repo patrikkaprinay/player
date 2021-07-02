@@ -17,10 +17,6 @@
                 placeholder="Username or Email"
             />
             <input type="text" v-model="user.password" placeholder="Password" />
-            <label>
-                Remember me
-                <input type="checkbox" v-model="user.remember" />
-            </label>
             <button @click="loginUser">Login</button>
             <router-link to="/register" href="#" style="font-size: 12px"
                 >Register</router-link
@@ -40,7 +36,6 @@ export default {
             user: {
                 email: '',
                 password: '',
-                remember: false,
             },
         })
 
