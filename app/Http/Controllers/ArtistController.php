@@ -22,4 +22,12 @@ class ArtistController extends Controller
 
         return response()->json($artist);
     }
+
+    public function search(Request $request){
+        if(empty($request->input('artist'))){
+            return;
+        }
+        
+        return Artist::where('name', 'like', '%' . $request->input('artist') . '%')->get();
+    }
 }

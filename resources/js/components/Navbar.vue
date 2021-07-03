@@ -86,7 +86,7 @@
                                         to="/add/song"
                                         class="dropdown-item"
                                         href="#"
-                                        >Add new song</router-link
+                                        >Add</router-link
                                     >
                                 </li>
                                 <li v-if="!store.state.loggedin">

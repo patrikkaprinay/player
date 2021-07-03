@@ -60,6 +60,8 @@ export default {
 
 <style scoped>
 .player {
+    /* delete this */
+    display: none;
     padding: 15px 20px 0 20px;
     background: burlywood;
     border-radius: 10px;

@@ -7,6 +7,7 @@ import Search from '../views/Search.vue'
 import Queue from '../views/Queue.vue'
 import AddSong from '../views/AddSong.vue'
 import AddArtist from '../views/AddArtist.vue'
+import AddAlbum from '../views/AddAlbum.vue'
 import Artists from '../views/Artists.vue'
 
 const routes = [
@@ -44,6 +45,11 @@ const routes = [
         path: '/add/artist',
         name: 'AddArtist',
         component: AddArtist,
+    },
+    {
+        path: '/add/album',
+        name: 'AddAlbum',
+        component: AddAlbum,
     },
     {
         path: '/artists',
