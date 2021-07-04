@@ -83,7 +83,7 @@
                                 </li>
                                 <li>
                                     <router-link
-                                        to="/add/song"
+                                        to="/add/album"
                                         class="dropdown-item"
                                         href="#"
                                         >Add</router-link

@@ -22,4 +22,8 @@ class AlbumController extends Controller
 
         return $albums; 
     }
+
+    public function add(Request $request){
+        return $request;
+    }
 }

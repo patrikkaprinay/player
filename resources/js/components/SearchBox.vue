@@ -41,11 +41,7 @@ import { reactive, toRefs } from 'vue'
 
 export default {
     emits: ['selectedArtist'],
-    props: {
-        error: {
-            type: Object,
-        },
-    },
+    props: ['error'],
     setup() {
         const state = reactive({
             artist: '',

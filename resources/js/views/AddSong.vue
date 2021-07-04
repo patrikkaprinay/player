@@ -18,7 +18,7 @@
                 <label for="exampleInputEmail1" class="form-label">Name</label>
                 <input type="email" v-model="name" class="form-control" />
             </div>
-            <SearchBox @selectedArtist="selectArtist" />
+            <SearchBox @selectedArtist="selectArtist" :error="null" />
             <AlbumBox @selectedAlbum="selectAlbum" />
             <button class="btn btn-primary">Submit</button>
         </div>

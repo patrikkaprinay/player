@@ -40,3 +40,5 @@ Route::post('artists/search', [ArtistController::class, 'search']);
 
 //Albums
 Route::post('albums/search', [AlbumController::class, 'search']);
+
+Route::post('add/album', [AlbumController::class, 'add']);
