@@ -9,68 +9,58 @@
         "
     >
         <h2>Add new album</h2>
-        <form action="" @submit.prevent="submitForm">
-            <div
-                class="
-                    d-flex
-                    justify-content-center
-                    align-items-center
-                    flex-column
-                "
-                style="max-width: 223px"
-            >
-                <div class="my-3">
-                    <img
-                        src=""
-                        style="width: 100px; height: 100px"
-                        id="previewArtwork"
-                        @click="$refs.file.click()"
-                    />
-                    <input
-                        type="file"
-                        ref="file"
-                        @change="getImgData"
-                        src=""
-                        id="artworkInput"
-                        style="display: none"
-                        accept="image/png, image/jpeg"
-                    />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Name</label>
-                    <input
-                        type="text"
-                        v-model="name"
-                        class="form-control"
-                        v-bind:class="{ outline_red: error.ele == 'name' }"
-                    />
-                </div>
-                <SearchBox
-                    @selectedArtist="selectArtist"
-                    @change="artistid = null"
-                    :error="error"
+        <div
+            class="d-flex justify-content-center align-items-center flex-column"
+            style="max-width: 223px"
+        >
+            <div class="my-3">
+                <img
+                    src=""
+                    style="width: 100px; height: 100px"
+                    id="previewArtwork"
+                    @click="$refs.file.click()"
                 />
-                <div class="mb-3 w-100">
-                    <label for="exampleInputPassword1" class="form-label"
-                        >Date Released</label
-                    >
-                    <input
-                        @change="checkDate"
-                        type="date"
-                        v-model="date"
-                        class="form-control"
-                        v-bind:class="{ outline_red: error.ele == 'date' }"
-                    />
-                </div>
-                <p
-                    class="text-danger text-center"
-                    @click="showImage($refs.file)"
-                >
-                    {{ error.text }}
-                </p>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <input
+                    type="file"
+                    ref="file"
+                    @change="getImgData"
+                    src=""
+                    id="artworkInput"
+                    style="display: none"
+                    accept="image/png, image/jpeg"
+                />
             </div>
-        </form>
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input
+                    type="text"
+                    v-model="name"
+                    class="form-control"
+                    v-bind:class="{ outline_red: error.ele == 'name' }"
+                />
+            </div>
+            <SearchBox
+                @selectedArtist="selectArtist"
+                @change="artistid = null"
+                :error="error"
+            />
+            <div class="mb-3 w-100">
+                <label for="exampleInputPassword1" class="form-label"
+                    >Date Released</label
+                >
+                <input
+                    @change="checkDate"
+                    type="date"
+                    v-model="date"
+                    class="form-control"
+                    v-bind:class="{ outline_red: error.ele == 'date' }"
+                />
+            </div>
+            <p class="text-danger text-center" @click="showImage($refs.file)">
+                {{ error.text }}
+            </p>
+            <button class="btn btn-primary" @click="submitForm">Submit</button>
+        </div>
     </div>
 </template>
 
@@ -142,10 +132,10 @@ export default {
             alert(state.name + ' ' + state.artistid + ' ' + state.date)
             let formData = new FormData()
             let imagefile = document.querySelector('#artworkInput')
-            console.log(imagefile.files[0])
             formData.append('image', imagefile.files[0])
             formData.append('name', state.name)
             formData.append('artist', state.artistid)
+            formData.append('date', state.date)
             axios
                 .post('/api/add/album', formData, {
                     headers: {
