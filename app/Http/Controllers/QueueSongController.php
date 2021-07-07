@@ -56,6 +56,13 @@ class QueueSongController extends Controller
         return response()->json($newQueueSong);
     }
 
+    public function next(Request $request){
+        $nowPlayed = QueueSong::where('id', $request->input('played'));
+        $nowPlayed->delete();
+
+        return $this->first();
+    }
+
     public function remove(Request $request){
         $queueSong = QueueSong::find($request->input('id'));
         $queueSong->delete();

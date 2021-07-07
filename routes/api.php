@@ -32,6 +32,8 @@ Route::post('queue/clear', [QueueSongController::class, 'clear']);
 
 Route::get('queue/first', [QueueSongController::class, 'first']);
 
+Route::post('queue/next', [QueueSongController::class, 'next']);
+
 //Artist
 Route::post('artists', [ArtistController ::class, 'index']);
 

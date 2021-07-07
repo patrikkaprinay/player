@@ -1,8 +1,8 @@
 <template>
     <div class="player">
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex justify-content-start align-items-center w-25">
             <img
-                src="/songs/kise/enorellove/artwork.jpg"
+                :src="store.state.currentlyPlaying.albumcover"
                 style="width: 60px"
                 alt=""
             />
@@ -15,9 +15,19 @@
             <div
                 class="top-bar d-flex justify-content-center align-items-center"
             >
-                <p class="mb-0 me-2">0:00</p>
-                <input type="range" style="width: 100%" value="0" />
-                <p class="mb-0 ms-2">3:21</p>
+                <p class="mb-0 me-2">
+                    {{ store.state.currentlyPlaying.currentTime }}
+                </p>
+                <input
+                    type="range"
+                    style="width: 100%"
+                    value="0"
+                    id="playerSlider"
+                    @change="moveProgress"
+                />
+                <p class="mb-0 ms-2">
+                    {{ store.state.currentlyPlaying.length }}
+                </p>
             </div>
             <div
                 class="
@@ -43,8 +53,16 @@
                 <i class="bi bi-skip-forward-fill music-controller"></i>
             </div>
         </div>
-        <div>
-            <button @click="store.dispatch('firstQueueSong')">Get shit</button>
+        <div
+            class="
+                d-flex
+                justify-content-center
+                align-items-end
+                flex-column
+                w-25
+            "
+        >
+            a
         </div>
     </div>
 </template>
@@ -71,11 +89,58 @@ export default {
             store.commit('stopMusic')
         }
 
+        function moveProgress() {
+            const clickX = document.querySelector('#playerSlider').value
+            const duration = store.state.player.duration
+            const newTime = (duration / 100) * clickX
+            store.state.player.currentTime = newTime
+        }
+
+        store.state.player.addEventListener('timeupdate', (e) => {
+            const { duration, currentTime } = e.srcElement
+            const progressPercent = (currentTime / duration) * 100
+            document.querySelector('#playerSlider').value = progressPercent
+            store.state.currentlyPlaying.currentTime = sToTime(currentTime)
+            store.state.currentlyPlaying.length = sToTime(duration)
+        })
+
+        store.state.player.addEventListener('ended', () => {
+            axios
+                .post('/api/queue/next', {
+                    played: store.state.currentlyPlaying.queueId,
+                })
+                .then((response) => {
+                    console.log(response)
+                    setTimeout(() => {
+                        store.dispatch('firstQueueSong')
+                        store.dispatch('getToQueue')
+                    }, 200)
+                    setTimeout(() => {
+                        console.log(store.state.player.src)
+                        store.commit('playMusic')
+                    }, 300)
+                })
+            console.log('fasz')
+        })
+
+        function sToTime(t) {
+            return (
+                padZero(parseInt((t / 60) % 60)) +
+                ':' +
+                padZero(parseInt(t % 60))
+            )
+        }
+
+        function padZero(v) {
+            return v < 10 ? '0' + v : v
+        }
+
         return {
             ...toRefs(state),
             store,
             play,
             stop,
+            moveProgress,
         }
     },
 }

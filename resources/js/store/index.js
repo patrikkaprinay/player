@@ -12,6 +12,10 @@ export default createStore({
             name: '',
             image: '',
             artist: '',
+            length: '00:00',
+            currentTime: '00:00',
+            albumcover: '',
+            queueId: null,
         },
     },
     mutations: {
@@ -28,9 +32,11 @@ export default createStore({
         },
         playMusic(state) {
             state.player.play()
+            console.log('Playing music')
         },
         stopMusic(state) {
             state.player.pause()
+            console.log('Stopping music')
         },
         getQueue(state) {
             axios
@@ -50,19 +56,20 @@ export default createStore({
         clearQueue(state) {
             state.queue = []
         },
-        setAudioSrc(state, payload) {
-            console.log(payload)
+        updateAudioData(state, payload) {
             state.player.src = payload.songNumber.path
             state.currentlyPlaying.name = payload.songNumber.name
             state.currentlyPlaying.artist = payload.songNumber.artist.name
+            state.currentlyPlaying.albumcover =
+                payload.songNumber.album.artwork_path
+            state.currentlyPlaying.queueId = payload.id
         },
     },
     actions: {
         firstQueueSong({ commit }) {
             axios
                 .get('/api/queue/first')
-
-                .then((response) => commit('setAudioSrc', response.data))
+                .then((response) => commit('updateAudioData', response.data))
         },
         registerUser({ commit }, { user }) {
             const name = user.name
@@ -104,10 +111,6 @@ export default createStore({
         },
         getToQueue({ commit }) {
             axios.get('/api/queue').then((response) => {
-                //console.log(response.data)
-                /*response.data.forEach((song) => {
-                    commit('addToQueue', song)
-                })*/
                 commit('setQueue', response.data)
             })
         },
