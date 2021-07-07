@@ -10,8 +10,7 @@
                     Clear queue
                 </button>
             </div>
-            <div>
-                {{ queue }}
+            <div class="mt-2">
                 <div
                     v-for="song in queue"
                     :key="song.id"
@@ -55,8 +54,6 @@ export default {
         const store = useStore()
 
         const queue = computed(() => store.state.queue)
-
-        console.log(queue)
 
         const removeFromQueue = (id) => {
             axios

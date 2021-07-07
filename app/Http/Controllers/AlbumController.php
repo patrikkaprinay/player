@@ -11,18 +11,34 @@ use Illuminate\Support\Facades\File;
 class AlbumController extends Controller
 {
     public function search(Request $request){
-        if(empty($request->input('artist'))){
+        if(empty($request->input('album'))){
             return;
         }
         
-        $albums = Album::where('name', 'like', '%' . $request->input('artist') . '%')->get();
+        $albums = Album::where('name', 'like', '%' . $request->input('album') . '%')->get();
 
-        foreach ($albums as $album) {
-            $artist = Artist::where('id', $album->artist)->get();
-            $album['artist'] = $artist;
+        if(count($albums) == 0){
+            $artist = Artist::where('name', 'like', '%' . $request->input('album') . '%')->value('id');
+
+
+            $albumsFromArtist = Album::where('artist', $artist)->get();
+
+            foreach ($albumsFromArtist as $album) {
+                $artist = Artist::where('id', $album->artist)->get();
+                $album['artist'] = $artist;
+            }
+
+            return $albumsFromArtist;
+
+        } else{
+            foreach ($albums as $album) {
+                $artist = Artist::where('id', $album->artist)->get();
+                $album['artist'] = $artist;
+            }
+    
+            return $albums; 
         }
 
-        return $albums; 
     }
 
     public function add(Request $request){
@@ -33,7 +49,11 @@ class AlbumController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
-        $artist = Artist::findOrFail($request->input('artist'))->name;
+        $artist = Artist::find($request->input('artist'))->name;
+
+        if(!$artist){
+            return response()->json(['msg'=>'This artist doesn\'t exist']);
+        }
 
         $normalizeChars = array(
             'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
@@ -81,12 +101,6 @@ class AlbumController extends Controller
             }
         } else{
             return response()->json(['msg'=>'Album already exists']);
-        }
-
-
-
-        //File::move(, $albumPath)
-
-        
+        }        
     }
 }

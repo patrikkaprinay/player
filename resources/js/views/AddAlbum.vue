@@ -53,7 +53,7 @@
                     type="date"
                     v-model="date"
                     class="form-control"
-                    v-bind:class="{ outline_red: error.ele == 'date' }"
+                    :class="{ outline_red: error.ele == 'date' }"
                 />
             </div>
             <p class="text-danger text-center" @click="showImage($refs.file)">
@@ -121,15 +121,17 @@ export default {
             if (!state.name) {
                 state.error.text = "The name field can't be empty"
                 state.error.ele = 'name'
+                return
             } else if (!state.artistid) {
                 state.error.text = 'Please select an artist'
                 state.error.ele = 'artist'
+                return
             } else if (!state.date) {
                 state.error.text = 'Please pick a release date'
                 state.error.ele = 'date'
+                return
             }
 
-            alert(state.name + ' ' + state.artistid + ' ' + state.date)
             let formData = new FormData()
             let imagefile = document.querySelector('#artworkInput')
             formData.append('image', imagefile.files[0])

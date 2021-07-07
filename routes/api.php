@@ -30,6 +30,7 @@ Route::post('queue/remove', [QueueSongController::class, 'remove']);
 
 Route::post('queue/clear', [QueueSongController::class, 'clear']);
 
+Route::get('queue/first', [QueueSongController::class, 'first']);
 
 //Artist
 Route::post('artists', [ArtistController ::class, 'index']);
@@ -38,7 +39,12 @@ Route::post('add/artist', [ArtistController ::class, 'add']);
 
 Route::post('artists/search', [ArtistController::class, 'search']);
 
+Route::post('artists/searchId', [ArtistController::class, 'searchId']);
+
 //Albums
 Route::post('albums/search', [AlbumController::class, 'search']);
 
 Route::post('add/album', [AlbumController::class, 'add']);
+
+//Songs
+Route::post('add/song', [SongController::class, 'add']);

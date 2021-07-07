@@ -83,7 +83,7 @@
                                 </li>
                                 <li>
                                     <router-link
-                                        to="/add/album"
+                                        to="/add/song"
                                         class="dropdown-item"
                                         href="#"
                                         >Add</router-link
@@ -112,14 +112,6 @@
                                 >Login</router-link
                             >
                         </li>
-                        <!-- <li class="nav-item" v-if="store.state.loggedin">
-                            <a
-                                class="nav-link"
-                                href="#"
-                                @click="store.commit('logout')"
-                                >Logout</a
-                            >
-                        </li> -->
                     </ul>
                 </div>
             </div>

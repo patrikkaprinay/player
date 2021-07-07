@@ -14,25 +14,31 @@
         <div
             class="d-flex justify-content-center align-items-center flex-column"
         >
+            <div class="my-3">
+                <input type="file" accept=".mp3,audio/*" id="song" />
+            </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Name</label>
-                <input type="email" v-model="name" class="form-control" />
+                <input
+                    type="email"
+                    v-model="name"
+                    class="form-control"
+                    :class="{ outline_red: error.ele == 'name' }"
+                />
             </div>
-            <SearchBox @selectedArtist="selectArtist" :error="null" />
             <AlbumBox @selectedAlbum="selectAlbum" />
-            <button class="btn btn-primary">Submit</button>
+            <p class="text-danger">{{ error.text }}</p>
+            <button class="btn btn-primary" @click="submitForm">Submit</button>
         </div>
     </div>
 </template>
 
 <script>
 import { reactive, toRefs } from 'vue'
-import SearchBox from '../components/SearchBox.vue'
 import AlbumBox from '../components/AlbumBox.vue'
 
 export default {
     components: {
-        SearchBox,
         AlbumBox,
     },
     setup() {
@@ -40,20 +46,47 @@ export default {
             name: '',
             artistid: null,
             albumid: null,
+            error: {
+                ele: '',
+                text: '',
+            },
         })
 
-        const selectArtist = (value) => {
-            state.artistid = value
+        const selectAlbum = (res) => {
+            state.albumid = res.album
+            state.artistid = res.artist
         }
 
-        const selectAlbum = (value) => {
-            state.albumid = value
+        const submitForm = () => {
+            if (!state.name) {
+                state.error.text = "The name field can't be empty"
+                state.error.ele = 'name'
+                return
+            } else if (!state.artistid) {
+                state.error.text = 'Please select an artist'
+                state.error.ele = 'artist'
+                return
+            }
+
+            let formData = new FormData()
+            let song = document.querySelector('#song')
+            formData.append('song', song.files[0])
+            formData.append('name', state.name)
+            formData.append('artist', state.artistid)
+            formData.append('album', state.albumid)
+            axios
+                .post('/api/add/song', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                })
+                .then((response) => console.log(response))
         }
 
         return {
             ...toRefs(state),
-            selectArtist,
             selectAlbum,
+            submitForm,
         }
     },
 }
@@ -75,5 +108,9 @@ export default {
     top: 100%;
     right: 0;
     width: 100%;
+}
+
+.outline_red {
+    outline: 2px solid red !important;
 }
 </style>

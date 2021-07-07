@@ -1,27 +1,50 @@
 <template>
     <div class="player">
-        <div class="top-bar d-flex justify-content-center align-items-center">
-            <p class="mb-0 me-2">0:00</p>
-            <input type="range" style="width: 100%" value="0" />
-            <p class="mb-0 ms-2">3:21</p>
+        <div class="d-flex justify-content-center align-items-center">
+            <img
+                src="/songs/kise/enorellove/artwork.jpg"
+                style="width: 60px"
+                alt=""
+            />
+            <div class="ms-2">
+                <p class="mb-0">{{ store.state.currentlyPlaying.name }}</p>
+                <p class="mb-0">{{ store.state.currentlyPlaying.artist }}</p>
+            </div>
         </div>
-        <div
-            class="bottom-bar d-flex justify-content-center align-items-center"
-        >
-            <i class="bi bi-skip-backward-fill music-controller"></i>
-            <i
-                class="bi bi-play-fill music-controller"
-                style="font-size: 30px"
-                v-if="!store.state.playing"
-                @click="play"
-            ></i>
-            <i
-                class="bi bi-pause-fill music-controller"
-                style="font-size: 30px"
-                v-if="store.state.playing"
-                @click="stop"
-            ></i>
-            <i class="bi bi-skip-forward-fill music-controller"></i>
+        <div style="width: 50%; padding: 15px 20px 0 20px">
+            <div
+                class="top-bar d-flex justify-content-center align-items-center"
+            >
+                <p class="mb-0 me-2">0:00</p>
+                <input type="range" style="width: 100%" value="0" />
+                <p class="mb-0 ms-2">3:21</p>
+            </div>
+            <div
+                class="
+                    bottom-bar
+                    d-flex
+                    justify-content-center
+                    align-items-center
+                "
+            >
+                <i class="bi bi-skip-backward-fill music-controller"></i>
+                <i
+                    class="bi bi-play-fill music-controller"
+                    style="font-size: 30px"
+                    v-if="!store.state.playing"
+                    @click="play"
+                ></i>
+                <i
+                    class="bi bi-pause-fill music-controller"
+                    style="font-size: 30px"
+                    v-if="store.state.playing"
+                    @click="stop"
+                ></i>
+                <i class="bi bi-skip-forward-fill music-controller"></i>
+            </div>
+        </div>
+        <div>
+            <button @click="store.dispatch('firstQueueSong')">Get shit</button>
         </div>
     </div>
 </template>
@@ -61,12 +84,15 @@ export default {
 <style scoped>
 .player {
     /* delete this */
-    display: none;
-    padding: 15px 20px 0 20px;
+    /* display: none; */
+    padding: 0 15px;
     background: burlywood;
     border-radius: 10px;
     margin-bottom: 10px;
-    width: 50%;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .music-controller {

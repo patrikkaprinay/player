@@ -1,7 +1,7 @@
 <template>
     <div>
         <Navbar />
-        <router-view />
+        <router-view style="margin-bottom: 100px" />
         <div class="player-container">
             <Player />
         </div>
@@ -20,6 +20,7 @@ export default {
     mounted() {
         this.$store.dispatch('amILoggedin')
         this.$store.dispatch('getToQueue')
+        this.$store.dispatch('firstQueueSong')
     },
     setup() {
         return {}

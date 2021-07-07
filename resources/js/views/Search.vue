@@ -10,15 +10,18 @@
             <div
                 v-for="song in songs"
                 :key="song.id"
-                class="bg-success w-100 mb-3 py-3 text-center"
+                class="queueSong"
                 @click="addToQueue(song.id)"
             >
                 <img
-                    :src="song.album[0].artwork_path"
-                    style="width: 30px"
+                    :src="song.album.artwork_path"
+                    style="width: 65px; margin-right: 30px"
                     alt=""
                 />
-                <p class="mb-0">{{ song.name }}</p>
+                <div>
+                    <p class="mb-0" style="font-size: 22px">{{ song.name }}</p>
+                    <p class="mb-0">{{ song.artist.name }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -49,7 +52,7 @@ export default {
                 })
                 .then((response) => {
                     if (response.status == 200) {
-                        alert('Song added to queue')
+                        console.log('Song added to queue')
                     }
                 })
             store.dispatch('getToQueue')
@@ -67,4 +70,21 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.queueSong {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: #cecece;
+    border-radius: 15px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+.queueSong:hover {
+    transform: scale(1.012);
+}
+</style>

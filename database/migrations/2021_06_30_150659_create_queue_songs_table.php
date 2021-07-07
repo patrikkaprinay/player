@@ -16,6 +16,7 @@ class CreateQueueSongsTable extends Migration
         Schema::create('queue_songs', function (Blueprint $table) {
             $table->id();
             $table->integer('songNumber');
+            $table->integer('order');
             $table->timestamps();
         });
     }

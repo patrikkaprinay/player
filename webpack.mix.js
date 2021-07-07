@@ -11,4 +11,5 @@ const mix = require('laravel-mix')
  |
  */
 mix.disableNotifications()
+mix.disableSuccessNotifications()
 mix.js('resources/js/app.js', 'public/js').vue()

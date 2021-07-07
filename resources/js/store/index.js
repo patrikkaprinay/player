@@ -8,6 +8,11 @@ export default createStore({
         player: new Audio(''),
         playing: false,
         queue: [],
+        currentlyPlaying: {
+            name: '',
+            image: '',
+            artist: '',
+        },
     },
     mutations: {
         logout(state) {
@@ -45,8 +50,20 @@ export default createStore({
         clearQueue(state) {
             state.queue = []
         },
+        setAudioSrc(state, payload) {
+            console.log(payload)
+            state.player.src = payload.songNumber.path
+            state.currentlyPlaying.name = payload.songNumber.name
+            state.currentlyPlaying.artist = payload.songNumber.artist.name
+        },
     },
     actions: {
+        firstQueueSong({ commit }) {
+            axios
+                .get('/api/queue/first')
+
+                .then((response) => commit('setAudioSrc', response.data))
+        },
         registerUser({ commit }, { user }) {
             const name = user.name
             const username = user.username

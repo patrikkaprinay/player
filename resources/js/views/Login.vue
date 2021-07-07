@@ -44,11 +44,11 @@ export default {
         const store = useStore()
 
         const loginUser = () => {
-            store.dispatch('loginUser', { user: state.user }).then(
+            store.dispatch('loginUser', { user: state.user }).then(() => {
                 router.push({
                     name: 'Home',
                 })
-            )
+            })
         }
 
         return {

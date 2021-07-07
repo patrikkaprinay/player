@@ -4,7 +4,7 @@
         <input
             type="text"
             @keyup="searchForArtist"
-            v-model="artist"
+            v-model="album"
             class="form-control"
         />
         <div class="searchResults">
@@ -18,8 +18,11 @@
                     searchAlbum
                 "
                 @click="
-                    selectArtist(album.name, album.id),
-                        $emit('selectedAlbum', albumid)
+                    selectAlbum(album.name, album.id, album.artist[0].id),
+                        $emit('selectedAlbum', {
+                            album: albumid,
+                            artist: artistid,
+                        })
                 "
             >
                 <img
@@ -45,30 +48,32 @@ export default {
     emits: ['selectedAlbum'],
     setup() {
         const state = reactive({
-            artist: '',
+            album: '',
             searchResult: '',
             albumid: null,
+            artistid: null,
         })
 
         const searchForArtist = () => {
             axios
                 .post('/api/albums/search', {
-                    artist: state.artist,
+                    album: state.album,
                 })
                 .then((response) => (state.searchResult = response.data))
             state.albumid = null
         }
 
-        const selectArtist = (artistName, artistId) => {
+        const selectAlbum = (albumName, albumId, artistId) => {
             state.searchResult = ''
-            state.artist = artistName
-            state.albumid = artistId
+            state.album = albumName
+            state.albumid = albumId
+            state.artistid = artistId
         }
 
         return {
             ...toRefs(state),
             searchForArtist,
-            selectArtist,
+            selectAlbum,
         }
     },
 }
