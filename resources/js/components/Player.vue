@@ -50,7 +50,10 @@
                     v-if="store.state.playing"
                     @click="stop"
                 ></i>
-                <i class="bi bi-skip-forward-fill music-controller"></i>
+                <i
+                    class="bi bi-skip-forward-fill music-controller"
+                    @click="nextSong"
+                ></i>
             </div>
         </div>
         <div
@@ -62,7 +65,26 @@
                 w-25
             "
         >
-            a
+            <div class="d-flex justify-content-center align-items-center">
+                <i
+                    class="bi bi-volume-up me-1"
+                    v-if="!store.state.muted"
+                    style="font-size: 22px"
+                    @click="store.commit('mute')"
+                ></i>
+                <i
+                    class="bi bi-volume-mute me-1"
+                    v-if="store.state.muted"
+                    @click="store.commit('unMute')"
+                    style="font-size: 22px"
+                ></i>
+                <input
+                    type="range"
+                    style="width: 80px"
+                    @change="changeVolume"
+                    id="volume"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -89,6 +111,13 @@ export default {
             store.commit('stopMusic')
         }
 
+        const changeVolume = () => {
+            const value = document.querySelector('#volume').value / 100
+            document.cookie = 'volume=' + value + '; path=/; SameSite=Lax;'
+            console.log(value)
+            store.commit('changeVolume', value)
+        }
+
         function moveProgress() {
             const clickX = document.querySelector('#playerSlider').value
             const duration = store.state.player.duration
@@ -104,7 +133,7 @@ export default {
             store.state.currentlyPlaying.length = sToTime(duration)
         })
 
-        store.state.player.addEventListener('ended', () => {
+        const nextSong = () => {
             axios
                 .post('/api/queue/next', {
                     played: store.state.currentlyPlaying.queueId,
@@ -121,6 +150,10 @@ export default {
                     }, 300)
                 })
             console.log('fasz')
+        }
+
+        store.state.player.addEventListener('ended', () => {
+            nextSong
         })
 
         function sToTime(t) {
@@ -141,6 +174,8 @@ export default {
             play,
             stop,
             moveProgress,
+            nextSong,
+            changeVolume,
         }
     },
 }
@@ -151,7 +186,7 @@ export default {
     /* delete this */
     /* display: none; */
     padding: 0 15px;
-    background: burlywood;
+    background: rgb(228, 163, 233);
     border-radius: 10px;
     margin-bottom: 10px;
     width: 95%;
