@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-center align-items-center flex-column">
-        <h2 class="mt-3">Search</h2>
+        <h2 class="mt-3">En vagyok itt a search helo Search</h2>
         <input
             type="text"
             style="height: 30px; width: 30%; margin-bottom: 30px"
