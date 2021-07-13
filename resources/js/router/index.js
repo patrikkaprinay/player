@@ -50,28 +50,34 @@ const routes = [
         path: '/add/song',
         name: 'AddSong',
         component: AddSong,
+        /*
         meta: {
             requiresAuth: true,
             is_admin: true,
         },
+        */
     },
     {
         path: '/add/artist',
         name: 'AddArtist',
         component: AddArtist,
+        /*
         meta: {
             requiresAuth: true,
             is_admin: true,
         },
+        */
     },
     {
         path: '/add/album',
         name: 'AddAlbum',
         component: AddAlbum,
+        /*
         meta: {
             requiresAuth: true,
             is_admin: true,
         },
+        */
     },
     {
         path: '/artists',
@@ -94,7 +100,7 @@ router.beforeEach((to, from, next) => {
                         next()
                     } else {
                         next({
-                            path: '/login',
+                            name: 'Login',
                             params: { nextUrl: to.fullPath },
                         })
                     }
@@ -103,7 +109,7 @@ router.beforeEach((to, from, next) => {
                 }
             } else {
                 next({
-                    path: '/login',
+                    name: 'Login',
                     params: { nextUrl: to.fullPath },
                 })
             }
@@ -111,6 +117,7 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some((record) => record.meta.guest)) {
         axios.get('/api/loggedin').then((response) => {
             console.log(response.data)
+            console.log('fasz');
             if (!response.data) {
                 next()
             } else {

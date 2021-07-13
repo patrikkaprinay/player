@@ -57,12 +57,14 @@ export default createStore({
             state.queue = []
         },
         updateAudioData(state, payload) {
-            state.player.src = payload.songNumber.path
-            state.currentlyPlaying.name = payload.songNumber.name
-            state.currentlyPlaying.artist = payload.songNumber.artist.name
-            state.currentlyPlaying.albumcover =
-                payload.songNumber.album.artwork_path
-            state.currentlyPlaying.queueId = payload.id
+            if(payload){
+                state.player.src = payload.songNumber.path
+                state.currentlyPlaying.name = payload.songNumber.name
+                state.currentlyPlaying.artist = payload.songNumber.artist.name
+                state.currentlyPlaying.albumcover =
+                    payload.songNumber.album.artwork_path
+                state.currentlyPlaying.queueId = payload.id
+            }
         },
     },
     actions: {

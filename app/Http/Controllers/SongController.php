@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Artist;
+use App\Models\QueueSong;
 use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -26,8 +27,8 @@ class SongController extends Controller
     }
 
     public function add(Request $request){
+        // Have to set upload_max_filesize = 10M to allow bigger files, then restart the server.
 
-        
         $request->validate([
             'name' => 'required|max:255',
             'artist' => 'required|integer',
@@ -72,18 +73,17 @@ class SongController extends Controller
         
         $albumFolder = preg_replace('/\s+/', '-', strtolower(strtr($album, $normalizeChars)));
         
-        $albumPath = public_path() . $artistPath . '/' . $albumFolder;
-
+        $albumPath = public_path() . $artistPath . '/' . $albumFolder;         
 
         if(!File::exists($albumPath)){
-
+            
             return response()->json(['msg' => 'This album doesn\'t exist']);
         } else{
-
+            
             $songNameFormatted = preg_replace('/\s+/', '-', strtolower(strtr($request->input('name'), $normalizeChars)));
 
             $songName = $songNameFormatted . '.' . $request->song->extension();
-
+            
             if(!File::exists($albumPath . '/' . $songName)){
                 $request->song->move($albumPath, $songName);
             } else{
@@ -96,6 +96,9 @@ class SongController extends Controller
                 $newSong->name = $request->input('name');
                 $newSong->artist = $request->input('artist');
                 $newSong->album = $request->input('album');
+
+                
+
                 $newSong->path = $artistPath . '/' . $albumFolder . '/' . $songName;
                 $newSong->save();
                 return response()->json(['msg'=>'Song created successfully']);
