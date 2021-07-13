@@ -33,7 +33,7 @@ class QueueSongController extends Controller
     }
 
     public function first(){
-        $querysong = QueueSong::all()->sortByDesc('order')->first();
+        $querysong = QueueSong::all()->sortBy('order')->first();
         $selectedSong = Song::where('id', $querysong->songNumber)->first();
         $artist = Artist::where('id', $selectedSong->artist)->first();
         $album = Album::where('id', $selectedSong->album)->first();
@@ -49,8 +49,16 @@ class QueueSongController extends Controller
     }
 
     public function add(Request $request){
+
+        if($lastQueueOrder = QueueSong::max('order')){
+            $newOrderNumber = $lastQueueOrder + 10;
+        } else {
+            $newOrderNumber = 10;
+        }
+
         $newQueueSong = new QueueSong();
         $newQueueSong->songNumber = $request->input('song');
+        $newQueueSong->order = $newOrderNumber;
         $newQueueSong->save();
 
         return response()->json($newQueueSong);

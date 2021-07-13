@@ -32,10 +32,12 @@ export default createStore({
         },
         playMusic(state) {
             state.player.play()
+            state.playing = true
             console.log('Playing music')
         },
         stopMusic(state) {
             state.player.pause()
+            state.playing = false
             console.log('Stopping music')
         },
         getQueue(state) {

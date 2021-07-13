@@ -50,28 +50,28 @@ const routes = [
         path: '/add/song',
         name: 'AddSong',
         component: AddSong,
-        meta: {
+        /*meta: {
             requiresAuth: true,
             is_admin: true,
-        },
+        },*/
     },
     {
         path: '/add/artist',
         name: 'AddArtist',
         component: AddArtist,
-        meta: {
+        /*meta: {
             requiresAuth: true,
             is_admin: true,
-        },
+        },*/
     },
     {
         path: '/add/album',
         name: 'AddAlbum',
         component: AddAlbum,
-        meta: {
+        /*meta: {
             requiresAuth: true,
             is_admin: true,
-        },
+        },*/
     },
     {
         path: '/artists',

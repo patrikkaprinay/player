@@ -50,7 +50,10 @@
                     v-if="store.state.playing"
                     @click="stop"
                 ></i>
-                <i class="bi bi-skip-forward-fill music-controller"></i>
+                <i
+                    class="bi bi-skip-forward-fill music-controller"
+                    @click="skipSong"
+                ></i>
             </div>
         </div>
         <div
@@ -105,6 +108,10 @@ export default {
         })
 
         store.state.player.addEventListener('ended', () => {
+            skipSong()
+        })
+
+        const skipSong = () => {
             axios
                 .post('/api/queue/next', {
                     played: store.state.currentlyPlaying.queueId,
@@ -121,7 +128,7 @@ export default {
                     }, 300)
                 })
             console.log('fasz')
-        })
+        }
 
         function sToTime(t) {
             return (
@@ -141,6 +148,7 @@ export default {
             play,
             stop,
             moveProgress,
+            skipSong,
         }
     },
 }

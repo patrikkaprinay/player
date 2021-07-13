@@ -25,7 +25,12 @@
             >
                 <img
                     :src="artist.image_path"
-                    style="width: 50px; margin-right: 10px"
+                    style="
+                        width: 50px;
+                        height: 50px;
+                        object-fit: cover;
+                        margin-right: 10px;
+                    "
                     alt=""
                 />
                 <p class="mb-0">
