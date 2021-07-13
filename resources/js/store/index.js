@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { browserSync } from 'laravel-mix'
 import { createStore } from 'vuex'
 
 export default createStore({
@@ -17,8 +18,21 @@ export default createStore({
             albumcover: '',
             queueId: null,
         },
+        muted: false,
+        volume: null,
     },
     mutations: {
+        mute(state) {
+            state.muted = true
+            state.player.muted = true
+        },
+        unMute(state) {
+            state.muted = false
+            state.player.muted = false
+        },
+        changeVolume(state, payload) {
+            state.player.volume = payload
+        },
         logout(state) {
             axios.post('/logout').then(console.log('Successfully logged out'))
             state.loggedin = false
