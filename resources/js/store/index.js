@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { browserSync } from 'laravel-mix'
 import { createStore } from 'vuex'
 
 export default createStore({
@@ -17,8 +18,21 @@ export default createStore({
             albumcover: '',
             queueId: null,
         },
+        muted: false,
+        volume: null,
     },
     mutations: {
+        mute(state) {
+            state.muted = true
+            state.player.muted = true
+        },
+        unMute(state) {
+            state.muted = false
+            state.player.muted = false
+        },
+        changeVolume(state, payload) {
+            state.player.volume = payload
+        },
         logout(state) {
             axios.post('/logout').then(console.log('Successfully logged out'))
             state.loggedin = false
@@ -59,12 +73,14 @@ export default createStore({
             state.queue = []
         },
         updateAudioData(state, payload) {
-            state.player.src = payload.songNumber.path
-            state.currentlyPlaying.name = payload.songNumber.name
-            state.currentlyPlaying.artist = payload.songNumber.artist.name
-            state.currentlyPlaying.albumcover =
-                payload.songNumber.album.artwork_path
-            state.currentlyPlaying.queueId = payload.id
+            if(payload){
+                state.player.src = payload.songNumber.path
+                state.currentlyPlaying.name = payload.songNumber.name
+                state.currentlyPlaying.artist = payload.songNumber.artist.name
+                state.currentlyPlaying.albumcover =
+                    payload.songNumber.album.artwork_path
+                state.currentlyPlaying.queueId = payload.id
+            }
         },
     },
     actions: {

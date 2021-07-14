@@ -33,6 +33,7 @@ class QueueSongController extends Controller
     }
 
     public function first(){
+
         $querysong = QueueSong::all()->sortBy('order')->first();
         $selectedSong = Song::where('id', $querysong->songNumber)->first();
         $artist = Artist::where('id', $selectedSong->artist)->first();

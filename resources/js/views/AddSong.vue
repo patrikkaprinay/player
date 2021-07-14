@@ -63,17 +63,19 @@ export default {
                 state.error.ele = 'name'
                 return
             } else if (!state.artistid) {
-                state.error.text = 'Please select an artist'
+                state.error.text = 'Please select an album'
                 state.error.ele = 'artist'
                 return
             }
 
             let formData = new FormData()
             let song = document.querySelector('#song')
+            console.log(song.files[0])
             formData.append('song', song.files[0])
             formData.append('name', state.name)
             formData.append('artist', state.artistid)
             formData.append('album', state.albumid)
+            console.log(formData)
             axios
                 .post('/api/add/song', formData, {
                     headers: {
