@@ -55,6 +55,7 @@
 <script>
 import axios from 'axios'
 import { reactive, toRefs } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
     setup() {
@@ -65,6 +66,8 @@ export default {
                 text: '',
             },
         })
+
+        const store = useStore()
 
         const getImgData = () => {
             const chooseFile = document.querySelector('#pfpInput')
@@ -95,17 +98,16 @@ export default {
                         'Content-Type': 'multipart/form-data',
                     },
                 })
-                .then((response) => console.log(response))
-        }
-
-        /*const submitForm = () => {
-            axios
-                .post('/api/add/artist', {
-                    name: state.name,
-                    path: state.path,
+                .then((response) => {
+                    if (response.status == 200) {
+                        store.dispatch('newNotification', {
+                            text: 'Artist added',
+                            status: 0,
+                        })
+                        store.dispatch('notify')
+                    }
                 })
-                .then((response) => console.log(response))
-        }*/
+        }
 
         return {
             ...toRefs(state),

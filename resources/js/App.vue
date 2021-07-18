@@ -1,6 +1,7 @@
 <template>
-    <div>
+    <div style="position: relative; overflow-x: hidden">
         <Navbar />
+        <Notification />
         <router-view style="margin-bottom: 100px" />
         <div class="player-container">
             <Player />
@@ -11,13 +12,13 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import Player from './components/Player.vue'
-import { onMounted } from 'vue'
-import { useStore } from 'vuex'
+import Notification from './components/Notification.vue'
 
 export default {
     components: {
         Navbar,
         Player,
+        Notification,
     },
     mounted() {
         this.$store.dispatch('amILoggedin')
@@ -25,8 +26,6 @@ export default {
         this.$store.dispatch('firstQueueSong')
     },
     setup() {
-        const store = useStore()
-
         return {}
     },
 }

@@ -34,8 +34,10 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
 import AlbumBox from '../components/AlbumBox.vue'
+
+import { reactive, toRefs } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
     components: {
@@ -51,6 +53,8 @@ export default {
                 text: '',
             },
         })
+
+        const store = useStore()
 
         const selectAlbum = (res) => {
             state.albumid = res.album
@@ -80,7 +84,15 @@ export default {
                         'Content-Type': 'multipart/form-data',
                     },
                 })
-                .then((response) => console.log(response))
+                .then((response) => {
+                    if (response.status == 200) {
+                        store.dispatch('newNotification', {
+                            text: 'Song added',
+                            status: 0,
+                        })
+                        store.dispatch('notify')
+                    }
+                })
         }
 
         return {

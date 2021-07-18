@@ -65,8 +65,10 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
 import SearchBox from '../components/SearchBox.vue'
+
+import { reactive, toRefs } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
     components: {
@@ -82,6 +84,8 @@ export default {
                 text: '',
             },
         })
+
+        const store = useStore()
 
         const selectArtist = (value) => {
             state.artistid = value
@@ -144,7 +148,15 @@ export default {
                         'Content-Type': 'multipart/form-data',
                     },
                 })
-                .then((response) => console.log(response))
+                .then((response) => {
+                    if (response.status == 200) {
+                        store.dispatch('newNotification', {
+                            text: 'Album added',
+                            status: 0,
+                        })
+                        store.dispatch('notify')
+                    }
+                })
         }
 
         return {

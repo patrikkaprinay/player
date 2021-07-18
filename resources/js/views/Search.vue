@@ -99,6 +99,11 @@ export default {
                 })
             }
             store.dispatch('getToQueue')
+            store.dispatch('newNotification', {
+                text: 'Added to queue',
+                status: 0,
+            })
+            store.dispatch('notify')
         }
 
         const playNow = (id) => {

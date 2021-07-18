@@ -37,7 +37,7 @@ class SongController extends Controller
         $artist = Artist::find($request->input('artist'))->name;
 
 
-        $album = Album::find($request->input('artist'))->name;
+        $album = Album::find($request->input('album'))->name;
 
         if(!$artist){
             return response()->json(['msg'=>'This artist doesn\'t exist. (DB:01)']);
@@ -69,8 +69,6 @@ class SongController extends Controller
         if(!File::exists($folderPath)){
             return response()->json(['msg' => 'This artist doesn\'t have their directory']);
         }
-        
-        $albumFolder = preg_replace('/\s+/', '-', strtolower(strtr($album, $normalizeChars)));
         
         $albumPath = public_path() . $artistPath . '/' . $albumFolder;
 

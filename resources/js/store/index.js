@@ -19,6 +19,12 @@ export default createStore({
             queueId: null,
         },
         muted: false,
+        notification: {
+            shown: false,
+            hidden: false,
+            text: '',
+            status: 0,
+        },
     },
     mutations: {
         mute(state) {
@@ -78,8 +84,29 @@ export default createStore({
                 state.currentlyPlaying.id = payload.songNumber.id
             }
         },
+        changeNotification(state, payload) {
+            state.notification.text = payload.text
+            state.notification.status = payload.status
+        },
+        showNotification(state) {
+            state.notification.shown = true
+            state.notification.hidden = false
+        },
+        hideNotification(state) {
+            state.notification.hidden = true
+            state.notification.shown = false
+        },
     },
     actions: {
+        newNotification({ commit }, payload) {
+            commit('changeNotification', payload)
+        },
+        notify({ commit }) {
+            commit('showNotification')
+            setTimeout(() => {
+                commit('hideNotification')
+            }, 1800)
+        },
         firstQueueSong({ commit }) {
             axios
                 .get('/api/queue/first')
