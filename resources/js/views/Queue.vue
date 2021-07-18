@@ -11,9 +11,9 @@
                 </button>
             </div>
             <div class="mt-2">
+                <h3>Currently Playing</h3>
                 <div
-                    v-for="song in queue"
-                    :key="song.id"
+                    v-if="store.state.currentlyPlaying"
                     class="
                         queueSong
                         d-flex
@@ -24,21 +24,49 @@
                     "
                 >
                     <img
-                        :src="song.song.album[0].artwork_path"
+                        :src="store.state.currentlyPlaying.albumcover"
                         style="width: 30px; margin-right: 30px"
                         alt=""
                     />
 
                     <p class="mb-0">
-                        {{ song.song.name }} - {{ song.song.artist[0].name }}
+                        {{ store.state.currentlyPlaying.name }} -
+                        {{ store.state.currentlyPlaying.artist }}
                     </p>
-                    <p
-                        class="mb-0 ms-auto me-2"
-                        @click="removeFromQueue(song.id)"
-                        style="cursor: pointer"
+                </div>
+                <div v-if="queue.length > 1">
+                    <h3>In Queue</h3>
+                </div>
+                <div v-for="song in queue" :key="song.id">
+                    <div
+                        v-if="song != queue[0]"
+                        class="
+                            queueSong
+                            d-flex
+                            justify-content-start
+                            align-items-center
+                            flex-row
+                            mb-2
+                        "
                     >
-                        x
-                    </p>
+                        <img
+                            :src="song.song.album[0].artwork_path"
+                            style="width: 30px; margin-right: 30px"
+                            alt=""
+                        />
+
+                        <p class="mb-0">
+                            {{ song.song.name }} -
+                            {{ song.song.artist[0].name }}
+                        </p>
+                        <p
+                            class="mb-0 ms-auto me-2"
+                            @click="removeFromQueue(song.id)"
+                            style="cursor: pointer"
+                        >
+                            x
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

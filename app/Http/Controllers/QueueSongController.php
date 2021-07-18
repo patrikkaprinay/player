@@ -34,18 +34,22 @@ class QueueSongController extends Controller
 
     public function first(){
         $querysong = QueueSong::all()->sortBy('order')->first();
-        $selectedSong = Song::where('id', $querysong->songNumber)->first();
-        $artist = Artist::where('id', $selectedSong->artist)->first();
-        $album = Album::where('id', $selectedSong->album)->first();
-
-        $selectedSong['album'] = $album;
-
-        $selectedSong['artist'] = $artist;
-
-        $querysong['songNumber'] = $selectedSong;
-
-
-        return $querysong;
+        if($querysong){
+            $selectedSong = Song::where('id', $querysong->songNumber)->first();
+            $artist = Artist::where('id', $selectedSong->artist)->first();
+            $album = Album::where('id', $selectedSong->album)->first();
+    
+            $selectedSong['album'] = $album;
+    
+            $selectedSong['artist'] = $artist;
+    
+            $querysong['songNumber'] = $selectedSong;
+    
+    
+            return $querysong;
+        } else {
+            return null;
+        }
     }
 
     public function add(Request $request){
@@ -81,5 +85,23 @@ class QueueSongController extends Controller
     public function clear(){
         QueueSong::truncate();
         return response()->json(['msg' => 'Queue cleared succesfully']);
+    }
+
+    public function now(Request $request){
+        $firstSong = QueueSong::all()->sortBy('order')->first();
+        if($firstSong){
+            $firstSong->songNumber = $request->input('id');
+            $firstSong->save();
+
+            return response()->json(['msg'=>'Modified the queue']);
+        }
+
+        $firstInQueue = new QueueSong();
+        $firstInQueue->songNumber = $request->input('id');
+        $firstInQueue->order = 10;
+
+        $firstInQueue->save();
+
+        return response()->json(['msg'=>'Added to queue']);
     }
 }

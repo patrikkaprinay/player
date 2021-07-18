@@ -6,8 +6,8 @@
                 style="width: 60px"
                 alt=""
             />
-            <div class="ms-2">
-                <p class="mb-0">{{ store.state.currentlyPlaying.name }}</p>
+            <div class="ms-3">
+                <p class="mb-0 fs-5">{{ store.state.currentlyPlaying.name }}</p>
                 <p class="mb-0">{{ store.state.currentlyPlaying.artist }}</p>
             </div>
         </div>
@@ -56,28 +56,56 @@
                 ></i>
             </div>
         </div>
-        <div
-            class="
-                d-flex
-                justify-content-center
-                align-items-end
-                flex-column
-                w-25
-            "
-        >
-            a
+        <div class="d-flex justify-content-end align-items-center w-25">
+            <i
+                class="bi bi-volume-up"
+                style="font-size: 22px"
+                v-if="!store.state.muted"
+                @click="mute"
+            ></i>
+            <i
+                class="bi bi-volume-mute"
+                style="font-size: 22px"
+                v-if="store.state.muted"
+                @click="unMute"
+            ></i>
+            <input
+                type="range"
+                style="width: 100px"
+                v-model="volume"
+                @change="updateVolume"
+            />
+            <p>{{ store.state.currentlyPlaying.volume }}</p>
         </div>
     </div>
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { reactive, toRefs, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
     setup() {
         const state = reactive({
             playing: false,
+            volume: getCookie('volume') * 100 * 2,
+            muted: false,
+            beforeMuted: 0,
+        })
+
+        // Original JavaScript code by Chirp Internet: chirpinternet.eu
+        // Please acknowledge use of this code by including this header.
+
+        function getCookie(name) {
+            var re = new RegExp(name + '=([^;]+)')
+            var value = re.exec(document.cookie)
+            return value != null ? unescape(value[1]) : null
+        }
+
+        const volumeCookie = getCookie('volume')
+
+        onMounted(() => {
+            store.commit('setVolume', volumeCookie)
         })
 
         const store = useStore()
@@ -90,6 +118,24 @@ export default {
         const stop = () => {
             store.state.playing = false
             store.commit('stopMusic')
+        }
+
+        const mute = () => {
+            store.commit('mute')
+            state.beforeMuted = state.volume
+            state.volume = 0
+        }
+
+        const unMute = () => {
+            store.commit('unMute')
+            state.volume = state.beforeMuted
+        }
+
+        const updateVolume = () => {
+            const newVolume = state.volume / 100 / 2
+            store.state.player.volume = newVolume
+            store.commit('unMute')
+            document.cookie = 'volume=' + newVolume + '; SameSite=Lax;'
         }
 
         function moveProgress() {
@@ -117,17 +163,21 @@ export default {
                     played: store.state.currentlyPlaying.queueId,
                 })
                 .then((response) => {
-                    console.log(response)
-                    setTimeout(() => {
-                        store.dispatch('firstQueueSong')
-                        store.dispatch('getToQueue')
-                    }, 200)
-                    setTimeout(() => {
-                        console.log(store.state.player.src)
-                        store.commit('playMusic')
-                    }, 300)
+                    if (response.data == '') {
+                        console.log('Nincs tobb zene a queue-ben')
+                        store.state.player.currentTime = 0
+                        store.commit('stopMusic')
+                    } else {
+                        setTimeout(() => {
+                            store.dispatch('firstQueueSong')
+                            store.dispatch('getToQueue')
+                        }, 200)
+                        setTimeout(() => {
+                            console.log(store.state.player.src)
+                            store.commit('playMusic')
+                        }, 300)
+                    }
                 })
-            console.log('fasz')
         }
 
         function sToTime(t) {
@@ -149,6 +199,9 @@ export default {
             stop,
             moveProgress,
             skipSong,
+            updateVolume,
+            unMute,
+            mute,
         }
     },
 }
@@ -159,10 +212,10 @@ export default {
     /* delete this */
     /* display: none; */
     padding: 0 15px;
-    background: burlywood;
+    background: rgb(161, 161, 161);
     border-radius: 10px;
-    margin-bottom: 10px;
-    width: 95%;
+    margin: 10px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;

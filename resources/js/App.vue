@@ -11,6 +11,8 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import Player from './components/Player.vue'
+import { onMounted } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
     components: {
@@ -23,6 +25,8 @@ export default {
         this.$store.dispatch('firstQueueSong')
     },
     setup() {
+        const store = useStore()
+
         return {}
     },
 }

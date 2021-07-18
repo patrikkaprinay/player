@@ -7,12 +7,27 @@
             placeholder="Search for a song"
         />
         <div class="w-50">
-            <div
-                v-for="song in songs"
-                :key="song.id"
-                class="queueSong"
-                @click="addToQueue(song.id)"
-            >
+            <div v-for="song in songs" :key="song.id" class="queueSong">
+                <div
+                    class="songComplication me-2"
+                    v-if="
+                        store.state.currentlyPlaying.id != song.id ||
+                        !store.state.playing
+                    "
+                    @click="playNow(song.id)"
+                >
+                    <i class="bi bi-play" style="font-size: 22px"></i>
+                </div>
+                <div
+                    class="songComplication me-2"
+                    v-if="
+                        store.state.currentlyPlaying.id == song.id &&
+                        store.state.playing
+                    "
+                    @click="store.commit('stopMusic')"
+                >
+                    <i class="bi bi-pause" style="font-size: 22px"></i>
+                </div>
                 <img
                     :src="song.album.artwork_path"
                     style="width: 65px; margin-right: 30px"
@@ -21,6 +36,26 @@
                 <div>
                     <p class="mb-0" style="font-size: 22px">{{ song.name }}</p>
                     <p class="mb-0">{{ song.artist.name }}</p>
+                </div>
+                <div
+                    class="
+                        ms-auto
+                        me-3
+                        d-flex
+                        justify-content-center
+                        align-items-center
+                    "
+                >
+                    <div
+                        class="songComplication me-1"
+                        @click="addToQueue(song.id)"
+                    >
+                        <i class="bi bi-list-nested songComplicationIcon"></i>
+                    </div>
+                    <div class="songComplication">
+                        <i class="bi bi-heart songComplicationIcon"></i>
+                        <i class="bi bi-heart-fill d-none"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,6 +90,7 @@ export default {
                         console.log('Song added to queue')
                     }
                 })
+
             if (store.state.queue.length == 0) {
                 store.dispatch('firstQueueSong').then(() => {
                     setTimeout(() => {
@@ -65,6 +101,20 @@ export default {
             store.dispatch('getToQueue')
         }
 
+        const playNow = (id) => {
+            if (id == store.state.currentlyPlaying.id) {
+                store.commit('playMusic')
+            } else {
+                axios.post('/api/queue/now', { id: id }).then((response) => {
+                    store.dispatch('firstQueueSong')
+                    setTimeout(() => {
+                        store.commit('playMusic')
+                    }, 100)
+                    console.log(response)
+                })
+            }
+        }
+
         onMounted(getSongs)
 
         return {
@@ -72,6 +122,7 @@ export default {
             getSongs,
             addToQueue,
             store,
+            playNow,
         }
     },
 }
@@ -81,17 +132,32 @@ export default {
 .queueSong {
     width: 100%;
     margin-bottom: 16px;
-    padding: 15px;
+    padding: 15px 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     background: #cecece;
-    border-radius: 15px;
+    border-radius: 7px;
     transition-duration: 0.2s;
+}
+
+.songComplication {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transition-duration: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.songComplication:hover {
+    background: #c3c3c3;
     cursor: pointer;
 }
 
-.queueSong:hover {
-    transform: scale(1.012);
+.songComplicationIcon {
+    width: 16px;
+    height: 20px;
 }
 </style>

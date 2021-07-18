@@ -15,7 +15,12 @@
             >
                 <img
                     :src="artist.image_path"
-                    style="width: 100px; border-radius: 50%"
+                    style="
+                        width: 100px;
+                        height: 100px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    "
                     alt=""
                 />
                 <p>{{ artist.name }}</p>

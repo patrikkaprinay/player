@@ -9,6 +9,7 @@ export default createStore({
         playing: false,
         queue: [],
         currentlyPlaying: {
+            id: 0,
             name: '',
             image: '',
             artist: '',
@@ -17,8 +18,20 @@ export default createStore({
             albumcover: '',
             queueId: null,
         },
+        muted: false,
     },
     mutations: {
+        mute(state) {
+            state.player.muted = true
+            state.muted = true
+        },
+        unMute(state) {
+            state.player.muted = false
+            state.muted = false
+        },
+        setVolume(state, payload) {
+            state.player.volume = payload
+        },
         logout(state) {
             axios.post('/logout').then(console.log('Successfully logged out'))
             state.loggedin = false
@@ -33,38 +46,37 @@ export default createStore({
         playMusic(state) {
             state.player.play()
             state.playing = true
-            console.log('Playing music')
+            //console.log('Playing music')
         },
         stopMusic(state) {
             state.player.pause()
             state.playing = false
-            console.log('Stopping music')
+            //console.log('Stopping music')
         },
         getQueue(state) {
-            axios
-                .get('/api/queue')
-                .then((response) => (state.queue = response.data))
+            axios.get('/api/queue').then((response) => () => {
+                state.queue = response.data
+            })
         },
         setQueue(state, payload) {
             state.queue = payload
-            //state.player.src = state.queue[0].id
-            //console.log(state.player)
         },
         addToQueue(state, payload) {
             state.queue.push(payload)
-            //state.player.src = state.queue[0].id
-            //console.log(state.player)
         },
         clearQueue(state) {
             state.queue = []
         },
         updateAudioData(state, payload) {
-            state.player.src = payload.songNumber.path
-            state.currentlyPlaying.name = payload.songNumber.name
-            state.currentlyPlaying.artist = payload.songNumber.artist.name
-            state.currentlyPlaying.albumcover =
-                payload.songNumber.album.artwork_path
-            state.currentlyPlaying.queueId = payload.id
+            if (payload) {
+                state.player.src = payload.songNumber.path
+                state.currentlyPlaying.name = payload.songNumber.name
+                state.currentlyPlaying.artist = payload.songNumber.artist.name
+                state.currentlyPlaying.albumcover =
+                    payload.songNumber.album.artwork_path
+                state.currentlyPlaying.queueId = payload.id
+                state.currentlyPlaying.id = payload.songNumber.id
+            }
         },
     },
     actions: {
@@ -92,6 +104,7 @@ export default createStore({
             })
             commit('login')
         },
+
         loginUser({ commit }, { user }) {
             const email = user.email
             const pass = user.password
@@ -103,6 +116,7 @@ export default createStore({
             })
             commit('login')
         },
+
         amILoggedin({ commit }) {
             axios.get('/api/loggedin').then((response) => {
                 if (response.data) {
