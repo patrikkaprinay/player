@@ -39,6 +39,8 @@ Route::post('queue/now', [QueueSongController::class, 'now']);
 //Artist
 Route::post('artists', [ArtistController ::class, 'index']);
 
+Route::post('artist', [ArtistController ::class, 'info']);
+
 Route::post('add/artist', [ArtistController ::class, 'add']);
 
 Route::post('artists/search', [ArtistController::class, 'search']);

@@ -8,7 +8,13 @@
             />
             <div class="ms-3">
                 <p class="mb-0 fs-5">{{ store.state.currentlyPlaying.name }}</p>
-                <p class="mb-0">{{ store.state.currentlyPlaying.artist }}</p>
+                <router-link
+                    href="#"
+                    :to="`/artist/` + artistnameFormatted"
+                    class="mb-0"
+                    style="color: black"
+                    >{{ store.state.currentlyPlaying.artist }}</router-link
+                >
             </div>
         </div>
         <div style="width: 50%; padding: 15px 20px 0 20px">
@@ -81,17 +87,27 @@
 </template>
 
 <script>
-import { reactive, toRefs, onMounted } from 'vue'
+import { reactive, toRefs, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
     setup() {
+        const store = useStore()
+
         const state = reactive({
             playing: false,
             volume: getCookie('volume') * 100 * 2,
             muted: false,
             beforeMuted: 0,
         })
+
+        const artistnameFormatted = computed(() =>
+            store.state.currentlyPlaying.artist
+                .normalize('NFD')
+                .replace(/\p{Diacritic}/gu, '')
+                .toLowerCase()
+                .replace(' ', '-')
+        )
 
         // Original JavaScript code by Chirp Internet: chirpinternet.eu
         // Please acknowledge use of this code by including this header.
@@ -107,8 +123,6 @@ export default {
         onMounted(() => {
             store.commit('setVolume', volumeCookie)
         })
-
-        const store = useStore()
 
         const play = () => {
             store.state.playing = true
@@ -202,6 +216,7 @@ export default {
             updateVolume,
             unMute,
             mute,
+            artistnameFormatted,
         }
     },
 }
@@ -212,13 +227,14 @@ export default {
     /* delete this */
     /* display: none; */
     padding: 0 15px;
-    background: rgb(161, 161, 161);
+    background: rgb(228, 228, 228);
     border-radius: 10px;
     margin: 10px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 0 6px #0000001a;
 }
 
 .music-controller {

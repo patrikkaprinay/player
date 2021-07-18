@@ -141,7 +141,7 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: #cecece;
+    background: #eaeaea;
     border-radius: 7px;
     transition-duration: 0.2s;
 }
@@ -157,7 +157,7 @@ export default {
 }
 
 .songComplication:hover {
-    background: #c3c3c3;
+    background: #dbdbdb;
     cursor: pointer;
 }
 

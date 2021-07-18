@@ -66,6 +66,14 @@ class ArtistController extends Controller
         }
     }
 
+    public function info(Request $request){
+        if(empty($request->input('artist'))){
+            return;
+        }
+        
+        return Artist::where('name', 'like', '%' . $request->input('artist') . '%')->first();
+    }
+
     public function search(Request $request){
         if(empty($request->input('artist'))){
             return;

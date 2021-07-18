@@ -22,6 +22,7 @@
                         flex-row
                         mb-2
                     "
+                    style="border-radius: 10px"
                 >
                     <img
                         :src="store.state.currentlyPlaying.albumcover"
@@ -34,7 +35,7 @@
                         {{ store.state.currentlyPlaying.artist }}
                     </p>
                 </div>
-                <div v-if="queue.length > 1">
+                <div class="mt-4" v-if="queue.length > 1">
                     <h3>In Queue</h3>
                 </div>
                 <div v-for="song in queue" :key="song.id">
@@ -48,6 +49,7 @@
                             flex-row
                             mb-2
                         "
+                        style="border-radius: 10px"
                     >
                         <img
                             :src="song.song.album[0].artwork_path"

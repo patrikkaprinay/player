@@ -64,7 +64,7 @@ export default {
     position: absolute;
     /*right: 10px;*/
     top: 90px;
-    right: -20%;
+    right: -200px;
     width: 200px;
     min-height: 70px;
     height: 70px;
@@ -93,7 +93,7 @@ export default {
         right: 10px;
     }
     to {
-        right: -20%;
+        right: -200px;
     }
 }
 </style>
