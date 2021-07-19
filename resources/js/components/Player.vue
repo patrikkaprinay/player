@@ -63,14 +63,17 @@
             </div>
         </div>
         <div class="d-flex justify-content-end align-items-center w-25">
+            <router-link to="/queue" href="#" style="color: black">
+                <i class="bi bi-list me-3" style="font-size: 20px"></i>
+            </router-link>
             <i
-                class="bi bi-volume-up"
+                class="bi bi-volume-up me-2"
                 style="font-size: 22px"
                 v-if="!store.state.muted"
                 @click="mute"
             ></i>
             <i
-                class="bi bi-volume-mute"
+                class="bi bi-volume-mute me-2"
                 style="font-size: 22px"
                 v-if="store.state.muted"
                 @click="unMute"

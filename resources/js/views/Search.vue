@@ -91,13 +91,13 @@ export default {
                     }
                 })
 
-            if (store.state.queue.length == 0) {
-                store.dispatch('firstQueueSong').then(() => {
-                    setTimeout(() => {
-                        store.commit('playMusic')
-                    }, 100)
-                })
-            }
+            // if (store.state.queue.length == 0) {
+            //     store.dispatch('firstQueueSong').then(() => {
+            //         setTimeout(() => {
+            //             store.commit('playMusic')
+            //         }, 100)
+            //     })
+            // }
             store.dispatch('getToQueue')
             store.dispatch('newNotification', {
                 text: 'Added to queue',
