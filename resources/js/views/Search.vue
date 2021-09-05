@@ -6,7 +6,7 @@
             style="height: 30px; width: 30%; margin-bottom: 30px"
             placeholder="Search for a song"
         />
-        <div class="w-50">
+        <div class="">
             <div v-for="song in songs" :key="song.id" class="queueSong">
                 <div
                     class="songComplication me-2"

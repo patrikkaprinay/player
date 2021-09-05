@@ -48,7 +48,7 @@
                         </li>
                         <!-- <li class="nav-item">
                             <router-link to="/queue" class="nav-link" href="#"
-                                >Queue</router-link
+                                >Queue Settings</router-link
                             >
                         </li> -->
                         <li class="nav-item">
