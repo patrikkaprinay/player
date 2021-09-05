@@ -47,11 +47,6 @@
                             >
                         </li>
                         <li class="nav-item">
-                            <router-link to="/queue" class="nav-link" href="#"
-                                >Queue Settings</router-link
-                            >
-                        </li>
-                        <li class="nav-item">
                             <router-link to="/artists" class="nav-link" href="#"
                                 >Artists</router-link
                             >
@@ -90,11 +85,16 @@
                                     >
                                 </li>
                                 <li v-if="!store.state.loggedin">
+                                    <router-link href="#" to="/login"
+                                        >Login</router-link
+                                    >
+                                </li>
+                                <li>
                                     <router-link
+                                        to="/queue-settings"
                                         class="dropdown-item"
                                         href="#"
-                                        to="/login"
-                                        >Login</router-link
+                                        >Queue Settings</router-link
                                     >
                                 </li>
                                 <li v-if="store.state.loggedin">

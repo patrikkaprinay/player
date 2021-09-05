@@ -10,6 +10,7 @@ import AddArtist from '../views/AddArtist.vue'
 import AddAlbum from '../views/AddAlbum.vue'
 import Artists from '../views/Artists.vue'
 import Artist from '../views/Artist.vue'
+import QueueSettings from '../views/QueueSettings.vue'
 
 import axios from 'axios'
 
@@ -84,6 +85,11 @@ const routes = [
         path: '/artist/:name',
         name: 'Artist',
         component: Artist,
+    },
+    {
+        path: '/queue-settings',
+        name: 'QueueSettings',
+        component: QueueSettings,
     },
 ]
 
