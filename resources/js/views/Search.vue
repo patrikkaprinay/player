@@ -33,7 +33,7 @@
                     style="width: 65px; margin-right: 30px"
                     alt=""
                 />
-                <div>
+                <div class="me-3">
                     <p class="mb-0" style="font-size: 22px">{{ song.name }}</p>
                     <p class="mb-0">{{ song.artist.name }}</p>
                 </div>
