@@ -27,8 +27,6 @@ class SongHistoryController extends Controller
             }
         }
         return false;
-        
-        //return response()->json(['time' => $lastHistory, 'Carbon' => $before30mins]);
     }
 
     public function add(Request $request)
