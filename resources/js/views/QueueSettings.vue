@@ -2,7 +2,13 @@
     <div class="container">
         <h1 class="mb-4 mt-2">Queue Rules</h1>
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="samesong" />
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="samesong"
+                @change="changeSetting(1)"
+                :checked="rules[0]"
+            />
             <div>
                 <label class="form-check-label me-2" for="samesong"
                     >Don't play the same song for 30 mins
@@ -16,7 +22,13 @@
             </div>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="sameartist" />
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="sameartist"
+                @change="changeSetting(2)"
+                :checked="rules[1]"
+            />
             <div>
                 <label class="form-check-label me-2" for="sameartist"
                     >Don't play the same artist more than 5 times in 30 mins
@@ -30,7 +42,13 @@
             </div>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="cooldownuser" />
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="cooldownuser"
+                @change="changeSetting(3)"
+                :checked="rules[2]"
+            />
             <div>
                 <label class="form-check-label me-2" for="cooldownuser"
                     >Don't let users add more than 10 songs into the queue in 30
@@ -45,7 +63,13 @@
             </div>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="fillqueue" />
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="fillqueue"
+                @change="changeSetting(4)"
+                :checked="rules[3]"
+            />
             <div>
                 <label class="form-check-label me-2" for="fillqueue"
                     >Don't play the queue unless there are more than 10 songs in
@@ -60,7 +84,13 @@
             </div>
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="autodj" />
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="autodj"
+                @change="changeSetting(5)"
+                :checked="rules[4]"
+            />
             <div>
                 <label class="form-check-label me-2" for="autodj"
                     >Auto DJ
@@ -77,9 +107,27 @@
 </template>
 
 <script>
+import { onMounted, reactive, toRefs } from 'vue'
+
 export default {
     setup() {
-        return {}
+        const changeSetting = (id) => {
+            axios.post('/api/rule', {
+                id,
+            })
+        }
+        const state = reactive({
+            rules: [],
+        })
+        onMounted(() => {
+            axios.get('/api/rules').then((response) => {
+                state.rules = response.data.rules
+            })
+        })
+        return {
+            ...toRefs(state),
+            changeSetting,
+        }
     },
 }
 </script>

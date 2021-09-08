@@ -3,12 +3,22 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mt-2">
                 <h2>Queue</h2>
-                <button
-                    @click="store.dispatch('clearQueue')"
-                    class="btn btn-primary"
-                >
-                    Clear queue
-                </button>
+                <div>
+                    <router-link
+                        to="/queue-settings"
+                        href="#"
+                        class="me-4"
+                        style="color: black"
+                    >
+                        <i class="bi bi-gear-fill" style="font-size: 18px"></i>
+                    </router-link>
+                    <button
+                        @click="store.dispatch('clearQueue')"
+                        class="btn btn-primary"
+                    >
+                        Clear queue
+                    </button>
+                </div>
             </div>
             <div class="mt-2">
                 <h3>Currently Playing</h3>

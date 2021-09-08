@@ -1,11 +1,11 @@
 <template>
     <div class="d-flex justify-content-center align-items-center flex-column">
         <h2 class="mt-3">Search</h2>
-        <input
+        <!-- <input
             type="text"
             style="height: 30px; width: 30%; margin-bottom: 30px"
             placeholder="Search for a song"
-        />
+        /> -->
         <div class="">
             <div v-for="song in songs" :key="song.id" class="queueSong">
                 <div

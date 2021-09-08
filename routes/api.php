@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\QueueSongController;
+use App\Http\Controllers\RuleController;
 use App\Http\Controllers\SongController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,3 +55,7 @@ Route::post('add/album', [AlbumController::class, 'add']);
 
 //Songs
 Route::post('add/song', [SongController::class, 'add']);
+
+//Rules
+Route::get('rules', [RuleController::class, 'index']);
+Route::post('rule', [RuleController::class, 'changeRuleStatus']);
