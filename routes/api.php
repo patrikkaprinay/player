@@ -58,8 +58,8 @@ Route::post('add/album', [AlbumController::class, 'add']);
 //Rules
 Route::get('rules', [RuleController::class, 'index']);
 Route::post('rule', [RuleController::class, 'changeRuleStatus']);
+Route::get('artistCooldown', [SongHistoryController::class, 'artistCooldown']);
 
 //Song History
 Route::get('history', [SongHistoryController::class, 'index']);
 Route::post('history', [SongHistoryController::class, 'add']);
-Route::get('last', [SongHistoryController::class, 'last30mins']);

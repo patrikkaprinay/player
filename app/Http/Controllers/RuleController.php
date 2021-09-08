@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class RuleController extends Controller
 {
-
     public function index(){
         $rulesEnabled = Array();
         $rules = Rule::all();
@@ -31,23 +30,23 @@ class RuleController extends Controller
 
 
     public static function SameSong(){
-    
+        return Rule::find(1)->enabled == 1 ? true : false;
     }
-    /*
+    
     public static function SameArtist(){
-        
+        return Rule::find(2)->enabled == 1 ? true : false;
     }
 
     public static function SpamProtection(){
-        
+        return Rule::find(3)->enabled == 1 ? true : false;
     }
     
     public static function HalfFullQueue(){
-        
+        return Rule::find(4)->enabled == 1 ? true : false;
     }
     
     public static function AutoDJ(){
-        
+        return Rule::find(5)->enabled == 1 ? true : false;
     } 
-    */   
+    
 }
