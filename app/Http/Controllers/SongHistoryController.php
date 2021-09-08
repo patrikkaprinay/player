@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SongHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SongHistoryController extends Controller
@@ -13,9 +14,21 @@ class SongHistoryController extends Controller
         return $songHistory;
     }
 
-    public function last30mins(Request $request)
+    public static function last30mins($id)
     {
         ###
+        $before30mins = Carbon::now()->subMinute(30);
+
+        $lastHistory = SongHistory::where('created_at', '>', $before30mins)->get();
+
+        foreach ($lastHistory as $song) {
+            if($song->songId == $id){
+                return true;
+            }
+        }
+        return false;
+        
+        //return response()->json(['time' => $lastHistory, 'Carbon' => $before30mins]);
     }
 
     public function add(Request $request)

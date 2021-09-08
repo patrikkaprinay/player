@@ -86,9 +86,14 @@ export default {
                     song: song,
                 })
                 .then((response) => {
+                    if (response.data.message) {
+                        console.log(response.data.message)
+                    }
+                    /*
                     if (response.status == 200) {
                         console.log('Song added to queue')
                     }
+                    */
                 })
 
             // if (store.state.queue.length == 0) {
@@ -98,6 +103,7 @@ export default {
             //         }, 100)
             //     })
             // }
+
             store.dispatch('getToQueue')
             store.dispatch('newNotification', {
                 text: 'Added to queue',

@@ -6,7 +6,6 @@ use App\Http\Controllers\QueueSongController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\SongHistoryController;
-use App\Models\SongHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -63,3 +62,4 @@ Route::post('rule', [RuleController::class, 'changeRuleStatus']);
 //Song History
 Route::get('history', [SongHistoryController::class, 'index']);
 Route::post('history', [SongHistoryController::class, 'add']);
+Route::get('last', [SongHistoryController::class, 'last30mins']);

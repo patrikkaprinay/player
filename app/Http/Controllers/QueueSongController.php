@@ -7,6 +7,7 @@ use App\Models\Artist;
 use App\Models\QueueSong;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SongHistoryController;
 
 class QueueSongController extends Controller
 {
@@ -53,6 +54,12 @@ class QueueSongController extends Controller
     }
 
     public function add(Request $request){
+        # $x = 30 mins
+        # Check if the song has been played in the last $x
+
+        if(SongHistoryController::last30mins($request->input('song'))){
+            return response()->json(['message'=>'This song can\'t be played, because it was played later than 30 minutes ago']);
+        }
 
         if($lastQueueOrder = QueueSong::max('order')){
             $newOrderNumber = $lastQueueOrder + 10;
