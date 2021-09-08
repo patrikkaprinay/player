@@ -5,6 +5,8 @@ use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\QueueSongController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\SongController;
+use App\Http\Controllers\SongHistoryController;
+use App\Models\SongHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +23,7 @@ Route::get('loggedin', function (){
 
 //Songs
 Route::get('songs', [SongController::class, 'index']);
+Route::post('add/song', [SongController::class, 'add']);
 
 //Queue
 Route::get('queue', [QueueSongController::class, 'index']);
@@ -53,9 +56,10 @@ Route::post('albums/search', [AlbumController::class, 'search']);
 
 Route::post('add/album', [AlbumController::class, 'add']);
 
-//Songs
-Route::post('add/song', [SongController::class, 'add']);
-
 //Rules
 Route::get('rules', [RuleController::class, 'index']);
 Route::post('rule', [RuleController::class, 'changeRuleStatus']);
+
+//Song History
+Route::get('history', [SongHistoryController::class, 'index']);
+Route::post('history', [SongHistoryController::class, 'add']);

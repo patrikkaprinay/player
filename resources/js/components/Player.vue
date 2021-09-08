@@ -175,6 +175,9 @@ export default {
         })
 
         const skipSong = () => {
+            axios.post('/api/history', {
+                id: store.state.currentlyPlaying.id,
+            })
             axios
                 .post('/api/queue/next', {
                     played: store.state.currentlyPlaying.queueId,
@@ -227,8 +230,6 @@ export default {
 
 <style scoped>
 .player {
-    /* delete this */
-    /* display: none; */
     padding: 0 15px;
     background: rgb(228, 228, 228);
     border-radius: 10px;
