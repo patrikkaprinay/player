@@ -81,6 +81,7 @@ export default {
         }
 
         const addToQueue = (song) => {
+            let notificationText = 'Added to queue'
             axios
                 .post('/api/queue/add', {
                     song: song,
@@ -88,28 +89,15 @@ export default {
                 .then((response) => {
                     if (response.data.message) {
                         console.log(response.data.message)
+                        notificationText = response.data.message
                     }
-                    /*
-                    if (response.status == 200) {
-                        console.log('Song added to queue')
-                    }
-                    */
+                    store.dispatch('getToQueue')
+                    store.dispatch('newNotification', {
+                        text: notificationText,
+                        status: 0,
+                    })
+                    store.dispatch('notify')
                 })
-
-            // if (store.state.queue.length == 0) {
-            //     store.dispatch('firstQueueSong').then(() => {
-            //         setTimeout(() => {
-            //             store.commit('playMusic')
-            //         }, 100)
-            //     })
-            // }
-
-            store.dispatch('getToQueue')
-            store.dispatch('newNotification', {
-                text: 'Added to queue',
-                status: 0,
-            })
-            store.dispatch('notify')
         }
 
         const playNow = (id) => {

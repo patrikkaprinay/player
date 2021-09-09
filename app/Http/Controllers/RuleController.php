@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RuleController extends Controller
 {
@@ -17,15 +18,17 @@ class RuleController extends Controller
     }
 
     public function changeRuleStatus(Request $request){
-        $rule = Rule::find($request->id);
-        if($rule->enabled == '0'){
-            $rule->enabled = 1;
-        } else {
-            $rule->enabled = 0;
+        if(Auth::check()){
+            $rule = Rule::find($request->id);
+            if($rule->enabled == '0'){
+                $rule->enabled = 1;
+            } else {
+                $rule->enabled = 0;
+            }
+    
+            $rule->save();
+            return $rule;
         }
-
-        $rule->save();
-        return $rule;
     }
 
 
