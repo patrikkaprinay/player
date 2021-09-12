@@ -9,6 +9,7 @@ use App\Models\Song;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SongHistoryController;
 use App\Http\Controllers\RuleController;
+use Illuminate\Support\Facades\Auth;
 
 class QueueSongController extends Controller
 {
@@ -55,6 +56,7 @@ class QueueSongController extends Controller
     }
 
     public function add(Request $request){
+        $user = Auth::user()->id;
 
         if(RuleController::SameSong()){
             if(SongHistoryController::songCooldown($request->input('song'))){
@@ -76,6 +78,8 @@ class QueueSongController extends Controller
         $newQueueSong = new QueueSong();
         $newQueueSong->songNumber = $request->input('song');
         $newQueueSong->order = $newOrderNumber;
+        $newQueueSong->addedBy = $user;
+        
         $newQueueSong->save();
 
         return response()->json($newQueueSong);

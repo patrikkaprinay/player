@@ -17,6 +17,7 @@ class CreateQueueSongsTable extends Migration
             $table->id();
             $table->integer('songNumber');
             $table->integer('order');
+            $table->integer('addedBy')->nullable();
             $table->timestamps();
         });
     }
