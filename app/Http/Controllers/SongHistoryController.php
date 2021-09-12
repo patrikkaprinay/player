@@ -58,10 +58,17 @@ class SongHistoryController extends Controller
     {
         /* Put the user on cooldown after */ $x = 15 /* songs added to the queue in the last 30 minutes */;
         $history = SongHistoryController::index();
+        $queue = QueueSong::all();
 
         $c = 0;
 
         foreach ($history as $song) {
+            if($song->addedBy == $user){
+                $c++;
+            }
+        }
+
+        foreach ($queue as $song) {
             if($song->addedBy == $user){
                 $c++;
             }

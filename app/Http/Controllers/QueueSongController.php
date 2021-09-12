@@ -9,6 +9,7 @@ use App\Models\Song;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SongHistoryController;
 use App\Http\Controllers\RuleController;
+use App\Models\SongHistory;
 use Illuminate\Support\Facades\Auth;
 
 class QueueSongController extends Controller
@@ -30,7 +31,6 @@ class QueueSongController extends Controller
             array_push($queueSongInfo, $song);
         }
 
-        //return $queueSongInfo;
         return $queue;
         
     }
@@ -51,7 +51,21 @@ class QueueSongController extends Controller
     
             return $querysong;
         } else {
+            /*
+            $selectedSong = Song::where('id', SongHistory::orderBy('id', 'desc')->first()->songId)->first();
+            $artist = Artist::where('id', $selectedSong->artist)->first();
+            $album = Album::where('id', $selectedSong->album)->first();
+    
+            $selectedSong['album'] = $album;
+    
+            $selectedSong['artist'] = $artist;
+    
+            $querysong['songNumber'] = $selectedSong;
+            
+            return $querysong;
+            */
             return null;
+
         }
     }
 
