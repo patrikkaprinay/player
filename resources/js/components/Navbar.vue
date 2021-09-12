@@ -82,11 +82,6 @@
                                 aria-labelledby="navbarDropdown"
                             >
                                 <li>
-                                    <a class="dropdown-item" href="#"
-                                        >Settings</a
-                                    >
-                                </li>
-                                <li>
                                     <router-link
                                         to="/add/song"
                                         class="dropdown-item"
@@ -105,6 +100,11 @@
                                         class="dropdown-item"
                                         href="#"
                                         >Queue Settings</router-link
+                                    >
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                        >Settings</a
                                     >
                                 </li>
                                 <li v-if="store.state.loggedin">

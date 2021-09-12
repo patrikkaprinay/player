@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -84,5 +85,10 @@ class ArtistController extends Controller
 
     public function searchId(Request $request){
         return Artist::where('id', $request->input('id'))->first();
+    }
+
+    public function allSongs($id)
+    {
+        return Song::where('artist', $id)->get();
     }
 }

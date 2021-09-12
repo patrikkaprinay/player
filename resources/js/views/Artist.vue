@@ -18,6 +18,7 @@
                 </h1>
             </div>
         </div>
+        <div></div>
     </div>
 </template>
 
@@ -30,6 +31,7 @@ export default {
         const state = reactive({
             artist: [],
             isLoaded: false,
+            songs: [],
         })
 
         const artistImage = computed(() => state.artist.image_path)
@@ -47,7 +49,11 @@ export default {
                 .then((response) => {
                     state.artist = response.data
                     state.isLoaded = true
-                    console.log(response)
+                    axios
+                        .get(`/api/artist/` + response.data.id + `/songs`)
+                        .then((response) => {
+                            state.songs = response.data
+                        })
                 })
         })
 

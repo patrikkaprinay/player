@@ -22,7 +22,10 @@ Route::get('loggedin', function (){
 
 //Songs
 Route::get('songs', [SongController::class, 'index']);
+
 Route::post('add/song', [SongController::class, 'add']);
+
+Route::get('artist/{id}/songs', [ArtistController::class, 'allSongs']);
 
 //Queue
 Route::get('queue', [QueueSongController::class, 'index']);
