@@ -35,7 +35,12 @@
                 />
                 <div class="me-3">
                     <p class="mb-0" style="font-size: 22px">{{ song.name }}</p>
-                    <p class="mb-0">{{ song.artist.name }}</p>
+                    <router-link
+                        :to="`/artist/` + nice(song.artist.name)"
+                        class="mb-0"
+                        style="color: black; text-decoration: none"
+                        >{{ song.artist.name }}</router-link
+                    >
                 </div>
                 <div
                     class="
@@ -114,6 +119,14 @@ export default {
             }
         }
 
+        const nice = (name) => {
+            return name
+                .normalize('NFD')
+                .replace(/\p{Diacritic}/gu, '')
+                .toLowerCase()
+                .replace(' ', '-')
+        }
+
         onMounted(getSongs)
 
         return {
@@ -122,6 +135,7 @@ export default {
             addToQueue,
             store,
             playNow,
+            nice,
         }
     },
 }

@@ -13,9 +13,19 @@
         </div> -->
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
             <div class="container-fluid">
-                <router-link to="/" class="navbar-brand" href="#"
-                    >Player</router-link
+                <router-link
+                    to="/"
+                    class="
+                        navbar-brand
+                        d-flex
+                        justify-content-center
+                        align-items-center
+                        fw-bold
+                    "
+                    href="#"
                 >
+                    <Logo />
+                </router-link>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -121,8 +131,12 @@
 
 <script>
 import { useStore } from 'vuex'
+import Logo from './Logo.vue'
 
 export default {
+    components: {
+        Logo,
+    },
     setup() {
         const store = useStore()
 
@@ -138,4 +152,4 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style></style>
