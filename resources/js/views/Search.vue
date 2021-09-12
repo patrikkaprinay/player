@@ -8,6 +8,8 @@
         /> -->
         <div class="">
             <div v-for="song in songs" :key="song.id" class="queueSong">
+                <Song :song="song" />
+                <!-- 
                 <div
                     class="songComplication me-2"
                     v-if="
@@ -61,7 +63,7 @@
                         <i class="bi bi-heart songComplicationIcon"></i>
                         <i class="bi bi-heart-fill d-none"></i>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -70,8 +72,12 @@
 <script>
 import { reactive, toRefs, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import Song from '../components/Song.vue'
 
 export default {
+    components: {
+        Song,
+    },
     setup() {
         const state = reactive({
             songs: [],
@@ -152,25 +158,5 @@ export default {
     background: #eaeaea;
     border-radius: 7px;
     transition-duration: 0.2s;
-}
-
-.songComplication {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    transition-duration: 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.songComplication:hover {
-    background: #dbdbdb;
-    cursor: pointer;
-}
-
-.songComplicationIcon {
-    width: 16px;
-    height: 20px;
 }
 </style>

@@ -18,7 +18,9 @@
                 </h1>
             </div>
         </div>
-        <div></div>
+        <div>
+            {{ songs }}
+        </div>
     </div>
 </template>
 
