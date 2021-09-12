@@ -177,6 +177,7 @@ export default {
         const skipSong = () => {
             axios.post('/api/history', {
                 id: store.state.currentlyPlaying.id,
+                played: store.state.currentlyPlaying.queueId,
             })
             axios
                 .post('/api/queue/next', {

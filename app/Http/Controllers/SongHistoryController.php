@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\QueueSong;
 use App\Models\Song;
 use App\Models\SongHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SongHistoryController extends Controller
 {
@@ -16,22 +18,7 @@ class SongHistoryController extends Controller
 
         $before30mins = Carbon::now()->subMinute($x);
 
-        return  SongHistory::where('created_at', '>', $before30mins)->get();
-    }
-
-    public static function artistCooldown($id)
-    {
-        /* Put the artist to cooldown after */ $x = 5; /* times appearing in the queue */
-        $history = SongHistoryController::index();
-        $songRequested = Song::find($id);
-        $c = 0;
-
-        foreach ($history as $song) {
-            if($song->artist() == $songRequested->artist){
-                $c++;
-            }
-        }
-        return $c <= $x ? true : false;
+        return SongHistory::where('created_at', '>', $before30mins)->get();
     }
 
     public static function songCooldown($id)
@@ -52,12 +39,47 @@ class SongHistoryController extends Controller
         return false;
     }
 
+    public static function artistCooldown($id)
+    {
+        /* Put the artist to cooldown after */ $x = 5; /* times appearing in the queue */
+        $history = SongHistoryController::index();
+        $songRequested = Song::find($id);
+        $c = 0;
+
+        foreach ($history as $song) {
+            if($song->artist() == $songRequested->artist){
+                $c++;
+            }
+        }
+        return $c <= $x ? true : false;
+    }
+
+    public static function userCooldown($user)
+    {
+        /* Put the user on cooldown after */ $x = 15 /* songs added to the queue in the last 30 minutes */;
+        $history = SongHistoryController::index();
+
+        $c = 0;
+
+        foreach ($history as $song) {
+            if($song->addedBy == $user){
+                $c++;
+            }
+        }
+
+        return $c <= $x ? true : false;
+    }
+
     public function add(Request $request)
     {
-        $songHistory = new SongHistory();
-        $songHistory->songId = $request->id;
-        $songHistory->save();
-
-        return response()->json(['song_history'=>$songHistory]);
+        if($request->id != 0){
+            $songHistory = new SongHistory();
+            $songHistory->songId = $request->id;
+            $user = QueueSong::find($request->played)->first()->addedBy;
+            $songHistory->addedBy = $user;
+            $songHistory->save();
+            
+            return response()->json(['song_history'=>$songHistory]);
+        }
     }
 }

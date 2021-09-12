@@ -69,6 +69,12 @@ class QueueSongController extends Controller
             }
         }
 
+        if(RuleController::SpamProtection()){
+            if(SongHistoryController::userCooldown($user)){
+                return response()->json(['message'=>'You can\'t put any more songs into the queue because you put more than 15 songs into it in the last 30 minutes']);
+            }
+        }
+
         if($lastQueueOrder = QueueSong::max('order')){
             $newOrderNumber = $lastQueueOrder + 10;
         } else {

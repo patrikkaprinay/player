@@ -16,6 +16,7 @@ class CreateSongHistoriesTable extends Migration
         Schema::create('song_histories', function (Blueprint $table) {
             $table->id();
             $table->integer('songId');
+            $table->integer('addedBy');
             $table->timestamps();
         });
     }
