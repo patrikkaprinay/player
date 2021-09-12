@@ -77,7 +77,7 @@
             <div>
                 <label class="form-check-label me-2" for="fillqueue"
                     >Don't play the queue unless there are more than 10 songs in
-                    it minutes
+                    it
                 </label>
                 <i
                     class="bi bi-question-circle-fill"

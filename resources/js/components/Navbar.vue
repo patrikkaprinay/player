@@ -42,7 +42,7 @@
                     id="navbarSupportedContent"
                 >
                     <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <router-link
                                 to="/"
                                 class="nav-link active"
@@ -50,7 +50,7 @@
                                 href="#"
                                 >Home</router-link
                             >
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <router-link to="/search" class="nav-link" href="#"
                                 >Search</router-link

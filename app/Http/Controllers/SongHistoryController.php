@@ -67,7 +67,7 @@ class SongHistoryController extends Controller
             }
         }
 
-        return $c <= $x ? true : false;
+        return $c >= $x ? true : false;
     }
 
     public function add(Request $request)
