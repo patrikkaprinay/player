@@ -18,7 +18,6 @@ class QueueSongController extends Controller
     public function index(){
         $queue = QueueSong::all();
 
-
         foreach($queue as $oneSong){
             $song = $oneSong->song;
             
@@ -36,12 +35,9 @@ class QueueSongController extends Controller
             $addedby = $oneSong->addedBy;
             $user = User::find($addedby);
             $oneSong->addedBy = $user;
-
-            
         }
 
         return $queue;
-        
     }
 
     public function first(){
