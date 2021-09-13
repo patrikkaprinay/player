@@ -89,4 +89,15 @@ class SongHistoryController extends Controller
             return response()->json(['song_history'=>$songHistory]);
         }
     }
+
+    public function last()
+    {
+        $song = SongHistory::orderBy('id', 'desc')->first();
+        $song['songNumber'] = SongController::index($song->songId);
+
+        $queueSong = QueueSong::orderBy('id')->first();
+        $queueSong->delete();
+
+        return $song;
+    }
 }

@@ -80,3 +80,5 @@ Route::get('artistCooldown', [SongHistoryController::class, 'artistCooldown']);
 Route::get('history', [SongHistoryController::class, 'index']);
 
 Route::post('history', [SongHistoryController::class, 'add']);
+
+Route::get('history/last', [SongHistoryController::class, 'last']);

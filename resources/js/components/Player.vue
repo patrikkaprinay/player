@@ -43,7 +43,10 @@
                     align-items-center
                 "
             >
-                <i class="bi bi-skip-backward-fill music-controller"></i>
+                <i
+                    class="bi bi-skip-backward-fill music-controller"
+                    @click="previousSong"
+                ></i>
                 <i
                     class="bi bi-play-fill music-controller"
                     style="font-size: 30px"
@@ -201,6 +204,14 @@ export default {
                 })
         }
 
+        const previousSong = () => {
+            axios.get('/api/history/last').then((response) => {
+                console.log(response.data)
+                store.commit('updateAudioData', response.data)
+                play()
+            })
+        }
+
         function sToTime(t) {
             return (
                 padZero(parseInt((t / 60) % 60)) +
@@ -224,6 +235,7 @@ export default {
             unMute,
             mute,
             artistnameFormatted,
+            previousSong,
         }
     },
 }
