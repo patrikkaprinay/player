@@ -68,9 +68,9 @@
                         />
 
                         <p class="mb-0">
-                            {{ song.song.name }} - {{ song.song.artist.name }} -
+                            {{ song.song.name }} - {{ song.song.artist.name }}
                             <span style="color: grey"
-                                >added by {{ song.addedBy.name }}</span
+                                >— added by {{ song.addedBy.name }}</span
                             >
                         </p>
                         <p
