@@ -13,4 +13,9 @@ class QueueSong extends Model
         return $this->hasOne(Song::class, 'id', 'songNumber');
     }
 
+    public function addedBy()
+    {
+        return $this->hasOne(User::class, 'id', 'addedBy');
+    }
+
 }

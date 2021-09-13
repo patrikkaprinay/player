@@ -10,25 +10,34 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\SongHistoryController;
 use App\Http\Controllers\RuleController;
 use App\Models\SongHistory;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class QueueSongController extends Controller
 {
     public function index(){
         $queue = QueueSong::all();
-        $queueSongInfo = Array();
 
 
         foreach($queue as $oneSong){
             $song = $oneSong->song;
             
-            $artist = Artist::where('id', $song->artist)->get();
+            $artist = Artist::find($song->artist);
             $song['artist'] = $artist;
 
-            $album = Album::where('id', $song->album)->get();
+            $album = Album::find($song->album);
             $song['album'] = $album;
+
+            if($song->addedBy){
+                $user = $song->addedBy();
+                $song['addedBy'] = $user;
+            }
+
+            $addedby = $oneSong->addedBy;
+            $user = User::find($addedby);
+            $oneSong->addedBy = $user;
+
             
-            array_push($queueSongInfo, $song);
         }
 
         return $queue;

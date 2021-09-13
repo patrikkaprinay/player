@@ -62,14 +62,16 @@
                         style="border-radius: 10px"
                     >
                         <img
-                            :src="song.song.album[0].artwork_path"
+                            :src="song.song.album.artwork_path"
                             style="width: 30px; margin-right: 30px"
                             alt=""
                         />
 
                         <p class="mb-0">
-                            {{ song.song.name }} -
-                            {{ song.song.artist[0].name }}
+                            {{ song.song.name }} - {{ song.song.artist.name }} -
+                            <span style="color: grey"
+                                >added by {{ song.addedBy.name }}</span
+                            >
                         </p>
                         <p
                             class="mb-0 ms-auto me-2"
