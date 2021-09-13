@@ -6,6 +6,7 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,6 +33,11 @@ class SongController extends Controller
 
         $album = Album::where('id', $song->album)->first();
         $song['album'] = $album;
+
+        if(Auth::check()){
+            // $liked = LikedSong::where('id');
+            // $song['liked'] = 
+        }
         
         return $song;
 
