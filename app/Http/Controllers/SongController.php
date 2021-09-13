@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Artist;
+use App\Models\LikedSong;
 use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,11 @@ class SongController extends Controller
     
                 $album = Album::where('id', $song->album)->first();
                 $song['album'] = $album;
+
+                if(Auth::check()){
+                    $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $song->id)->first() ? true : false;
+                    $song['liked'] = $liked;
+                }
             }
             return $songs;
         }
@@ -35,8 +41,8 @@ class SongController extends Controller
         $song['album'] = $album;
 
         if(Auth::check()){
-            // $liked = LikedSong::where('id');
-            // $song['liked'] = 
+            $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $songId) ? true : false;
+            $song['liked'] = $liked;
         }
         
         return $song;

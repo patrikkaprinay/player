@@ -33,20 +33,33 @@
         <div class="songComplication me-1" @click="addToQueue(song.id)">
             <i class="bi bi-list-nested songComplicationIcon"></i>
         </div>
-        <div class="songComplication" @click="likeSong(song.id)">
-            <i class="bi bi-heart songComplicationIcon"></i>
-            <i class="bi bi-heart-fill d-none"></i>
+        <div
+            class="songComplication"
+            v-if="store.state.username"
+            @click="favoriteSong(song.id)"
+        >
+            <i class="bi bi-heart songComplicationIcon" v-if="!liked"></i>
+            <i
+                class="bi bi-heart-fill"
+                style="margin-bottom: -3px"
+                v-if="liked"
+            ></i>
         </div>
     </div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
+import { reactive, toRefs } from 'vue'
 
 export default {
     props: ['song'],
-    setup() {
+    setup(props) {
         const store = useStore()
+
+        const state = reactive({
+            liked: props.song.liked,
+        })
 
         const addToQueue = (song) => {
             let notificationText = 'Added to queue'
@@ -90,7 +103,7 @@ export default {
                 .replace(' ', '-')
         }
 
-        const likeSong = (id) => {
+        const favoriteSong = (id) => {
             axios
                 .post('/api/songs/liked', {
                     id: id,
@@ -98,14 +111,16 @@ export default {
                 .then((response) => {
                     console.log(response)
                 })
+            state.liked = !state.liked
         }
 
         return {
+            ...toRefs(state),
             store,
             addToQueue,
             playNow,
             nice,
-            likeSong,
+            favoriteSong,
         }
     },
 }

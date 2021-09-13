@@ -21,12 +21,23 @@ class LikedSongController extends Controller
 
     public function add(Request $request)
     {
-        $likedSong = new LikedSong();
-        $likedSong->userId = Auth::user()->id;
-        $likedSong->songId = $request->id;
+        $userId = Auth::user()->id;
+        $songId = $request->id;
+        $existingLike = LikedSong::where('userId', Auth::user()->id)->where('songId', $songId)->first();
 
-        $likedSong->save();
+        if(!$existingLike){
+            $likedSong = new LikedSong();
+            $likedSong->userId = $userId;
+            $likedSong->songId = $songId;
+    
+            $likedSong->save();
+    
+            return response()->json(['msg' => 'Song successfully added to your liked songs']);
+        }
 
-        return response()->json(['msg' => 'Song successfully added to your liked songs']);
+        $existingLike->delete();
+
+        return response()->json(['msg' => 'Song has been removed']);
+
     }
 }

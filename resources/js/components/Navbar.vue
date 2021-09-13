@@ -61,7 +61,7 @@
                                 >Artists</router-link
                             >
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="store.state.username">
                             <router-link to="/liked" class="nav-link" href="#"
                                 >Liked Songs</router-link
                             >

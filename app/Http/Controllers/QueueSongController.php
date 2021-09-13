@@ -75,7 +75,15 @@ class QueueSongController extends Controller
     }
 
     public function add(Request $request){
-        $user = Auth::user()->id;
+        if(Auth::check()){
+            $user = Auth::user()->id;
+
+            if(RuleController::SpamProtection()){
+                if(SongHistoryController::userCooldown($user)){
+                    return response()->json(['message'=>'You can\'t put any more songs into the queue because you put more than 15 songs into it in the last 30 minutes']);
+                }
+            }
+        }
 
         if(RuleController::SameSong()){
             if(SongHistoryController::songCooldown($request->input('song'))){
@@ -88,11 +96,6 @@ class QueueSongController extends Controller
             }
         }
 
-        if(RuleController::SpamProtection()){
-            if(SongHistoryController::userCooldown($user)){
-                return response()->json(['message'=>'You can\'t put any more songs into the queue because you put more than 15 songs into it in the last 30 minutes']);
-            }
-        }
 
         if($lastQueueOrder = QueueSong::max('order')){
             $newOrderNumber = $lastQueueOrder + 10;
@@ -103,7 +106,9 @@ class QueueSongController extends Controller
         $newQueueSong = new QueueSong();
         $newQueueSong->songNumber = $request->input('song');
         $newQueueSong->order = $newOrderNumber;
-        $newQueueSong->addedBy = $user;
+        if(Auth::check()) {
+            $newQueueSong->addedBy = $user;
+        }
         
         $newQueueSong->save();
 
