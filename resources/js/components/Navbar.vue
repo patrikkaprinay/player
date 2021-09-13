@@ -66,6 +66,11 @@
                                 >Liked Songs</router-link
                             >
                         </li>
+                        <li class="nav-item">
+                            <router-link to="/history" class="nav-link" href="#"
+                                >Song History</router-link
+                            >
+                        </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li

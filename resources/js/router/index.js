@@ -13,6 +13,7 @@ import Artist from '../views/Artist.vue'
 import QueueSettings from '../views/QueueSettings.vue'
 import LikedSongs from '../views/LikedSongs.vue'
 import Album from '../views/Album.vue'
+import History from '../views/History.vue'
 
 import axios from 'axios'
 
@@ -102,6 +103,11 @@ const routes = [
         path: '/album/:name',
         name: 'Album',
         component: Album,
+    },
+    {
+        path: '/history',
+        name: 'History',
+        component: History,
     },
 ]
 
