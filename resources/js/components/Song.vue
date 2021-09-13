@@ -76,6 +76,7 @@ export default {
                     store.dispatch('firstQueueSong')
                     setTimeout(() => {
                         store.commit('playMusic')
+                        console.log('playing song')
                     }, 100)
                 })
             }

@@ -52,7 +52,7 @@ export default createStore({
         playMusic(state) {
             state.player.play()
             state.playing = true
-            //console.log('Playing music')
+            console.log(state.player.src)
         },
         stopMusic(state) {
             state.player.pause()

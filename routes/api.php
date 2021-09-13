@@ -25,8 +25,6 @@ Route::get('songs', [SongController::class, 'index']);
 
 Route::post('add/song', [SongController::class, 'add']);
 
-Route::get('artist/{id}/songs', [ArtistController::class, 'allSongs']);
-
 //Queue
 Route::get('queue', [QueueSongController::class, 'index']);
 
@@ -52,6 +50,12 @@ Route::post('add/artist', [ArtistController ::class, 'add']);
 Route::post('artists/search', [ArtistController::class, 'search']);
 
 Route::post('artists/searchId', [ArtistController::class, 'searchId']);
+
+Route::get('artist/{id}/songs', [ArtistController::class, 'allSongs']);
+
+//Route::get('artist/{id}/albums', [ArtistController::class, 'allAlbums']);
+
+Route::get('artist/{id}/all', [ArtistController::class, 'all']);
 
 //Albums
 Route::post('albums/search', [AlbumController::class, 'search']);

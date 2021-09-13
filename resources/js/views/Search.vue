@@ -9,8 +9,8 @@
         <div class="">
             <div v-for="song in songs" :key="song.id" class="queueSong">
                 <Song :song="song" />
-                <!-- 
-                <div
+
+                <!-- <div
                     class="songComplication me-2"
                     v-if="
                         store.state.currentlyPlaying.id != song.id ||
@@ -147,7 +147,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .queueSong {
     width: 100%;
     margin-bottom: 16px;

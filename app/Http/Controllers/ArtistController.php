@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
 use Illuminate\Http\Request;
@@ -89,6 +90,33 @@ class ArtistController extends Controller
 
     public function allSongs($id)
     {
-        return Song::where('artist', $id)->get();
+        $songs = Song::where('artist', $id)->get();
+
+        foreach($songs as $song){
+            $artist = Artist::where('id', $song->artist)->first();
+            $song['artist'] = $artist;
+
+            $album = Album::where('id', $song->album)->first();
+            $song['album'] = $album;
+        }
+
+        return $songs;
+    }
+
+    public function all($id)
+    {
+        $songs = Song::where('artist', $id)->get();
+
+        foreach($songs as $song){
+            $artist = Artist::where('id', $song->artist)->first();
+            $song['artist'] = $artist;
+
+            $album = Album::where('id', $song->album)->first();
+            $song['album'] = $album;
+        }
+
+        $albums = Album::where('artist', $id)->get();
+
+        return response()->json(['songs'=>$songs, 'albums'=>$albums]);
     }
 }

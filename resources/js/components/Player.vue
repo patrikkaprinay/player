@@ -149,7 +149,7 @@ export default {
         }
 
         const updateVolume = () => {
-            const newVolume = state.volume / 100 / 2
+            const newVolume = state.volume / 100
             store.state.player.volume = newVolume
             store.commit('unMute')
             document.cookie = 'volume=' + newVolume + '; SameSite=Lax;'
