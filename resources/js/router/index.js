@@ -11,6 +11,7 @@ import AddAlbum from '../views/AddAlbum.vue'
 import Artists from '../views/Artists.vue'
 import Artist from '../views/Artist.vue'
 import QueueSettings from '../views/QueueSettings.vue'
+import LikedSongs from '../views/LikedSongs.vue'
 
 import axios from 'axios'
 
@@ -90,6 +91,11 @@ const routes = [
         path: '/queue-settings',
         name: 'QueueSettings',
         component: QueueSettings,
+    },
+    {
+        path: '/liked',
+        name: 'LikedSongs',
+        component: LikedSongs,
     },
 ]
 

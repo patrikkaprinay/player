@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAddedbyColumn extends Migration
+class CreateLikedSongsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddAddedbyColumn extends Migration
      */
     public function up()
     {
-        Schema::table('song_histories', function (Blueprint $table){
-            $table->integer('addedBy')->nullable();
+        Schema::create('liked_songs', function (Blueprint $table) {
+            $table->id();
+            $table->integer('userId');
+            $table->integer('songId');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +28,6 @@ class AddAddedbyColumn extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('liked_songs');
     }
 }

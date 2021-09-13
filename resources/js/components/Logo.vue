@@ -1,6 +1,6 @@
 <template>
     L
-    <img class="logo" src="the-v.png" style="" />
+    <img class="logo" src="next-logo.svg" />
     NP
 </template>
 

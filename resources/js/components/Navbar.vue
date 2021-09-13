@@ -61,6 +61,11 @@
                                 >Artists</router-link
                             >
                         </li>
+                        <li class="nav-item">
+                            <router-link to="/liked" class="nav-link" href="#"
+                                >Liked Songs</router-link
+                            >
+                        </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li

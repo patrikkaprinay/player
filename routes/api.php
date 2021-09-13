@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\LikedSongController;
 use App\Http\Controllers\QueueSongController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\SongHistoryController;
+use App\Models\LikedSong;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,11 @@ Route::get('loggedin', function (){
 Route::get('songs', [SongController::class, 'index']);
 
 Route::post('add/song', [SongController::class, 'add']);
+
+// Liked Songs
+Route::get('songs/liked', [LikedSongController::class, 'index']);
+
+Route::post('songs/liked', [LikedSongController::class, 'add']);
 
 //Queue
 Route::get('queue', [QueueSongController::class, 'index']);
@@ -64,9 +71,12 @@ Route::post('add/album', [AlbumController::class, 'add']);
 
 //Rules
 Route::get('rules', [RuleController::class, 'index']);
+
 Route::post('rule', [RuleController::class, 'changeRuleStatus']);
+
 Route::get('artistCooldown', [SongHistoryController::class, 'artistCooldown']);
 
 //Song History
 Route::get('history', [SongHistoryController::class, 'index']);
+
 Route::post('history', [SongHistoryController::class, 'add']);

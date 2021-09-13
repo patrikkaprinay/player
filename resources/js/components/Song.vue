@@ -33,7 +33,7 @@
         <div class="songComplication me-1" @click="addToQueue(song.id)">
             <i class="bi bi-list-nested songComplicationIcon"></i>
         </div>
-        <div class="songComplication">
+        <div class="songComplication" @click="likeSong(song.id)">
             <i class="bi bi-heart songComplicationIcon"></i>
             <i class="bi bi-heart-fill d-none"></i>
         </div>
@@ -90,11 +90,22 @@ export default {
                 .replace(' ', '-')
         }
 
+        const likeSong = (id) => {
+            axios
+                .post('/api/songs/liked', {
+                    id: id,
+                })
+                .then((response) => {
+                    console.log(response)
+                })
+        }
+
         return {
             store,
             addToQueue,
             playNow,
             nice,
+            likeSong,
         }
     },
 }

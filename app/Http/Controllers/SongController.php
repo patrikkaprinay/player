@@ -11,18 +11,30 @@ use Illuminate\Support\Facades\Storage;
 
 class SongController extends Controller
 {
-    public function index(){
-        $songs = Song::all();
-
-        foreach($songs as $song){
-            $artist = Artist::where('id', $song->artist)->first();
-            $song['artist'] = $artist;
-
-            $album = Album::where('id', $song->album)->first();
-            $song['album'] = $album;
+    public static function index($songId = 0){
+        if($songId == 0){
+            $songs = Song::all();
+        
+            foreach($songs as $song){
+                $artist = Artist::where('id', $song->artist)->first();
+                $song['artist'] = $artist;
+    
+                $album = Album::where('id', $song->album)->first();
+                $song['album'] = $album;
+            }
+            return $songs;
         }
 
-        return $songs;
+        $song = Song::find($songId);
+        
+        $artist = Artist::where('id', $song->artist)->first();
+        $song['artist'] = $artist;
+
+        $album = Album::where('id', $song->album)->first();
+        $song['album'] = $album;
+        
+        return $song;
+
     }
 
     public function add(Request $request){
