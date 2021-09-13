@@ -21,7 +21,17 @@
         alt=""
     />
     <div class="me-3">
-        <p class="mb-0" style="font-size: 22px">{{ song.name }}</p>
+        <router-link
+            :to="`/album/` + nice(song.album.name)"
+            class="mb-0"
+            style="
+                font-size: 22px;
+                display: block;
+                color: black;
+                text-decoration: none;
+            "
+            >{{ song.name }}</router-link
+        >
         <router-link
             :to="`/artist/` + nice(song.artist.name)"
             class="mb-0"

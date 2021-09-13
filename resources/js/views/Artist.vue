@@ -1,6 +1,17 @@
 <template>
     <div class="container" v-if="isLoaded">
-        <div class="d-flex align-items-end w-75 mx-auto pt-5 contentOnSite">
+        <div
+            class="
+                d-flex
+                align-items-end
+                mx-auto
+                pt-5
+                pb-4
+                px-4
+                mb-3
+                contentOnSite
+            "
+        >
             <img
                 :src="artist.image_path"
                 class="artistImage"
@@ -18,7 +29,10 @@
                 </h1>
             </div>
         </div>
-        <div v-if="songs">
+        <div v-if="songs.length == 0 && albums.length == 0" class="mt-5">
+            <p>This user doesn't seem to appear in any music or album.</p>
+        </div>
+        <div v-if="songs.length != 0">
             <!-- {{ songs }} -->
             <h2 class="artistTitle">Songs</h2>
             <div v-for="song in songs" :key="song.id">
@@ -27,11 +41,11 @@
                 </div>
             </div>
         </div>
-        <div v-if="albums" style="margin-top: 50px">
+        <div v-if="albums.length != 0" style="margin-top: 50px">
             <h2 class="artistTitle">Albums</h2>
             <div class="albums">
                 <div v-for="album in albums" :key="album.id">
-                    <router-link to="albumneve" href="#">
+                    <router-link :to="`/album/` + nice(album.name)" href="#">
                         <img
                             :src="album.artwork_path"
                             alt="Album Artwork"
@@ -106,11 +120,20 @@ export default {
             return date.substring(0, 4)
         }
 
+        const nice = (name) => {
+            return name
+                .normalize('NFD')
+                .replace(/\p{Diacritic}/gu, '')
+                .toLowerCase()
+                .replace(' ', '-')
+        }
+
         return {
             ...toRefs(state),
             route,
             artistImage,
             albumDate,
+            nice,
         }
     },
 }

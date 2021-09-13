@@ -12,6 +12,7 @@ import Artists from '../views/Artists.vue'
 import Artist from '../views/Artist.vue'
 import QueueSettings from '../views/QueueSettings.vue'
 import LikedSongs from '../views/LikedSongs.vue'
+import Album from '../views/Album.vue'
 
 import axios from 'axios'
 
@@ -96,6 +97,11 @@ const routes = [
         path: '/liked',
         name: 'LikedSongs',
         component: LikedSongs,
+    },
+    {
+        path: '/album/:name',
+        name: 'Album',
+        component: Album,
     },
 ]
 

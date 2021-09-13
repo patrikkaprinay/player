@@ -28,13 +28,18 @@ class QueueSongController extends Controller
             $song['album'] = $album;
 
             if($song->addedBy){
-                $user = $song->addedBy();
-                $song['addedBy'] = $user;
+                $song['addedBy'] = $song->addedBy();
             }
 
             $addedby = $oneSong->addedBy;
-            $user = User::find($addedby);
-            $oneSong->addedBy = $user;
+            if($addedby != 0){
+                $user = User::find($addedby);
+                $oneSong->addedBy = $user;
+            } else {
+                $oneSong->addedBy = (object) [
+                    'name' => 'Guest'
+                ];
+            }
         }
 
         return $queue;
@@ -75,6 +80,7 @@ class QueueSongController extends Controller
     }
 
     public function add(Request $request){
+        
         if(Auth::check()){
             $user = Auth::user()->id;
 
@@ -108,6 +114,8 @@ class QueueSongController extends Controller
         $newQueueSong->order = $newOrderNumber;
         if(Auth::check()) {
             $newQueueSong->addedBy = $user;
+        } else {
+            $newQueueSong->addedBy = 0;
         }
         
         $newQueueSong->save();
