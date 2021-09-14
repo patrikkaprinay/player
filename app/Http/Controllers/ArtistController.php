@@ -64,7 +64,7 @@ class ArtistController extends Controller
             }
 
         } else{
-            return response()->json(['msg'=>'Artist already exists']);
+            return response()->json(['msg'=>'Artist already exists x']);
         }
     }
 
