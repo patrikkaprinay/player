@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Artist;
-
+use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -102,5 +102,16 @@ class AlbumController extends Controller
         } else{
             return response()->json(['msg'=>'Album already exists']);
         }        
+    }
+
+    public function getAlbum(Request $request)
+    {
+        $album = Album::where('name', $request->album)->first();
+        $songs = SongController::fromAlbum($album->id);
+
+        return response()->json([
+            'album' => $album,
+            'songs' => $songs
+        ]);
     }
 }

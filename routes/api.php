@@ -67,6 +67,8 @@ Route::get('artist/{id}/all', [ArtistController::class, 'all']);
 //Albums
 Route::post('albums/search', [AlbumController::class, 'search']);
 
+Route::post('album/getAlbum', [AlbumController::class, 'getAlbum']);
+
 Route::post('add/album', [AlbumController::class, 'add']);
 
 //Rules

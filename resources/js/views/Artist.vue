@@ -33,7 +33,6 @@
             <p>This user doesn't seem to appear in any music or album.</p>
         </div>
         <div v-if="songs.length != 0">
-            <!-- {{ songs }} -->
             <h2 class="artistTitle">Songs</h2>
             <div v-for="song in songs" :key="song.id">
                 <div class="queueSong mt-4">

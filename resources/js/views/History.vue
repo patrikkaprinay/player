@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div style="margin-bottom: 120px">
-            <h2>History</h2>
+            <h2 class="my-3">History</h2>
             <div v-for="song in songs" :key="song.id" class="queueSong">
                 <Song :song="song.song" :when="song.when" />
             </div>

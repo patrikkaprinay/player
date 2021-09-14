@@ -1,4 +1,7 @@
 <template>
+    <div class="numberOrder" v-if="song.order">
+        {{ song.order }}
+    </div>
     <div
         class="songComplication me-2"
         v-if="
@@ -158,5 +161,16 @@ export default {
 .songComplicationIcon {
     width: 16px;
     height: 20px;
+}
+
+.numberOrder {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transition-duration: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
 }
 </style>

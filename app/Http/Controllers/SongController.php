@@ -126,4 +126,25 @@ class SongController extends Controller
             }
         }
     }
+
+    public static function fromAlbum($albumId)
+    {
+        $songs = Song::where('album', $albumId)->orderBy('id', 'asc')->get();
+            $order = 1;
+            foreach($songs as $song){
+                $song['order'] = $order;
+                $artist = Artist::where('id', $song->artist)->first();
+                $song['artist'] = $artist;
+    
+                $album = Album::where('id', $song->album)->first();
+                $song['album'] = $album;
+
+                if(Auth::check()){
+                    $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $song->id)->first() ? true : false;
+                    $song['liked'] = $liked;
+                }
+                $order++;
+            }
+            return $songs;
+    }
 }

@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <h2 class="my-3">Artists</h2>
         <div class="row row-cols-6">
             <div v-for="artist in artists" :key="artist.id" class="col mt-3">
                 <router-link
