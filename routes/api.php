@@ -7,7 +7,8 @@ use App\Http\Controllers\QueueSongController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\SongHistoryController;
-use App\Models\LikedSong;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\TagEntriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -86,3 +87,13 @@ Route::post('history', [SongHistoryController::class, 'add']);
 Route::get('history/last', [SongHistoryController::class, 'last']);
 
 Route::get('history/songs', [SongHistoryController::class, 'lastFew']);
+
+//Tag Entries
+Route::get('tags/{id}', [TagEntriesController::class, 'index']);
+
+Route::post('tag-entry', [TagEntriesController::class, 'add']);
+
+// Tags
+Route::get('tags', [TagController::class, 'index']);
+
+Route::post('add/tags', [TagController::class, 'add']);

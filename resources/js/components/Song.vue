@@ -39,8 +39,8 @@
             :to="`/artist/` + nice(song.artist.name)"
             class="mb-0"
             style="color: black; text-decoration: none"
-            >{{ song.artist.name }}</router-link
-        >
+            >{{ song.artist.name }}
+        </router-link>
         <p class="mb-0" style="color: grey" v-if="when">{{ when }}</p>
     </div>
     <div class="ms-auto me-3 d-flex justify-content-center align-items-center">
@@ -58,6 +58,29 @@
                 style="margin-bottom: -3px"
                 v-if="liked"
             ></i>
+        </div>
+        <div class="songComplication" @click="clickDropdown">
+            <div class="">
+                <p
+                    class="mb-0"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                >
+                    <i class="bi bi-three-dots"></i>
+                </p>
+                <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuClickableInside"
+                >
+                    <li v-for="tag in store.state.tags" :key="tag.id">
+                        <label class="dropdown-item">
+                            <input type="checkbox" name="" id="" />
+                            {{ tag.name }}
+                        </label>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -137,12 +160,22 @@ export default {
             playNow,
             nice,
             favoriteSong,
+            store,
         }
     },
 }
 </script>
 
 <style scoped>
+label:hover {
+    cursor: pointer;
+    user-select: none;
+}
+
+.songComplication:not(:last-child) {
+    margin-right: 0.25rem;
+}
+
 .songComplication {
     border-radius: 50%;
     width: 40px;

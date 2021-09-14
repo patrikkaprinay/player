@@ -24,6 +24,7 @@ export default {
         this.$store.dispatch('amILoggedin')
         this.$store.dispatch('getToQueue')
         this.$store.dispatch('firstQueueSong')
+        this.$store.dispatch('getTags')
     },
     setup() {
         return {}

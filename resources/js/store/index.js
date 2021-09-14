@@ -25,8 +25,12 @@ export default createStore({
             text: '',
             status: 0,
         },
+        tags: [],
     },
     mutations: {
+        setTags(state, payload) {
+            state.tags = payload
+        },
         mute(state) {
             state.player.muted = true
             state.muted = true
@@ -159,6 +163,11 @@ export default createStore({
         },
         clearQueue({ commit }) {
             axios.post('/api/queue/clear').then(commit('clearQueue'))
+        },
+        getTags({ commit }) {
+            axios
+                .get('/api/tags')
+                .then((response) => commit('setTags', response.data))
         },
     },
     modules: {},
