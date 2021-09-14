@@ -38,6 +38,7 @@
             style="color: black; text-decoration: none"
             >{{ song.artist.name }}</router-link
         >
+        <p class="mb-0" style="color: grey" v-if="when">{{ when }}</p>
     </div>
     <div class="ms-auto me-3 d-flex justify-content-center align-items-center">
         <div class="songComplication me-1" @click="addToQueue(song.id)">
@@ -63,7 +64,7 @@ import { useStore } from 'vuex'
 import { reactive, toRefs } from 'vue'
 
 export default {
-    props: ['song'],
+    props: ['song', 'when'],
     setup(props) {
         const store = useStore()
 
@@ -114,6 +115,7 @@ export default {
         }
 
         const favoriteSong = (id) => {
+            console.log('favorite pressed')
             axios
                 .post('/api/songs/liked', {
                     id: id,
@@ -122,6 +124,7 @@ export default {
                     console.log(response)
                 })
             state.liked = !state.liked
+            console.log('favorite ended')
         }
 
         return {

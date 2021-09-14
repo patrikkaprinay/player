@@ -1,8 +1,10 @@
 <template>
-    <div class="container my-2">
-        <h2>History</h2>
-        <div v-for="song in songs" :key="song.id" class="queueSongs">
-            <Song :song="song" />
+    <div class="container">
+        <div style="margin-bottom: 120px">
+            <h2>History</h2>
+            <div v-for="song in songs" :key="song.id" class="queueSong">
+                <Song :song="song.song" :when="song.when" />
+            </div>
         </div>
     </div>
 </template>
@@ -17,8 +19,9 @@ export default {
             songs: [],
         })
 
-        axios.get('/api/history').then((response) => {
+        axios.get('/api/history/songs').then((response) => {
             store.songs = response.data
+            console.log(response)
         })
         return {
             ...toRefs(store),

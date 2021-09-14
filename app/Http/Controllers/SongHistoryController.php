@@ -100,4 +100,15 @@ class SongHistoryController extends Controller
 
         return $song;
     }
+
+    public function lastFew()
+    {
+        $history = SongHistory::latest()->take(30)->get();
+
+        foreach ($history as $song) {
+            $song['song'] = SongController::index($song->songId);
+            $song['when'] = Carbon::createFromTimeString($song->created_at)->diffForHumans();
+        }
+        return $history;
+    }
 }
