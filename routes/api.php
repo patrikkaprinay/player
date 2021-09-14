@@ -97,3 +97,5 @@ Route::post('tag-entry', [TagEntriesController::class, 'add']);
 Route::get('tags', [TagController::class, 'index']);
 
 Route::post('add/tags', [TagController::class, 'add']);
+
+Route::post('tag', [TagController::class, 'delete']);

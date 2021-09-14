@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Models\TagEntries;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -21,5 +22,19 @@ class TagController extends Controller
         $newTag->save();
         
         return $newTag;
+    }
+
+    public function delete(Request $request)
+    {
+        $tag = Tag::find($request->tagId);
+        $tag->delete();
+
+        $entries = TagEntries::where('tagId', $request->tagId)->get();
+
+        if(count($entries) > 0){
+            $entries->delete();
+        }
+
+        return 'Successfully deleted';
     }
 }

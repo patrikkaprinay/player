@@ -118,6 +118,14 @@
                                     >
                                 </li>
                                 <li v-if="store.state.loggedin">
+                                    <router-link
+                                        to="/tags"
+                                        class="dropdown-item"
+                                        href="#"
+                                        >Tags</router-link
+                                    >
+                                </li>
+                                <li v-if="store.state.loggedin">
                                     <a
                                         class="dropdown-item"
                                         href="#"
