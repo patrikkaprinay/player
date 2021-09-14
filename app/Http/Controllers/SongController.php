@@ -41,7 +41,7 @@ class SongController extends Controller
         $song['album'] = $album;
 
         if(Auth::check()){
-            $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $songId) ? true : false;
+            $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $songId)->first() ? true : false;
             $song['liked'] = $liked;
         }
         
