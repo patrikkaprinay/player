@@ -21,7 +21,6 @@ export default {
 
         axios.get('/api/history/songs').then((response) => {
             store.songs = response.data
-            console.log(response)
         })
         return {
             ...toRefs(store),

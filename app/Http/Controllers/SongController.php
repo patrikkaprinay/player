@@ -6,6 +6,7 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\LikedSong;
 use App\Models\Song;
+use App\Models\TagEntries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -24,6 +25,9 @@ class SongController extends Controller
                 $album = Album::where('id', $song->album)->first();
                 $song['album'] = $album;
 
+                $tags = TagEntriesController::index($song->id);
+                $song['tags'] = $tags;
+
                 if(Auth::check()){
                     $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $song->id)->first() ? true : false;
                     $song['liked'] = $liked;
@@ -39,6 +43,9 @@ class SongController extends Controller
 
         $album = Album::where('id', $song->album)->first();
         $song['album'] = $album;
+
+        $tags = TagEntriesController::index($song->id);
+        $song['tags'] = $tags;
 
         if(Auth::check()){
             $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $songId)->first() ? true : false;

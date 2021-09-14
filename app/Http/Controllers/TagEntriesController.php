@@ -24,6 +24,11 @@ class TagEntriesController extends Controller
 
     public function add(Request $request)
     {
+        if($existingEntry = TagEntries::where('songId', $request->songId)->where('tagId', $request->tagId)->first()){
+            $existingEntry->delete();
+            return 'Entry has been deleted';
+        }
+
         $newTagEntry = new TagEntries();
         $newTagEntry->songId = $request->songId;
         $newTagEntry->tagId = $request->tagId;

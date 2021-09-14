@@ -60,7 +60,7 @@
             ></i>
         </div>
         <div class="songComplication" @click="clickDropdown">
-            <div class="">
+            <div>
                 <p
                     class="mb-0"
                     data-bs-toggle="dropdown"
@@ -74,8 +74,16 @@
                     aria-labelledby="dropdownMenuClickableInside"
                 >
                     <li v-for="tag in store.state.tags" :key="tag.id">
-                        <label class="dropdown-item">
-                            <input type="checkbox" name="" id="" />
+                        <label
+                            class="dropdown-item"
+                            style="text-transform: capitalize"
+                        >
+                            <input
+                                type="checkbox"
+                                class="me-2"
+                                :checked="song.tags[tag.id]"
+                                @click="changeTag(tag.id, song.id)"
+                            />
                             {{ tag.name }}
                         </label>
                     </li>
@@ -97,6 +105,16 @@ export default {
         const state = reactive({
             liked: props.song.liked,
         })
+
+        const changeTag = (t, s) => {
+            console.log(t + ` ` + s)
+            axios
+                .post('/api/tag-entry', {
+                    songId: s,
+                    tagId: t,
+                })
+                .then((response) => console.log(response))
+        }
 
         const addToQueue = (song) => {
             let notificationText = 'Added to queue'
@@ -161,6 +179,8 @@ export default {
             nice,
             favoriteSong,
             store,
+
+            changeTag,
         }
     },
 }
