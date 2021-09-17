@@ -44,25 +44,20 @@
             <h2 class="artistTitle">Albums</h2>
             <div class="albums">
                 <div v-for="album in albums" :key="album.id">
-                    <router-link :to="`/album/` + nice(album.name)" href="#">
+                    <router-link
+                        :to="`/album/` + nice(album.name)"
+                        href="#"
+                        style="text-decoration: none"
+                    >
                         <img
                             :src="album.artwork_path"
                             alt="Album Artwork"
                             style="width: 250px"
                         />
-                        <p
-                            class="mb-0 h5 mt-1"
-                            style="color: black; text-decoration: none"
-                        >
+                        <p class="mb-0 h5 mt-1" style="color: #dbdbdb">
                             {{ album.name }}
                         </p>
-                        <p
-                            style="
-                                font-size: 14px;
-                                color: black;
-                                text-decoration: none;
-                            "
-                        >
+                        <p style="font-size: 14px; color: #dbdbdb">
                             {{ albumDate(album.published) }}
                         </p>
                     </router-link>
@@ -144,8 +139,10 @@ export default {
 }
 
 .contentOnSite {
-    background: rgb(224, 224, 224);
+    background: #3a3a3a;
     padding: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .artistTitle {

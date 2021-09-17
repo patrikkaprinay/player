@@ -10,11 +10,14 @@
                         class="me-4"
                         style="color: black"
                     >
-                        <i class="bi bi-gear-fill" style="font-size: 18px"></i>
+                        <i
+                            class="bi bi-gear-fill"
+                            style="filter: invert(1)"
+                        ></i>
                     </router-link>
                     <button
                         @click="store.dispatch('clearQueue')"
-                        class="btn btn-primary"
+                        class="btn btn-dark"
                     >
                         Clear queue
                     </button>
@@ -84,6 +87,7 @@
                 </div>
             </div>
         </div>
+        <!-- {{ queue }} -->
     </div>
 </template>
 
@@ -120,6 +124,6 @@ export default {
 <style scoped>
 .queueSong {
     padding: 10px;
-    background: rgb(219, 219, 219);
+    background: #444444;
 }
 </style>

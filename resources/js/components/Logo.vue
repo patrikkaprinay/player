@@ -17,5 +17,6 @@ export default {
     width: 25px;
     margin-left: -5px;
     margin-right: -7px;
+    filter: invert(1);
 }
 </style>

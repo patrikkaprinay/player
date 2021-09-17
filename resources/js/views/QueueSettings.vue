@@ -8,7 +8,7 @@
                 id="samesong"
                 @change="changeSetting(1)"
                 :checked="rules[0]"
-                :disabled="!store.state.loggedin"
+                :disabled="store.state.role != 1"
             />
             <div>
                 <label class="form-check-label me-2" for="samesong"
@@ -29,7 +29,7 @@
                 id="sameartist"
                 @change="changeSetting(2)"
                 :checked="rules[1]"
-                :disabled="!store.state.loggedin"
+                :disabled="store.state.role != 1"
             />
             <div>
                 <label class="form-check-label me-2" for="sameartist"
@@ -50,7 +50,7 @@
                 id="cooldownuser"
                 @change="changeSetting(3)"
                 :checked="rules[2]"
-                :disabled="!store.state.loggedin"
+                :disabled="store.state.role != 1"
             />
             <div>
                 <label class="form-check-label me-2" for="cooldownuser"
@@ -72,7 +72,7 @@
                 id="fillqueue"
                 @change="changeSetting(4)"
                 :checked="rules[3]"
-                :disabled="!store.state.loggedin"
+                :disabled="store.state.role != 1"
             />
             <div>
                 <label class="form-check-label me-2" for="fillqueue"
@@ -94,7 +94,7 @@
                 id="autodj"
                 @change="changeSetting(5)"
                 :checked="rules[4]"
-                :disabled="!store.state.loggedin"
+                :disabled="store.state.role != 1"
             />
             <div>
                 <label class="form-check-label me-2" for="autodj"

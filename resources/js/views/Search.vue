@@ -100,7 +100,7 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    background: #eaeaea;
+    background: #444444;
     border-radius: 7px;
     transition-duration: 0.2s;
 }

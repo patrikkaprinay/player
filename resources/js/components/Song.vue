@@ -30,15 +30,15 @@
             style="
                 font-size: 22px;
                 display: block;
-                color: black;
                 text-decoration: none;
+                color: #dbdbdb;
             "
             >{{ song.name }}</router-link
         >
         <router-link
             :to="`/artist/` + nice(song.artist.name)"
             class="mb-0"
-            style="color: black; text-decoration: none"
+            style="color: #dbdbdb; text-decoration: none"
             >{{ song.artist.name }}
         </router-link>
         <div class="tagContainer" v-if="song.tags && !props.showTag">
@@ -230,7 +230,7 @@ export default {
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    border: 1px solid rgb(167, 167, 167);
+    border: 1px solid rgb(32, 32, 32);
     margin-right: 5px;
 }
 
@@ -260,7 +260,7 @@ label:hover {
 }
 
 .songComplication:hover {
-    background: #dbdbdb;
+    background: #3a3a3a;
     cursor: pointer;
 }
 

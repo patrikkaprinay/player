@@ -67,6 +67,16 @@ export default {
     padding: 7px 10px;
 }
 
+a {
+    color: grey;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(151, 151, 151);
+    text-decoration: underline;
+}
+
 .loginIsland {
     display: flex;
     justify-content: center;
@@ -74,7 +84,7 @@ export default {
     flex-direction: column;
     width: 400px;
     margin-top: 30px;
-    background: rgb(214, 214, 214);
+    background: #444;
     padding: 15px;
     border-radius: 20px;
 }

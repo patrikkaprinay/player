@@ -68,7 +68,7 @@ export default {
     width: 200px;
     min-height: 70px;
     height: 70px;
-    background: rgb(211, 211, 211);
+    background: #444444;
     border-radius: 10px;
 }
 

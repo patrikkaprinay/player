@@ -37,6 +37,10 @@ body,
 html {
     margin: 0;
     height: 100%;
+    color: white;
+}
+a {
+    color: white;
 }
 * {
     box-sizing: border-box;
@@ -55,6 +59,7 @@ html {
     position: relative;
     overflow-x: hidden;
     height: 100%;
+    background: #171a1d;
 }
 
 #app {

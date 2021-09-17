@@ -24,7 +24,7 @@
                         "
                         alt=""
                     />
-                    <p>{{ artist.name }}</p>
+                    <p style="color: #dbdbdb">{{ artist.name }}</p>
                 </router-link>
             </div>
         </div>

@@ -1,17 +1,6 @@
 <template>
     <div>
-        <!-- <div
-            class="navbar"
-            style="display: flex; justify-content: space-between; width: 30%"
-        >
-            <router-link to="/" href="#">Home</router-link>
-            <router-link to="/search" href="#">Search</router-link>
-            <router-link v-if="!store.state.loggedin" to="/login" href="#"
-                >Login</router-link
-            >
-            <a href="#" v-if="store.state.loggedin" @click="logOut">Log out</a>
-        </div> -->
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
                 <router-link
                     to="/"
@@ -116,12 +105,7 @@
                                         >Add</router-link
                                     >
                                 </li>
-                                <li v-if="!store.state.loggedin">
-                                    <router-link href="#" to="/login"
-                                        >Login</router-link
-                                    >
-                                </li>
-                                <li>
+                                <li v-if="store.state.role == 1">
                                     <router-link
                                         to="/queue-settings"
                                         class="dropdown-item"
@@ -129,7 +113,7 @@
                                         >Queue Settings</router-link
                                     >
                                 </li>
-                                <li v-if="store.state.loggedin">
+                                <li v-if="store.state.role == 1">
                                     <router-link
                                         to="/tags"
                                         class="dropdown-item"
@@ -190,5 +174,6 @@ export default {
 <style>
 .activeNavbar {
     font-weight: 500;
+    color: rgba(255, 255, 255, 0.75) !important;
 }
 </style>

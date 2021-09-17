@@ -12,7 +12,7 @@
                     href="#"
                     :to="`/artist/` + artistnameFormatted"
                     class="mb-0"
-                    style="color: black"
+                    style="color: #dbdbdb; text-decoration: none"
                     >{{ store.state.currentlyPlaying.artist }}</router-link
                 >
             </div>
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-end align-items-center w-25">
-            <router-link to="/queue" href="#" style="color: black">
+            <router-link to="/queue" href="#">
                 <i class="bi bi-list me-3" style="font-size: 20px"></i>
             </router-link>
             <i
@@ -244,14 +244,15 @@ export default {
 <style scoped>
 .player {
     padding: 0 15px;
-    background: rgb(228, 228, 228);
+    background: #212529;
+    /* background: rgb(228, 228, 228); */
     border-radius: 10px;
     margin: 10px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 0 6px #0000001a;
+    box-shadow: 0 0 6px #00000034;
 }
 
 .music-controller {
@@ -260,6 +261,18 @@ export default {
 
 .music-controller:not(:last-child) {
     margin-right: 10px;
+}
+
+#playerSlider {
+    background: transparent;
+}
+
+#playerSlider::-moz-range-progress {
+    background-color: rgb(121, 121, 121);
+}
+
+#playerSlider::-moz-range-track {
+    background-color: rgb(216, 216, 216);
 }
 
 @media (max-width: 500px) {

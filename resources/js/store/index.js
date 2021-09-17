@@ -47,6 +47,7 @@ export default createStore({
             axios.post('/logout').then(console.log('Successfully logged out'))
             state.loggedin = false
             state.username = ''
+            state.role = 0
         },
         login(state) {
             state.loggedin = true
