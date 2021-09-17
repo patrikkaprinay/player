@@ -1,5 +1,5 @@
 <template>
-    <div style="position: relative; overflow-x: hidden">
+    <div id="mainDiv">
         <Navbar />
         <Notification />
         <router-view style="margin-bottom: 100px" />
@@ -33,8 +33,10 @@ export default {
 </script>
 
 <style>
-body {
+body,
+html {
     margin: 0;
+    height: 100%;
 }
 * {
     box-sizing: border-box;
@@ -47,5 +49,15 @@ body {
     width: 100%;
     bottom: 0;
     right: 0;
+}
+
+#mainDiv {
+    position: relative;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+#app {
+    height: 100%;
 }
 </style>

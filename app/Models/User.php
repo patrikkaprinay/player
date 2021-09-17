@@ -11,6 +11,11 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    function isAdmin()
+    {
+        return User::find($this->id)->role == 1 ? true : false;
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -76,8 +76,6 @@ Route::post('add/album', [AlbumController::class, 'add']);
 //Rules
 Route::get('rules', [RuleController::class, 'index']);
 
-Route::post('rule', [RuleController::class, 'changeRuleStatus']);
-
 Route::get('artistCooldown', [SongHistoryController::class, 'artistCooldown']);
 
 //Song History
@@ -92,13 +90,22 @@ Route::get('history/songs', [SongHistoryController::class, 'lastFew']);
 //Tag Entries
 Route::get('tags/{id}', [TagEntriesController::class, 'index']);
 
-Route::post('tag-entry', [TagEntriesController::class, 'add']);
-
-Route::post('tag/all-songs', [TagEntriesController::class, 'allSongs']);
-
 // Tags
 Route::get('tags', [TagController::class, 'index']);
 
-Route::post('add/tags', [TagController::class, 'add']);
+Route::middleware('adminApi')->group(function(){
+    //Rules
+    Route::post('rule', [RuleController::class, 'changeRuleStatus']);
 
-Route::post('tag', [TagController::class, 'delete']);
+    //Tag Entries
+    Route::post('tag-entry', [TagEntriesController::class, 'add']);
+
+    Route::post('tag/all-songs', [TagEntriesController::class, 'allSongs']);
+    
+    //Tags
+    Route::post('add/tags', [TagController::class, 'add']);
+
+    Route::post('tag', [TagController::class, 'delete']);
+});
+
+
