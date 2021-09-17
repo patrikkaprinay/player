@@ -72,7 +72,6 @@ export default {
 
         const nice = (name) => {
             return name
-                .normalize('NFD')
                 .replace(/\p{Diacritic}/gu, '')
                 .toLowerCase()
                 .replace(' ', '-')

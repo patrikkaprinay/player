@@ -49,6 +49,18 @@
                         <p class="mb-0 h5 mt-1 white-color">
                             {{ song.song.name }}
                         </p>
+                        <router-link
+                            :to="`/artist/` + nice(song.song.artist.name)"
+                            class="
+                                mb-0
+                                h5
+                                mt-1
+                                white-color-darker white-onhover
+                            "
+                            style="font-size: 18px; text-decoration: none"
+                        >
+                            {{ song.song.artist.name }}
+                        </router-link>
                     </router-link>
                 </div>
             </div>
@@ -89,10 +101,19 @@ export default {
                 }
             }
         }
+
+        const nice = (name) => {
+            return name
+                .replace(/\p{Diacritic}/gu, '')
+                .toLowerCase()
+                .replace(' ', '-')
+        }
+
         return {
             ...toRefs(state),
             goLeft,
             goRight,
+            nice,
         }
     },
 }
