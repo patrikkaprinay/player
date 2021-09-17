@@ -75,7 +75,7 @@
                 v-if="liked"
             ></i>
         </div>
-        <div class="songComplication" @click="clickDropdown">
+        <div class="songComplication">
             <div>
                 <p
                     class="mb-0"
@@ -89,19 +89,40 @@
                     class="dropdown-menu"
                     aria-labelledby="dropdownMenuClickableInside"
                 >
-                    <li v-for="tag in store.state.tags" :key="tag.id">
-                        <label
-                            class="dropdown-item"
-                            style="text-transform: capitalize"
-                        >
-                            <input
-                                type="checkbox"
-                                class="me-2"
-                                :checked="song.tags[tag.id]"
-                                @click="changeTag(tag.id, song.id)"
-                            />
-                            {{ tag.name }}
-                        </label>
+                    <li class="dropdown-item">
+                        <div class="btn-group dropstart w-100">
+                            <p
+                                class="dropdown-toggle m-0"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                data-bs-auto-close="outside"
+                                style="width: 100%"
+                            >
+                                Tags
+                            </p>
+                            <ul
+                                class="dropdown-menu"
+                                aria-labelledby="dropdownMenuClickableInside"
+                            >
+                                <li
+                                    v-for="tag in store.state.tags"
+                                    :key="tag.id"
+                                >
+                                    <label
+                                        class="dropdown-item"
+                                        style="text-transform: capitalize"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            class="me-2"
+                                            :checked="song.tags[tag.id]"
+                                            @click="changeTag(tag.id, song.id)"
+                                        />
+                                        {{ tag.name }}
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
