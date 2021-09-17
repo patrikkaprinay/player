@@ -8,62 +8,7 @@
         /> -->
         <div class="">
             <div v-for="song in songs" :key="song.id" class="queueSong">
-                <Song :song="song" />
-
-                <!-- <div
-                    class="songComplication me-2"
-                    v-if="
-                        store.state.currentlyPlaying.id != song.id ||
-                        !store.state.playing
-                    "
-                    @click="playNow(song.id)"
-                >
-                    <i class="bi bi-play" style="font-size: 22px"></i>
-                </div>
-                <div
-                    class="songComplication me-2"
-                    v-if="
-                        store.state.currentlyPlaying.id == song.id &&
-                        store.state.playing
-                    "
-                    @click="store.commit('stopMusic')"
-                >
-                    <i class="bi bi-pause" style="font-size: 22px"></i>
-                </div>
-                <img
-                    :src="song.album.artwork_path"
-                    style="width: 65px; margin-right: 30px"
-                    alt=""
-                />
-                <div class="me-3">
-                    <p class="mb-0" style="font-size: 22px">{{ song.name }}</p>
-                    <router-link
-                        :to="`/artist/` + nice(song.artist.name)"
-                        class="mb-0"
-                        style="color: black; text-decoration: none"
-                        >{{ song.artist.name }}</router-link
-                    >
-                </div>
-                <div
-                    class="
-                        ms-auto
-                        me-3
-                        d-flex
-                        justify-content-center
-                        align-items-center
-                    "
-                >
-                    <div
-                        class="songComplication me-1"
-                        @click="addToQueue(song.id)"
-                    >
-                        <i class="bi bi-list-nested songComplicationIcon"></i>
-                    </div>
-                    <div class="songComplication">
-                        <i class="bi bi-heart songComplicationIcon"></i>
-                        <i class="bi bi-heart-fill d-none"></i>
-                    </div>
-                </div> -->
+                <Song :song="song" @updateSongs="getSongs" />
             </div>
         </div>
     </div>
@@ -149,7 +94,7 @@ export default {
 
 <style>
 .queueSong {
-    width: 100%;
+    min-width: 600px;
     margin-bottom: 16px;
     padding: 15px 10px;
     display: flex;

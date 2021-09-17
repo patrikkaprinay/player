@@ -93,11 +93,7 @@ class ArtistController extends Controller
         $songs = Song::where('artist', $id)->get();
 
         foreach($songs as $song){
-            $artist = Artist::where('id', $song->artist)->first();
-            $song['artist'] = $artist;
-
-            $album = Album::where('id', $song->album)->first();
-            $song['album'] = $album;
+            $song = SongController::index($song->id);
         }
 
         return $songs;
@@ -106,17 +102,16 @@ class ArtistController extends Controller
     public function all($id)
     {
         $songs = Song::where('artist', $id)->get();
+        $alteredSongs = array();
 
         foreach($songs as $song){
-            $artist = Artist::where('id', $song->artist)->first();
-            $song['artist'] = $artist;
-
-            $album = Album::where('id', $song->album)->first();
-            $song['album'] = $album;
+            $song = SongController::index($song->id);
+            array_push($alteredSongs, $song);
         }
+
 
         $albums = Album::where('artist', $id)->get();
 
-        return response()->json(['songs'=>$songs, 'albums'=>$albums]);
+        return response()->json(['songs'=>$alteredSongs, 'albums'=>$albums]);
     }
 }

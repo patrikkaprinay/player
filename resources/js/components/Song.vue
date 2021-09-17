@@ -41,6 +41,22 @@
             style="color: black; text-decoration: none"
             >{{ song.artist.name }}
         </router-link>
+        <div class="tagContainer" v-if="song.tags">
+            <div v-for="(tag, index) in song.tags" :key="tag.id">
+                <div v-for="sTag in store.state.tags" :key="sTag.id">
+                    <router-link
+                        v-if="sTag.id == index && tag"
+                        :to="`/tags/` + sTag.name"
+                    >
+                        <div
+                            class="tagCircle"
+                            :style="`background: ` + sTag.color"
+                            :title="sTag.name"
+                        ></div>
+                    </router-link>
+                </div>
+            </div>
+        </div>
         <p class="mb-0" style="color: grey" v-if="when">{{ when }}</p>
     </div>
     <div class="ms-auto me-3 d-flex justify-content-center align-items-center">
@@ -99,7 +115,8 @@ import { reactive, toRefs } from 'vue'
 
 export default {
     props: ['song', 'when'],
-    setup(props) {
+    emits: ['updateSongs'],
+    setup(props, { emit }) {
         const store = useStore()
 
         const state = reactive({
@@ -114,6 +131,7 @@ export default {
                     tagId: t,
                 })
                 .then((response) => console.log(response))
+            emit('updateSongs')
         }
 
         const addToQueue = (song) => {
@@ -179,7 +197,6 @@ export default {
             nice,
             favoriteSong,
             store,
-
             changeTag,
         }
     },
@@ -187,6 +204,21 @@ export default {
 </script>
 
 <style scoped>
+.tagCircle {
+    margin-top: 5px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 1px solid rgb(167, 167, 167);
+    margin-right: 5px;
+}
+
+.tagContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
 label:hover {
     cursor: pointer;
     user-select: none;

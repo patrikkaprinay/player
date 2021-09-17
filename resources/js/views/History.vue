@@ -1,7 +1,15 @@
 <template>
     <div class="container">
-        <div style="margin-bottom: 120px">
-            <h2 class="my-3">History</h2>
+        <div
+            style="
+                margin-bottom: 120px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            "
+        >
+            <h2 class="my-3 w-100">History</h2>
             <div v-for="song in songs" :key="song.id" class="queueSong">
                 <Song :song="song.song" :when="song.when" />
             </div>

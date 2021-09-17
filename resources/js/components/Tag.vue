@@ -8,6 +8,7 @@
             d-flex
             justify-content-between
             align-items-center
+            rounded-3
         "
         :style="`background: ` + tag.color"
     >
@@ -19,12 +20,13 @@
 <script>
 export default {
     props: ['tag'],
-    setup(props) {
+    emits: ['on-delete'],
+    setup(props, { emit }) {
         const deleteTag = () => {
             axios.post('/api/tag', {
                 tagId: props.tag.id,
             })
-            // have to add bus to parent to refresh the tags list
+            emit('on-delete')
         }
 
         return {
