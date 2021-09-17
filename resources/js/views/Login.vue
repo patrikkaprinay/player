@@ -1,25 +1,25 @@
 <template>
     <div style="display: flex; justify-content: center">
-        <div
-            style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                width: 400px;
-                margin-top: 30px;
-            "
-        >
-            <p>Login</p>
+        <div class="loginIsland" style="">
+            <h3>Login</h3>
             <input
                 type="text"
                 v-model="user.email"
                 placeholder="Username or Email"
+                class="loginInput"
             />
-            <input type="text" v-model="user.password" placeholder="Password" />
-            <button @click="loginUser">Login</button>
-            <router-link to="/register" href="#" style="font-size: 12px"
-                >Register</router-link
+            <input
+                type="text"
+                class="loginInput"
+                v-model="user.password"
+                placeholder="Password"
+            />
+            <button class="btn btn-danger" @click="loginUser">Login</button>
+            <router-link
+                to="/register"
+                href="#"
+                style="font-size: 12px; margin-top: 7px"
+                >Don't have an account? Register</router-link
             >
         </div>
     </div>
@@ -59,4 +59,22 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.loginInput {
+    border-radius: 7px;
+    margin-block: 10px;
+    padding: 7px 10px;
+}
+
+.loginIsland {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 400px;
+    margin-top: 30px;
+    background: rgb(214, 214, 214);
+    padding: 15px;
+    border-radius: 20px;
+}
+</style>
