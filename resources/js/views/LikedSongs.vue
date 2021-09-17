@@ -1,10 +1,16 @@
 <template>
     <div class="container">
-        <h2 class="mt-2">Liked Songs</h2>
-        <div class="mx-auto mt-4" style="width: 85%">
-            <div v-for="song in liked" :key="song.id" class="queueSong">
+        <h2 class="my-3">Liked Songs</h2>
+        <div class="mx-auto mt-4">
+            <div
+                v-for="song in liked"
+                :key="song.id"
+                class="queueSong"
+                style="width: 600px; margin-inline: auto"
+            >
                 <Song :song="song.songId" @updateSongs="getSongs" />
             </div>
+            <p v-if="!liked.length">You don't have any liked songs</p>
         </div>
     </div>
 </template>
