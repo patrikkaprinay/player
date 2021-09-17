@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LikedSong;
+use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,5 +40,15 @@ class LikedSongController extends Controller
 
         return response()->json(['msg' => 'Song has been removed']);
 
+    }
+
+    public function lastFew()
+    {
+        $history = LikedSong::where('userId', Auth::user()->id)->latest()->take(8)->get();
+
+        foreach ($history as $song) {
+            $song['song'] = SongController::index($song->songId);
+        }
+        return $history;
     }
 }

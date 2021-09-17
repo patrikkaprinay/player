@@ -10,8 +10,7 @@
         >
             <p style="font-size: 25px; margin-bottom: 0">{{ topTitle }}</p>
             <div class="d-flex justify-content-center align-items-center">
-                <div class="me-3">
-                    {{ margin }}
+                <div class="me-3" v-if="songs.length > 2">
                     <i
                         class="bi bi-caret-left"
                         style="font-size: 18px; margin-right: 7px"
@@ -110,5 +109,6 @@ export default {
     justify-content: flex-start;
     align-items: center;
     gap: 12px;
+    transition: margin 500ms;
 }
 </style>

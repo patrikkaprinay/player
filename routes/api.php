@@ -32,6 +32,8 @@ Route::post('add/song', [SongController::class, 'add']);
 // Liked Songs
 Route::get('songs/liked', [LikedSongController::class, 'index']);
 
+Route::get('songs/liked/few', [LikedSongController::class, 'lastFew']);
+
 Route::post('songs/liked', [LikedSongController::class, 'add']);
 
 //Queue
