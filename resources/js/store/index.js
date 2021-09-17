@@ -136,14 +136,18 @@ export default createStore({
             commit('login')
         },
 
-        loginUser({ commit }, { user }) {
+        loginUser({ commit, dispatch }, { user }) {
             const email = user.email
             const pass = user.password
             axios.get('/sanctum/csrf-cookie').then((response) => {
-                axios.post('/login', {
-                    username: email,
-                    password: pass,
-                })
+                axios
+                    .post('/login', {
+                        username: email,
+                        password: pass,
+                    })
+                    .then(() => {
+                        dispatch('amILoggedin')
+                    })
             })
             commit('login')
         },
