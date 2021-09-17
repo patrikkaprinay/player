@@ -42,32 +42,49 @@
                     id="navbarSupportedContent"
                 >
                     <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <router-link
                                 to="/"
-                                class="nav-link active"
+                                class="nav-link"
                                 aria-current="page"
                                 href="#"
+                                active-class="activeNavbar"
                                 >Home</router-link
                             >
-                        </li> -->
+                        </li>
                         <li class="nav-item">
-                            <router-link to="/search" class="nav-link" href="#"
+                            <router-link
+                                to="/search"
+                                class="nav-link"
+                                href="#"
+                                active-class="activeNavbar"
                                 >Search</router-link
                             >
                         </li>
                         <li class="nav-item">
-                            <router-link to="/artists" class="nav-link" href="#"
+                            <router-link
+                                to="/artists"
+                                class="nav-link"
+                                href="#"
+                                active-class="activeNavbar"
                                 >Artists</router-link
                             >
                         </li>
                         <li class="nav-item" v-if="store.state.username">
-                            <router-link to="/liked" class="nav-link" href="#"
+                            <router-link
+                                to="/liked"
+                                class="nav-link"
+                                href="#"
+                                active-class="activeNavbar"
                                 >Liked Songs</router-link
                             >
                         </li>
                         <li class="nav-item">
-                            <router-link to="/history" class="nav-link" href="#"
+                            <router-link
+                                to="/history"
+                                class="nav-link"
+                                href="#"
+                                active-class="activeNavbar"
                                 >Song History</router-link
                             >
                         </li>
@@ -112,17 +129,17 @@
                                         >Queue Settings</router-link
                                     >
                                 </li>
-                                <li>
-                                    <a class="dropdown-item" href="#"
-                                        >Settings</a
-                                    >
-                                </li>
                                 <li v-if="store.state.loggedin">
                                     <router-link
                                         to="/tags"
                                         class="dropdown-item"
                                         href="#"
                                         >Tags</router-link
+                                    >
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                        >Settings</a
                                     >
                                 </li>
                                 <li v-if="store.state.loggedin">
@@ -170,4 +187,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.activeNavbar {
+    font-weight: 500;
+}
+</style>
