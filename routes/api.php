@@ -93,14 +93,14 @@ Route::get('tags/{id}', [TagEntriesController::class, 'index']);
 // Tags
 Route::get('tags', [TagController::class, 'index']);
 
+Route::post('tag/all-songs', [TagEntriesController::class, 'allSongs']);
+
 Route::middleware('adminApi')->group(function(){
     //Rules
     Route::post('rule', [RuleController::class, 'changeRuleStatus']);
 
     //Tag Entries
     Route::post('tag-entry', [TagEntriesController::class, 'add']);
-
-    Route::post('tag/all-songs', [TagEntriesController::class, 'allSongs']);
     
     //Tags
     Route::post('add/tags', [TagController::class, 'add']);

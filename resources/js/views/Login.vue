@@ -13,6 +13,7 @@
                 class="loginInput"
                 v-model="user.password"
                 placeholder="Password"
+                @keypress.enter="loginUser"
             />
             <button class="btn btn-danger" @click="loginUser">Login</button>
             <router-link
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { onMounted, reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 

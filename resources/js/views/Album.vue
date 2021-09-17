@@ -42,20 +42,18 @@
 
 <script>
 import { onMounted, reactive, toRefs } from 'vue'
-import { useRoute } from 'vue-router'
 import Song from '../components/Song.vue'
 
 export default {
     components: {
         Song,
     },
-    setup() {
-        const route = useRoute()
-
+    props: ['name'],
+    setup(props) {
         const state = reactive({
             album: [],
             songs: [],
-            name: route.params.name,
+            name: props.name,
         })
 
         state.name = state.name.replace(/-/g, ' ')

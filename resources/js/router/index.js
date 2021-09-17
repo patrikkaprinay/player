@@ -45,9 +45,6 @@ const routes = [
         path: '/search',
         name: 'Search',
         component: Search,
-        meta: {
-            requiresAuth: true,
-        },
     },
     {
         path: '/queue',
@@ -58,28 +55,25 @@ const routes = [
         path: '/add/song',
         name: 'AddSong',
         component: AddSong,
-        /*meta: {
-            requiresAuth: true,
-            is_admin: true,
-        },*/
+        meta: {
+            is_user: true,
+        },
     },
     {
         path: '/add/artist',
         name: 'AddArtist',
         component: AddArtist,
-        /*meta: {
-            requiresAuth: true,
-            is_admin: true,
-        },*/
+        meta: {
+            is_user: true,
+        },
     },
     {
         path: '/add/album',
         name: 'AddAlbum',
         component: AddAlbum,
-        /*meta: {
-            requiresAuth: true,
-            is_admin: true,
-        },*/
+        meta: {
+            is_user: true,
+        },
     },
     {
         path: '/artists',
@@ -100,11 +94,15 @@ const routes = [
         path: '/liked',
         name: 'LikedSongs',
         component: LikedSongs,
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: '/album/:name',
         name: 'Album',
         component: Album,
+        props: true,
     },
     {
         path: '/history',
@@ -115,6 +113,9 @@ const routes = [
         path: '/tags',
         name: 'Tags',
         component: Tags,
+        meta: {
+            is_admin: true,
+        },
     },
     {
         path: '/tag/:name',
@@ -130,21 +131,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (to.matched.some((record) => record.meta.is_user)) {
         axios.get('/api/loggedin').then((response) => {
-            if (response.data !== null) {
-                if (to.matched.some((record) => record.meta.is_admin)) {
-                    if (response.data.roles == 1) {
-                        next()
-                    } else {
-                        next({
-                            path: '/login',
-                            params: { nextUrl: to.fullPath },
-                        })
-                    }
-                } else {
-                    next()
-                }
+            if (response && response.data.role <= 3) {
+                next()
             } else {
                 next({
                     path: '/login',
@@ -152,9 +142,30 @@ router.beforeEach((to, from, next) => {
                 })
             }
         })
+    } else if (to.matched.some((record) => record.meta.is_admin)) {
+        axios.get('/api/loggedin').then((response) => {
+            if (response && response.data.role == 1) {
+                next()
+            } else {
+                next({
+                    path: '/login',
+                    params: { nextUrl: to.fullPath },
+                })
+            }
+        })
+    } else if (to.matched.some((record) => record.meta.requiresAuth)) {
+        axios.get('/api/loggedin').then((response) => {
+            if (!response.data) {
+                next({
+                    path: '/login',
+                    params: { nextUrl: to.fullPath },
+                })
+            } else {
+                next()
+            }
+        })
     } else if (to.matched.some((record) => record.meta.guest)) {
         axios.get('/api/loggedin').then((response) => {
-            console.log(response.data)
             if (!response.data) {
                 next()
             } else {
