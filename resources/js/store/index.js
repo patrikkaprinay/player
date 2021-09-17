@@ -116,7 +116,7 @@ export default createStore({
                 .get('/api/queue/first')
                 .then((response) => commit('updateAudioData', response.data))
         },
-        registerUser({ commit }, { user }) {
+        registerUser({ commit, dispatch }, { user }) {
             const name = user.name
             const username = user.username
             const email = user.email
@@ -124,14 +124,15 @@ export default createStore({
             const passRe = user.passwordRe
 
             axios.get('/sanctum/csrf-cookie').then((response) => {
-                axios.post('/register', {
-                    name: name,
-                    username: username,
-                    email: email,
-                    password: pass,
-                    password_confirmation: passRe,
-                })
-                //.then((response) => console.log(response))
+                axios
+                    .post('/register', {
+                        name: name,
+                        username: username,
+                        email: email,
+                        password: pass,
+                        password_confirmation: passRe,
+                    })
+                    .then(() => dispatch('amILoggedin'))
             })
             commit('login')
         },

@@ -32,10 +32,13 @@
 <script>
 import { reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
     setup() {
         const store = useStore()
+
+        const router = useRouter()
 
         const state = reactive({
             user: {
@@ -48,10 +51,15 @@ export default {
         })
 
         function register() {
-            //console.log(state.user)
-            store.dispatch('registerUser', {
-                user: state.user,
-            })
+            store
+                .dispatch('registerUser', {
+                    user: state.user,
+                })
+                .then(() => {
+                    router.push({
+                        name: 'Home',
+                    })
+                })
         }
 
         return {
