@@ -4,6 +4,7 @@ import { createStore } from 'vuex'
 export default createStore({
     state: {
         loggedin: false,
+        role: 0,
         username: '',
         player: new Audio(''),
         playing: false,
@@ -52,6 +53,9 @@ export default createStore({
         },
         setUsername(state, payload) {
             state.username = payload
+        },
+        setRole(state, payload) {
+            state.role = payload
         },
         playMusic(state) {
             state.player.play()
@@ -158,6 +162,7 @@ export default createStore({
                 if (response.data) {
                     commit('login')
                     commit('setUsername', response.data.username)
+                    commit('setRole', response.data.role)
                 }
             })
         },
