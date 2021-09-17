@@ -124,7 +124,6 @@ export default {
         })
 
         const changeTag = (t, s) => {
-            console.log(t + ` ` + s)
             axios
                 .post('/api/tag-entry', {
                     songId: s,
