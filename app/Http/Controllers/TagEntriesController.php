@@ -37,4 +37,18 @@ class TagEntriesController extends Controller
 
         return $newTagEntry;
     }
+
+    public function allSongs(Request $request)
+    {
+        $tag = Tag::where('name', $request->name)->first();
+        $allsongs = $tag->allSongs();
+
+        $newSongArray = array();
+        foreach ($allsongs as $song) {
+            $newSong = SongController::index($song->songId);
+            array_push($newSongArray, $newSong);
+        }
+
+        return $newSongArray;
+    }
 }

@@ -41,12 +41,12 @@
             style="color: black; text-decoration: none"
             >{{ song.artist.name }}
         </router-link>
-        <div class="tagContainer" v-if="song.tags">
+        <div class="tagContainer" v-if="song.tags && !props.showTag">
             <div v-for="(tag, index) in song.tags" :key="tag.id">
                 <div v-for="sTag in store.state.tags" :key="sTag.id">
                     <router-link
                         v-if="sTag.id == index && tag"
-                        :to="`/tags/` + sTag.name"
+                        :to="`/tag/` + sTag.name"
                     >
                         <div
                             class="tagCircle"
@@ -114,7 +114,7 @@ import { useStore } from 'vuex'
 import { reactive, toRefs } from 'vue'
 
 export default {
-    props: ['song', 'when'],
+    props: ['song', 'when', 'showTag'],
     emits: ['updateSongs'],
     setup(props, { emit }) {
         const store = useStore()
@@ -198,6 +198,7 @@ export default {
             favoriteSong,
             store,
             changeTag,
+            props,
         }
     },
 }

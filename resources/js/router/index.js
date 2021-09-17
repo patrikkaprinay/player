@@ -15,6 +15,7 @@ import LikedSongs from '../views/LikedSongs.vue'
 import Album from '../views/Album.vue'
 import History from '../views/History.vue'
 import Tags from '../views/Tags.vue'
+import Tag from '../views/Tag.vue'
 
 import axios from 'axios'
 
@@ -114,6 +115,12 @@ const routes = [
         path: '/tags',
         name: 'Tags',
         component: Tags,
+    },
+    {
+        path: '/tag/:name',
+        name: 'Tag',
+        component: Tag,
+        props: true,
     },
 ]
 

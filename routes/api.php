@@ -9,6 +9,7 @@ use App\Http\Controllers\SongController;
 use App\Http\Controllers\SongHistoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TagEntriesController;
+use App\Models\TagEntries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -92,6 +93,8 @@ Route::get('history/songs', [SongHistoryController::class, 'lastFew']);
 Route::get('tags/{id}', [TagEntriesController::class, 'index']);
 
 Route::post('tag-entry', [TagEntriesController::class, 'add']);
+
+Route::post('tag/all-songs', [TagEntriesController::class, 'allSongs']);
 
 // Tags
 Route::get('tags', [TagController::class, 'index']);
