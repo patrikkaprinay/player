@@ -87,6 +87,8 @@ Route::get('history/last', [SongHistoryController::class, 'last']);
 
 Route::get('history/songs', [SongHistoryController::class, 'lastFew']);
 
+Route::get('history/few-songs', [SongHistoryController::class, 'lastVFew']);
+
 //Tag Entries
 Route::get('tags/{id}', [TagEntriesController::class, 'index']);
 

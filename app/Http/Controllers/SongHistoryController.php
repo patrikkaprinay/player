@@ -111,4 +111,15 @@ class SongHistoryController extends Controller
         }
         return $history;
     }
+
+    public function lastVFew()
+    {
+        $history = SongHistory::latest()->take(8)->get();
+
+        foreach ($history as $song) {
+            $song['song'] = SongController::index($song->songId);
+        }
+        
+        return $history;
+    }
 }

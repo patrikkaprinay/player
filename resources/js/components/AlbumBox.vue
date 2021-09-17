@@ -82,12 +82,12 @@ export default {
 <style scoped>
 .searchAlbum {
     padding: 10px 15px;
-    background: rgb(240, 240, 240);
+    background: #444;
 }
 
 .searchAlbum:hover {
     cursor: pointer;
-    background: rgb(214, 214, 214);
+    background: #333;
 }
 
 .searchResults {

@@ -263,15 +263,15 @@ export default {
     margin-right: 10px;
 }
 
-#playerSlider {
+input[type='range'] {
     background: transparent;
 }
 
-#playerSlider::-moz-range-progress {
+input[type='range']::-moz-range-progress {
     background-color: rgb(121, 121, 121);
 }
 
-#playerSlider::-moz-range-track {
+input[type='range']::-moz-range-track {
     background-color: rgb(216, 216, 216);
 }
 

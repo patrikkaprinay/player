@@ -33,6 +33,22 @@ export default {
 </script>
 
 <style>
+.white-color {
+    color: #dbdbdb;
+}
+
+.white-color-darker {
+    color: #c7c7c7;
+}
+
+.white-onhover:hover {
+    color: #9c9c9c;
+}
+
+.no-underline {
+    text-decoration: none;
+}
+
 body,
 html {
     margin: 0;
