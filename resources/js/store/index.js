@@ -6,6 +6,7 @@ export default createStore({
         loggedin: false,
         role: 0,
         username: '',
+        name: '',
         player: new Audio(''),
         playing: false,
         queue: [],
@@ -105,6 +106,9 @@ export default createStore({
             state.notification.hidden = true
             state.notification.shown = false
         },
+        setName(state, payload) {
+            state.name = payload
+        },
     },
     actions: {
         newNotification({ commit }, payload) {
@@ -163,6 +167,7 @@ export default createStore({
                 if (response.data) {
                     commit('login')
                     commit('setUsername', response.data.username)
+                    commit('setName', response.data.name)
                     commit('setRole', response.data.role)
                 }
             })

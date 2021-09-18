@@ -5,7 +5,7 @@
             class="my-3"
             v-if="store.state.username && store.state.loggedin"
         >
-            Welcome, {{ store.state.username }}
+            Welcome, {{ store.state.name }}
         </p>
         <div class="pb-3">
             <SongRow
@@ -18,6 +18,7 @@
                 class="mb-5"
                 topTitle="Your liked songs"
                 seeAll="liked"
+                v-if="store.state.loggedin"
                 :songs="liked"
             />
             <SongRow

@@ -44,11 +44,13 @@ class LikedSongController extends Controller
 
     public function lastFew()
     {
-        $history = LikedSong::where('userId', Auth::user()->id)->latest()->take(8)->get();
-
-        foreach ($history as $song) {
-            $song['song'] = SongController::index($song->songId);
+        if(Auth::check()){
+            $history = LikedSong::where('userId', Auth::user()->id)->latest()->take(8)->get();
+    
+            foreach ($history as $song) {
+                $song['song'] = SongController::index($song->songId);
+            }
+            return $history;
         }
-        return $history;
     }
 }

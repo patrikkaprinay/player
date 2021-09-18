@@ -33,7 +33,6 @@
             </div>
         </div>
         <div class="homeHistory">
-            {{ margin }}
             <div
                 class="homeHistoryInner"
                 :style="`margin-left: -` + margin + `px`"
@@ -79,7 +78,7 @@ export default {
     setup(props) {
         const state = reactive({
             margin: 0,
-            plus: 600,
+            plus: 800,
             fullWidth: null,
         })
 
