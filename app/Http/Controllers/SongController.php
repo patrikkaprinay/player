@@ -147,4 +147,16 @@ class SongController extends Controller
             }
             return $arraySongs;
     }
+
+    public function lastfew()
+    {
+        $songs = Song::latest()->take(8)->get();
+        $newSongs = array();
+
+        foreach ($songs as $song) {
+            $song['song'] = SongController::index($song->id);
+            // array_push($newSongs, $song);
+        }
+        return $songs;
+    }
 }

@@ -29,6 +29,8 @@ Route::get('songs', [SongController::class, 'index']);
 
 Route::post('add/song', [SongController::class, 'add']);
 
+Route::get('songs/few', [SongController::class, 'lastfew']);
+
 // Liked Songs
 Route::get('songs/liked', [LikedSongController::class, 'index']);
 

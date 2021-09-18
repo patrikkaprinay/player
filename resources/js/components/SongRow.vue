@@ -15,6 +15,7 @@
                         class="bi bi-caret-left"
                         style="font-size: 18px; margin-right: 7px"
                         @click="goLeft"
+                        :style="{ color: showLeft }"
                     ></i>
                     <i
                         class="bi bi-caret-right"
@@ -69,7 +70,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { computed, reactive, toRefs } from 'vue'
 
 export default {
     props: ['topTitle', 'seeAll', 'songs'],
@@ -78,6 +79,8 @@ export default {
             margin: 0,
             plus: 600,
         })
+
+        const showLeft = computed(() => (state.margin != 0 ? '' : 'grey'))
 
         const goLeft = () => {
             if (state.margin != 0) {
@@ -114,6 +117,7 @@ export default {
             goLeft,
             goRight,
             nice,
+            showLeft,
         }
     },
 }

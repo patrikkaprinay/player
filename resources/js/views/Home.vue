@@ -7,18 +7,26 @@
         >
             Welcome, {{ store.state.username }}
         </p>
-        <SongRow
-            class="mb-5"
-            topTitle="Recently played"
-            seeAll="history"
-            :songs="history"
-        />
-        <SongRow
-            class="mb-5"
-            topTitle="Your liked songs"
-            seeAll="liked"
-            :songs="liked"
-        />
+        <div class="pb-3">
+            <SongRow
+                class="mb-5"
+                topTitle="Recently played"
+                seeAll="history"
+                :songs="history"
+            />
+            <SongRow
+                class="mb-5"
+                topTitle="Your liked songs"
+                seeAll="liked"
+                :songs="liked"
+            />
+            <SongRow
+                class="mb-5"
+                topTitle="Latest songs added"
+                seeAll="search"
+                :songs="hot"
+            />
+        </div>
     </div>
 </template>
 
@@ -35,6 +43,7 @@ export default {
         const state = reactive({
             history: [],
             liked: [],
+            hot: [],
         })
 
         const getHistory = () => {
@@ -49,9 +58,17 @@ export default {
             })
         }
 
+        const getNew = () => {
+            axios.get('/api/songs/few').then((response) => {
+                console.log(response)
+                state.hot = response.data
+            })
+        }
+
         onMounted(() => {
             getHistory()
             getLiked()
+            getNew()
         })
 
         const getUsers = () => {
