@@ -21,6 +21,7 @@
                         class="bi bi-caret-right"
                         style="font-size: 18px"
                         @click="goRight"
+                        :style="{ color: showRight }"
                     ></i>
                 </div>
                 <router-link
@@ -32,6 +33,7 @@
             </div>
         </div>
         <div class="homeHistory">
+            {{ margin }}
             <div
                 class="homeHistoryInner"
                 :style="`margin-left: -` + margin + `px`"
@@ -74,13 +76,18 @@ import { computed, reactive, toRefs } from 'vue'
 
 export default {
     props: ['topTitle', 'seeAll', 'songs'],
-    setup() {
+    setup(props) {
         const state = reactive({
             margin: 0,
             plus: 600,
+            fullWidth: null,
         })
 
         const showLeft = computed(() => (state.margin != 0 ? '' : 'grey'))
+
+        const showRight = computed(() =>
+            state.margin == state.fullWidth ? 'grey' : ''
+        )
 
         const goLeft = () => {
             if (state.margin != 0) {
@@ -96,9 +103,13 @@ export default {
             const width =
                 document.querySelectorAll('.homeHistory')[0].offsetWidth
 
-            if (state.margin + state.plus < 2244 - width + state.plus) {
-                if (state.margin + state.plus > 2244 - width) {
-                    state.margin = 2244 - width
+            let fillWidth =
+                270 * props.songs.length + 12 * props.songs.length - 1
+
+            if (state.margin + state.plus < fillWidth - width + state.plus) {
+                if (state.margin + state.plus > fillWidth - width) {
+                    state.fullWidth = fillWidth - width
+                    state.margin = state.fullWidth
                 } else {
                     state.margin = state.margin + state.plus
                 }
@@ -118,6 +129,7 @@ export default {
             goRight,
             nice,
             showLeft,
+            showRight,
         }
     },
 }
