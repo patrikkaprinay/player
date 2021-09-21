@@ -6,6 +6,7 @@ use App\Http\Controllers\DislikedSongController;
 use App\Http\Controllers\LikedSongController;
 use App\Http\Controllers\QueueSongController;
 use App\Http\Controllers\RuleController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\SongHistoryController;
 use App\Http\Controllers\TagController;
@@ -24,6 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('loggedin', function (){
     return Auth::user();
 });
+
+//Search
+Route::post('search', [SearchController::class, 'index']);
 
 //Songs
 Route::get('songs', [SongController::class, 'index']);

@@ -1,14 +1,103 @@
 <template>
-    <div class="d-flex justify-content-center align-items-center flex-column">
-        <h2 class="mt-3">Search</h2>
-        <!-- <input
-            type="text"
-            style="height: 30px; width: 30%; margin-bottom: 30px"
-            placeholder="Search for a song"
-        /> -->
-        <div class="">
-            <div v-for="song in songs" :key="song.id" class="queueSong">
-                <Song :song="song" @updateSongs="getSongs" />
+    <div class="container">
+        <div
+            class="d-flex justify-content-center align-items-center flex-column"
+        >
+            <h2 class="mt-3 h1">Search</h2>
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search for a song, artist, album"
+                v-model="search"
+                @keyup="searchTerm"
+            />
+            <div v-if="!search">
+                <div v-for="song in songs" :key="song.id" class="queueSong">
+                    <Song :song="song" @updateSongs="getSongs" />
+                </div>
+            </div>
+        </div>
+        <div>
+            <div v-if="searchResult.songs">
+                <h2>Songs</h2>
+                <div
+                    v-for="song in searchResult.songs"
+                    :key="song.id"
+                    class="queueSong"
+                >
+                    <Song :song="song" @updateSongs="asd" />
+                </div>
+            </div>
+            <div v-if="searchResult.albums">
+                <h2>Albums</h2>
+                <div v-for="album in searchResult.albums" :key="album.id">
+                    <router-link
+                        :to="`/album/` + nice(album.name)"
+                        href="#"
+                        style="text-decoration: none"
+                    >
+                        <img
+                            :src="album.artwork_path"
+                            alt="Album Artwork"
+                            style="width: 250px"
+                        />
+                        <p class="mb-0 h5 mt-1" style="color: #dbdbdb">
+                            {{ album.name }}
+                        </p>
+                        <p style="font-size: 14px; color: #dbdbdb">
+                            {{ albumDate(album.published) }}
+                        </p>
+                    </router-link>
+                </div>
+            </div>
+            <div v-if="searchResult.artists">
+                <h2>Artists</h2>
+                <div
+                    class="
+                        d-flex
+                        justify-content-start
+                        align-items-center
+                        flex-row
+                    "
+                >
+                    <div
+                        v-for="artist in searchResult.artists"
+                        class="me-4"
+                        :key="artist.id"
+                    >
+                        <router-link
+                            :to="`/artist/` + nice(artist.name)"
+                            class="
+                                d-flex
+                                justify-content-center
+                                align-items-center
+                                flex-column
+                            "
+                            style="color: black; text-decoration: none"
+                            href="#"
+                        >
+                            <img
+                                :src="artist.image_path"
+                                style="
+                                    width: 170px;
+                                    height: 170px;
+                                    object-fit: cover;
+                                    border-radius: 50%;
+                                "
+                                alt=""
+                            />
+                            <p
+                                style="
+                                    color: #dbdbdb;
+                                    font-size: 20px;
+                                    margin-top: 5px;
+                                "
+                            >
+                                {{ artist.name }}
+                            </p>
+                        </router-link>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -26,9 +115,19 @@ export default {
     setup() {
         const state = reactive({
             songs: [],
+            search: '',
+            searchResult: [],
         })
 
         const store = useStore()
+
+        const searchTerm = () => {
+            axios
+                .post('/api/search', {
+                    search: state.search,
+                })
+                .then((response) => (state.searchResult = response.data))
+        }
 
         const getSongs = () => {
             axios.get('/api/songs').then((response) => {
@@ -36,45 +135,20 @@ export default {
             })
         }
 
-        const addToQueue = (song) => {
-            let notificationText = 'Added to queue'
-            axios
-                .post('/api/queue/add', {
-                    song: song,
-                })
-                .then((response) => {
-                    if (response.data.message) {
-                        console.log(response.data.message)
-                        notificationText = response.data.message
-                    }
-                    store.dispatch('getToQueue')
-                    store.dispatch('newNotification', {
-                        text: notificationText,
-                        status: 0,
-                    })
-                    store.dispatch('notify')
-                })
-        }
-
-        const playNow = (id) => {
-            if (id == store.state.currentlyPlaying.id) {
-                store.commit('playMusic')
-            } else {
-                axios.post('/api/queue/now', { id: id }).then((response) => {
-                    store.dispatch('firstQueueSong')
-                    setTimeout(() => {
-                        store.commit('playMusic')
-                    }, 100)
-                    console.log(response)
-                })
-            }
-        }
-
         const nice = (name) => {
             return name
+                .normalize('NFD')
                 .replace(/\p{Diacritic}/gu, '')
                 .toLowerCase()
                 .replace(' ', '-')
+        }
+
+        const albumDate = (date) => {
+            return date.substring(0, 4)
+        }
+
+        const asd = () => {
+            console.log('asd')
         }
 
         onMounted(getSongs)
@@ -82,10 +156,11 @@ export default {
         return {
             ...toRefs(state),
             getSongs,
-            addToQueue,
             store,
-            playNow,
+            searchTerm,
+            asd,
             nice,
+            albumDate,
         }
     },
 }
@@ -102,5 +177,26 @@ export default {
     background: #444444;
     border-radius: 7px;
     transition-duration: 0.2s;
+}
+
+#searchInput {
+    width: 370px;
+    margin-block: 30px;
+    padding: 7px 15px;
+    border-radius: 25px;
+    background: #121416;
+    color: white;
+    border: 2px solid rgb(77, 77, 77);
+    transition: 0.3s;
+}
+
+#searchInput:focus {
+    outline: none;
+    border: 2px solid rgb(131, 131, 131);
+}
+
+.albums {
+    display: grid;
+    grid-gap: 1rem;
 }
 </style>
