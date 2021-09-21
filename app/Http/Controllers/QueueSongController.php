@@ -9,7 +9,6 @@ use App\Models\Song;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SongHistoryController;
 use App\Http\Controllers\RuleController;
-use App\Models\SongHistory;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 

@@ -17,7 +17,7 @@
                 >
             </div>
         </div>
-        <div style="width: 50%; padding: 15px 20px 0 20px">
+        <div style="width: 50%" :style="{ padding: padding }">
             <div
                 class="top-bar d-flex justify-content-center align-items-center"
             >
@@ -28,6 +28,7 @@
                     type="range"
                     style="width: 100%"
                     value="0"
+                    :disabled="store.state.role > 2 || store.state.role == 0"
                     id="playerSlider"
                     @change="moveProgress"
                 />
@@ -42,6 +43,7 @@
                     justify-content-center
                     align-items-center
                 "
+                v-if="store.state.role <= 2 && store.state.role != 0"
             >
                 <i
                     class="bi bi-skip-backward-fill music-controller"
@@ -105,6 +107,12 @@ export default {
             volume: getCookie('volume') * 100 * 2,
             muted: false,
             beforeMuted: 0,
+        })
+
+        const padding = computed(() => {
+            return store.state.role <= 2 && store.state.role != 0
+                ? '15px 20px 0 20px'
+                : ''
         })
 
         const artistnameFormatted = computed(() =>
@@ -236,6 +244,7 @@ export default {
             mute,
             artistnameFormatted,
             previousSong,
+            padding,
         }
     },
 }
@@ -249,6 +258,7 @@ export default {
     border-radius: 10px;
     margin: 10px;
     width: 100%;
+    height: 84px;
     display: flex;
     justify-content: space-between;
     align-items: center;

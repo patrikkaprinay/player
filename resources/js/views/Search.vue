@@ -105,12 +105,12 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <!-- <div>
                 <p v-if="isSearchEmpty()">
                     It seems like there's no album, artist or track with this
                     name in our database
                 </p>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

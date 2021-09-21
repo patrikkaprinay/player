@@ -9,6 +9,11 @@ class Song extends Model
 {
     use HasFactory;
 
+    public function stats()
+    {
+        return $this->hasOne(SongStats::class, 'songId');
+    }
+
     public function queuesong(){
         return $this->belongsToMany(QueueSong::class);
     }

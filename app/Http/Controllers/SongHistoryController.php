@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\QueueSong;
 use App\Models\Song;
 use App\Models\SongHistory;
+use App\Models\SongStats;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -82,9 +83,25 @@ class SongHistoryController extends Controller
         if($request->id != 0){
             $songHistory = new SongHistory();
             $songHistory->songId = $request->id;
-            $user = QueueSong::find($request->played)->first()->addedBy;
-            $songHistory->addedBy = $user;
+            if($user = QueueSong::find($request->played)->first()->addedBy){
+                $songHistory->addedBy = $user;
+            }else {
+                $songHistory->addedBy = 0;
+            }
             $songHistory->save();
+
+            $songStats = SongStats::where('songId', $request->id)->first();
+            if($songStats){
+                $count = (int)$songStats->playCount;
+                $count += 1;
+                $songStats->playCount = $count++;
+            } else {
+                $songStats = new SongStats();
+                $songStats->songId = $request->id;
+                $songStats->playCount = 1;
+            }
+
+            $songStats->save();
             
             return response()->json(['song_history'=>$songHistory]);
         }
