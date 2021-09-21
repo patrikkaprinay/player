@@ -1,6 +1,18 @@
 <template>
     <div class="container">
-        <h2 class="my-2">Users</h2>
+        <div class="d-flex justify-content-between my-2 mt-4">
+            <h2>Users</h2>
+            <i
+                class="
+                    btn btn-dark
+                    d-flex
+                    justify-content-center
+                    align-items-center
+                    bi bi-arrow-repeat
+                "
+                @click.prevent="getUsers"
+            ></i>
+        </div>
         <div>
             <table class="table" style="color: white">
                 <thead>
@@ -49,6 +61,7 @@ export default {
 
         return {
             ...toRefs(state),
+            getUsers,
         }
     },
 }

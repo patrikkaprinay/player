@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr v-if="!deleted">
         <th scope="row">{{ user.id }}</th>
         <td>{{ user.name }}</td>
         <td>{{ user.username }}</td>
@@ -90,6 +90,7 @@ export default {
         const state = reactive({
             role: props.user.role,
             changeMade: 0,
+            deleted: false,
         })
 
         const changeSelect = () => {
@@ -121,7 +122,10 @@ export default {
                 .post('/api/user/delete', {
                     id,
                 })
-                .then((response) => console.log(response))
+                .then((response) => {
+                    console.log(response)
+                    state.deleted = true
+                })
         }
 
         return {
