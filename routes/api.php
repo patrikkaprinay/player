@@ -10,6 +10,7 @@ use App\Http\Controllers\SongController;
 use App\Http\Controllers\SongHistoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TagEntriesController;
+use App\Http\Controllers\UserController;
 use App\Models\TagEntries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('loggedin', function (){
     return Auth::user();
 });
-
 
 //Songs
 Route::get('songs', [SongController::class, 'index']);
@@ -119,6 +119,13 @@ Route::middleware('adminApi')->group(function(){
     Route::post('add/tags', [TagController::class, 'add']);
 
     Route::post('tag', [TagController::class, 'delete']);
+
+    //Users
+    Route::get('users', [UserController::class, 'index']);
+
+    Route::post('user/delete', [UserController::class, 'delete']);
+
+    Route::post('user/update', [UserController::class, 'update']);
 });
 
 

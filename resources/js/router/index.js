@@ -16,6 +16,7 @@ import Album from '../views/Album.vue'
 import History from '../views/History.vue'
 import Tags from '../views/Tags.vue'
 import Tag from '../views/Tag.vue'
+import ManageUsers from '../views/ManageUsers.vue'
 
 import axios from 'axios'
 
@@ -122,6 +123,14 @@ const routes = [
         name: 'Tag',
         component: Tag,
         props: true,
+    },
+    {
+        path: '/users',
+        name: 'ManageUsers',
+        component: ManageUsers,
+        meta: {
+            is_admin: true,
+        },
     },
 ]
 

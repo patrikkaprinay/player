@@ -6,6 +6,7 @@ export default createStore({
         loggedin: false,
         role: 0,
         username: '',
+        id: '',
         name: '',
         player: new Audio(''),
         playing: false,
@@ -58,6 +59,9 @@ export default createStore({
         },
         setRole(state, payload) {
             state.role = payload
+        },
+        setId(state, payload) {
+            state.id = payload
         },
         playMusic(state) {
             state.player.play()
@@ -169,6 +173,7 @@ export default createStore({
                     commit('setUsername', response.data.username)
                     commit('setName', response.data.name)
                     commit('setRole', response.data.role)
+                    commit('setId', response.data.id)
                 }
             })
         },

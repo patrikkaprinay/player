@@ -121,6 +121,14 @@
                                         >Tags</router-link
                                     >
                                 </li>
+                                <li v-if="store.state.role == 1">
+                                    <router-link
+                                        to="/users"
+                                        class="dropdown-item"
+                                        href="#"
+                                        >Users</router-link
+                                    >
+                                </li>
                                 <li>
                                     <a class="dropdown-item" href="#"
                                         >Settings</a
