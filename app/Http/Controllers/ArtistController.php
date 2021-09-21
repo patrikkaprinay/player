@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Song;
+use App\Models\SongStats;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -103,12 +104,23 @@ class ArtistController extends Controller
     {
         $songs = Song::where('artist', $id)->get();
         $alteredSongs = array();
+        $songStats = array();
 
         foreach($songs as $song){
-            $song = SongController::index($song->id);
-            array_push($alteredSongs, $song);
+            $stats = SongStats::select('id', 'playCount')->where('id', $song->id)->first();
+            array_push($songStats, $stats);
         }
 
+
+        $sortedStats = collect($songStats)->sortByDesc('playCount');
+
+        $c = 1;
+        foreach ($sortedStats as $songstat) {
+            $song = SongController::index($songstat->id);
+            $song['order'] = $c;
+            array_push($alteredSongs, $song);
+            $c++;
+        }
 
         $albums = Album::where('artist', $id)->get();
 

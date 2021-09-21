@@ -96,6 +96,7 @@
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="outside"
                     aria-expanded="false"
+                    id="dropdownThreeDots"
                 >
                     <i class="bi bi-three-dots"></i>
                 </p>
@@ -243,6 +244,7 @@ export default {
         }
 
         const dislikeSong = (id) => {
+            document.querySelector('#dropdownThreeDots').click()
             axios
                 .post('/api/songs/dislike/add', {
                     songId: id,
