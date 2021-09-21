@@ -12,19 +12,21 @@
                 class="mt-3 mb-5"
                 topTitle="Recently played"
                 seeAll="history"
+                v-if="history.length != 0"
                 :songs="history"
             />
             <SongRow
                 class="mb-5"
                 topTitle="Your liked songs"
                 seeAll="liked"
-                v-if="store.state.loggedin"
+                v-if="store.state.loggedin && liked.length != 0"
                 :songs="liked"
             />
             <SongRow
                 class="mb-5"
                 topTitle="Latest songs added"
                 seeAll="search"
+                v-if="hot.length != 0"
                 :songs="hot"
             />
         </div>

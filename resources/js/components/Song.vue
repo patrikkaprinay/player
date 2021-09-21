@@ -89,7 +89,7 @@
                 v-if="liked == false"
             ></i>
         </div>
-        <div class="songComplication">
+        <div class="songComplication" v-if="store.state.loggedin">
             <div>
                 <p
                     class="mb-0"
@@ -104,7 +104,7 @@
                     aria-labelledby="dropdownMenuClickableInside"
                 >
                     <li
-                        v-if="store.state.loggedin && liked != false"
+                        v-if="liked != false"
                         class="dropdown-item d-flex align-items-center"
                         @click="dislikeSong(song.id)"
                     >
@@ -114,7 +114,7 @@
                         ></i>
                         <p class="mb-0">Dislike</p>
                     </li>
-                    <li class="dropdown-item">
+                    <li class="dropdown-item" v-if="store.state.role == 1">
                         <div class="btn-group dropstart w-100">
                             <p
                                 class="dropdown-toggle m-0"

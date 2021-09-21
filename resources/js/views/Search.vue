@@ -18,7 +18,7 @@
             </div>
         </div>
         <div>
-            <div v-if="searchResult.songs">
+            <div v-if="searchResult.songs && searchResult.songs.length != 0">
                 <h2>Songs</h2>
                 <div
                     v-for="song in searchResult.songs"
@@ -28,29 +28,35 @@
                     <Song :song="song" @updateSongs="asd" />
                 </div>
             </div>
-            <div v-if="searchResult.albums">
+            <div v-if="searchResult.albums && searchResult.albums.length != 0">
                 <h2>Albums</h2>
-                <div v-for="album in searchResult.albums" :key="album.id">
-                    <router-link
-                        :to="`/album/` + nice(album.name)"
-                        href="#"
-                        style="text-decoration: none"
-                    >
-                        <img
-                            :src="album.artwork_path"
-                            alt="Album Artwork"
-                            style="width: 250px"
-                        />
-                        <p class="mb-0 h5 mt-1" style="color: #dbdbdb">
-                            {{ album.name }}
-                        </p>
-                        <p style="font-size: 14px; color: #dbdbdb">
-                            {{ albumDate(album.published) }}
-                        </p>
-                    </router-link>
-                </div>
+                <AlbumRow :albums="searchResult.albums" />
+
+                <!-- <div class="albums">
+                    <div v-for="album in searchResult.albums" :key="album.id">
+                        <router-link
+                            :to="`/album/` + nice(album.name)"
+                            href="#"
+                            style="text-decoration: none"
+                        >
+                            <img
+                                :src="album.artwork_path"
+                                alt="Album Artwork"
+                                style="width: 250px"
+                            />
+                            <p class="mb-0 h5 mt-1" style="color: #dbdbdb">
+                                {{ album.name }}
+                            </p>
+                            <p style="font-size: 14px; color: #dbdbdb">
+                                {{ albumDate(album.published) }}
+                            </p>
+                        </router-link>
+                    </div>
+                </div> -->
             </div>
-            <div v-if="searchResult.artists">
+            <div
+                v-if="searchResult.artists && searchResult.artists.length != 0"
+            >
                 <h2>Artists</h2>
                 <div
                     class="
@@ -99,6 +105,12 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <p v-if="isSearchEmpty()">
+                    It seems like there's no album, artist or track with this
+                    name in our database
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -107,10 +119,12 @@
 import { reactive, toRefs, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import Song from '../components/Song.vue'
+import AlbumRow from '../components/AlbumRow.vue'
 
 export default {
     components: {
         Song,
+        AlbumRow,
     },
     setup() {
         const state = reactive({
@@ -121,12 +135,24 @@ export default {
 
         const store = useStore()
 
+        const isSearchEmpty = () => {
+            if (state.search != '') {
+                return true
+            } else {
+                return false
+            }
+        }
+
         const searchTerm = () => {
-            axios
-                .post('/api/search', {
-                    search: state.search,
-                })
-                .then((response) => (state.searchResult = response.data))
+            if (state.search == '') {
+                state.searchResult = []
+            } else {
+                axios
+                    .post('/api/search', {
+                        search: state.search,
+                    })
+                    .then((response) => (state.searchResult = response.data))
+            }
         }
 
         const getSongs = () => {
@@ -161,6 +187,7 @@ export default {
             asd,
             nice,
             albumDate,
+            isSearchEmpty,
         }
     },
 }
@@ -196,7 +223,9 @@ export default {
 }
 
 .albums {
-    display: grid;
-    grid-gap: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 15px;
 }
 </style>
