@@ -65,14 +65,28 @@
         </div>
         <div
             class="songComplication"
-            v-if="store.state.username"
+            v-if="store.state.username && (liked == null || liked == true)"
             @click="favoriteSong(song.id)"
         >
-            <i class="bi bi-heart songComplicationIcon" v-if="!liked"></i>
+            <i
+                class="bi bi-heart songComplicationIcon"
+                v-if="liked == null"
+            ></i>
             <i
                 class="bi bi-heart-fill"
                 style="margin-bottom: -3px"
-                v-if="liked"
+                v-if="liked == true"
+            ></i>
+        </div>
+        <div
+            class="songComplication"
+            v-if="liked == false"
+            @click="removeDislike(song.id)"
+        >
+            <i
+                class="bi bi-hand-thumbs-down-fill"
+                style="font-size: 15px"
+                v-if="liked == false"
             ></i>
         </div>
         <div class="songComplication">
@@ -89,6 +103,17 @@
                     class="dropdown-menu"
                     aria-labelledby="dropdownMenuClickableInside"
                 >
+                    <li
+                        v-if="store.state.loggedin && liked != false"
+                        class="dropdown-item d-flex align-items-center"
+                        @click="dislikeSong(song.id)"
+                    >
+                        <i
+                            class="bi bi-hand-thumbs-down-fill me-2"
+                            style="font-size: 15px"
+                        ></i>
+                        <p class="mb-0">Dislike</p>
+                    </li>
                     <li class="dropdown-item">
                         <div class="btn-group dropstart w-100">
                             <p
@@ -197,7 +222,6 @@ export default {
         }
 
         const favoriteSong = (id) => {
-            console.log('favorite pressed')
             axios
                 .post('/api/songs/liked', {
                     id: id,
@@ -206,7 +230,25 @@ export default {
                     console.log(response)
                 })
             state.liked = !state.liked
-            console.log('favorite ended')
+        }
+
+        const removeDislike = (id) => {
+            console.log(id)
+            axios
+                .post('/api/songs/dislike/remove', {
+                    id,
+                })
+                .then((response) => console.log(response))
+            state.liked = null
+        }
+
+        const dislikeSong = (id) => {
+            axios
+                .post('/api/songs/dislike/add', {
+                    songId: id,
+                })
+                .then((response) => console.log(response))
+            state.liked = false
         }
 
         return {
@@ -216,9 +258,11 @@ export default {
             playNow,
             nice,
             favoriteSong,
+            dislikeSong,
             store,
             changeTag,
             props,
+            removeDislike,
         }
     },
 }

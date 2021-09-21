@@ -9,7 +9,7 @@
         </p>
         <div class="pb-3">
             <SongRow
-                class="mb-5"
+                class="mt-3 mb-5"
                 topTitle="Recently played"
                 seeAll="history"
                 :songs="history"

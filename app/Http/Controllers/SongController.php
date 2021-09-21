@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Artist;
+use App\Models\DislikedSong;
 use App\Models\LikedSong;
 use App\Models\Song;
 use App\Models\TagEntries;
@@ -29,8 +30,17 @@ class SongController extends Controller
                 $song['tags'] = $tags;
 
                 if(Auth::check()){
-                    $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $song->id)->first() ? true : false;
-                    $song['liked'] = $liked;
+                    $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $song->id)->count();
+                    $disliked = DislikedSongController::index($song->id);
+                    
+                    if($liked > 0){
+                        $likedVar = true;
+                    } else if($disliked > 0){
+                        $likedVar = false;
+                    } else {
+                        $likedVar = null;
+                    }
+                    $song['liked'] = $likedVar;
                 }
             }
             return $songs;
@@ -48,8 +58,17 @@ class SongController extends Controller
         $song['tags'] = $tags;
 
         if(Auth::check()){
-            $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $songId)->first() ? true : false;
-            $song['liked'] = $liked;
+            $liked = LikedSong::where('userId', Auth::user()->id)->where('songId', $song->id)->count();
+            $disliked = DislikedSongController::index($song->id);
+            
+            if($liked > 0){
+                $likedVar = true;
+            } else if($disliked > 0){
+                $likedVar = false;
+            } else {
+                $likedVar = null;
+            }
+            $song['liked'] = $likedVar;
         }
         
         return $song;

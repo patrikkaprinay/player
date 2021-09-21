@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\DislikedSongController;
 use App\Http\Controllers\LikedSongController;
 use App\Http\Controllers\QueueSongController;
 use App\Http\Controllers\RuleController;
@@ -37,6 +38,12 @@ Route::get('songs/liked', [LikedSongController::class, 'index']);
 Route::get('songs/liked/few', [LikedSongController::class, 'lastFew']);
 
 Route::post('songs/liked', [LikedSongController::class, 'add']);
+
+// Disliked Songs
+
+Route::post('songs/dislike/add', [DislikedSongController::class, 'add']);
+
+Route::post('songs/dislike/remove', [DislikedSongController::class, 'remove']);
 
 //Queue
 Route::get('queue', [QueueSongController::class, 'index']);
