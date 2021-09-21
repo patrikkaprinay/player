@@ -2,6 +2,12 @@
     <div style="display: flex; justify-content: center">
         <div class="loginIsland" style="">
             <h3>Login</h3>
+            <p v-if="error == 1" class="text-danger">
+                Email or password is incorrect!
+            </p>
+            <p v-if="error == 2" class="text-danger">
+                Something went wrong, please try again later!
+            </p>
             <input
                 type="text"
                 v-model="user.email"
@@ -27,7 +33,7 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs } from 'vue'
+import { reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -38,6 +44,7 @@ export default {
                 email: '',
                 password: '',
             },
+            error: 0,
         })
 
         const router = useRouter()
@@ -46,9 +53,15 @@ export default {
 
         const loginUser = () => {
             store.dispatch('loginUser', { user: state.user }).then(() => {
+                // if (response == '200') {
                 router.push({
                     name: 'Home',
                 })
+                // } else if (response == '422') {
+                //     state.error = 1
+                // } else {
+                //     state.error = 2
+                // }
             })
         }
 

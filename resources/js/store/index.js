@@ -161,9 +161,12 @@ export default createStore({
                     })
                     .then(() => {
                         dispatch('amILoggedin')
+                        commit('login')
+                        return new Promise((resolve) => {
+                            return resolve('200')
+                        })
                     })
             })
-            commit('login')
         },
 
         amILoggedin({ commit }) {
