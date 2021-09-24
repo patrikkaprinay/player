@@ -18,6 +18,7 @@ import Tags from '../views/Tags.vue'
 import Tag from '../views/Tag.vue'
 import ManageUsers from '../views/ManageUsers.vue'
 import Info from '../views/Info.vue'
+import Request from '../views/Request.vue'
 
 import axios from 'axios'
 
@@ -137,6 +138,11 @@ const routes = [
         path: '/info',
         name: 'Info',
         component: Info,
+    },
+    {
+        path: '/requests',
+        name: 'Request',
+        component: Request,
     },
 ]
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\RuleController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\SongHistoryController;
+use App\Http\Controllers\SongRequestController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TagEntriesController;
 use App\Http\Controllers\UserController;
@@ -28,6 +29,9 @@ Route::get('loggedin', function (){
 
 // Admins
 Route::get('admins', [UserController::class, 'admins']);
+
+// Song Requests
+Route::get('/requests', [SongRequestController::class, 'index']);
 
 // Search
 Route::post('search', [SearchController::class, 'index']);
