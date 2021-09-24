@@ -28,4 +28,9 @@ class UserController extends Controller
         $user->save();
         return 'User updated successfully';
     }
+
+    public function admins()
+    {
+        return User::select('username', 'name', 'id', 'email')->where('role', '1')->get();
+    }
 }

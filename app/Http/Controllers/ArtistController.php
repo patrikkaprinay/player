@@ -114,16 +114,22 @@ class ArtistController extends Controller
 
         $sortedStats = collect($songStats)->sortByDesc('playCount');
 
-        $c = 1;
+        
         foreach ($sortedStats as $songstat) {
             $song = SongController::index($songstat->id);
-            $song['order'] = $c;
             array_push($alteredSongs, $song);
+        }
+
+        $reversed = array_reverse($alteredSongs);
+
+        $c = 1;
+        foreach ($reversed as $song) {
+            $song['order'] = $c;
             $c++;
         }
 
         $albums = Album::where('artist', $id)->get();
 
-        return response()->json(['songs'=>$alteredSongs, 'albums'=>$albums]);
+        return response()->json(['songs' => array_slice($reversed, 0, 5, true), 'albums' => $albums]);
     }
 }

@@ -26,10 +26,13 @@ Route::get('loggedin', function (){
     return Auth::user();
 });
 
-//Search
+// Admins
+Route::get('admins', [UserController::class, 'admins']);
+
+// Search
 Route::post('search', [SearchController::class, 'index']);
 
-//Songs
+// Songs
 Route::get('songs', [SongController::class, 'index']);
 
 Route::post('add/song', [SongController::class, 'add']);
@@ -49,7 +52,7 @@ Route::post('songs/dislike/add', [DislikedSongController::class, 'add']);
 
 Route::post('songs/dislike/remove', [DislikedSongController::class, 'remove']);
 
-//Queue
+// Queue
 Route::get('queue', [QueueSongController::class, 'index']);
 
 Route::post('queue/add', [QueueSongController::class, 'add']);
@@ -64,7 +67,7 @@ Route::post('queue/next', [QueueSongController::class, 'next']);
 
 Route::post('queue/now', [QueueSongController::class, 'now']);
 
-//Artist
+// Artist
 Route::post('artists', [ArtistController ::class, 'index']);
 
 Route::post('artist', [ArtistController ::class, 'info']);
@@ -77,23 +80,23 @@ Route::post('artists/searchId', [ArtistController::class, 'searchId']);
 
 Route::get('artist/{id}/songs', [ArtistController::class, 'allSongs']);
 
-//Route::get('artist/{id}/albums', [ArtistController::class, 'allAlbums']);
+// Route::get('artist/{id}/albums', [ArtistController::class, 'allAlbums']);
 
 Route::get('artist/{id}/all', [ArtistController::class, 'all']);
 
-//Albums
+// Albums
 Route::post('albums/search', [AlbumController::class, 'search']);
 
 Route::post('album/getAlbum', [AlbumController::class, 'getAlbum']);
 
 Route::post('add/album', [AlbumController::class, 'add']);
 
-//Rules
+// Rules
 Route::get('rules', [RuleController::class, 'index']);
 
 Route::get('artistCooldown', [SongHistoryController::class, 'artistCooldown']);
 
-//Song History
+// Song History
 Route::get('history', [SongHistoryController::class, 'index']);
 
 Route::post('history', [SongHistoryController::class, 'add']);
@@ -104,7 +107,7 @@ Route::get('history/songs', [SongHistoryController::class, 'lastFew']);
 
 Route::get('history/few-songs', [SongHistoryController::class, 'lastVFew']);
 
-//Tag Entries
+// Tag Entries
 Route::get('tags/{id}', [TagEntriesController::class, 'index']);
 
 // Tags
@@ -113,18 +116,18 @@ Route::get('tags', [TagController::class, 'index']);
 Route::post('tag/all-songs', [TagEntriesController::class, 'allSongs']);
 
 Route::middleware('adminApi')->group(function(){
-    //Rules
+    // Rules
     Route::post('rule', [RuleController::class, 'changeRuleStatus']);
 
-    //Tag Entries
+    // Tag Entries
     Route::post('tag-entry', [TagEntriesController::class, 'add']);
     
-    //Tags
+    // Tags
     Route::post('add/tags', [TagController::class, 'add']);
 
     Route::post('tag', [TagController::class, 'delete']);
 
-    //Users
+    // Users
     Route::get('users', [UserController::class, 'index']);
 
     Route::post('user/delete', [UserController::class, 'delete']);

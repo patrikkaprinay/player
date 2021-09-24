@@ -17,6 +17,7 @@ import History from '../views/History.vue'
 import Tags from '../views/Tags.vue'
 import Tag from '../views/Tag.vue'
 import ManageUsers from '../views/ManageUsers.vue'
+import Info from '../views/Info.vue'
 
 import axios from 'axios'
 
@@ -131,6 +132,11 @@ const routes = [
         meta: {
             is_admin: true,
         },
+    },
+    {
+        path: '/info',
+        name: 'Info',
+        component: Info,
     },
 ]
 
