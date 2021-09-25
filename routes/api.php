@@ -31,7 +31,11 @@ Route::get('loggedin', function (){
 Route::get('admins', [UserController::class, 'admins']);
 
 // Song Requests
-Route::get('/requests', [SongRequestController::class, 'index']);
+Route::get('requests', [SongRequestController::class, 'index']);
+
+Route::post('request', [SongRequestController::class, 'add']);
+
+Route::post('request/like', [SongRequestController::class, 'like']);
 
 // Search
 Route::post('search', [SearchController::class, 'index']);

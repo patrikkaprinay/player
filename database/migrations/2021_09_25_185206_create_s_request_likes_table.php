@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSongRequestsTable extends Migration
+class CreateSRequestLikesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateSongRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('song_requests', function (Blueprint $table) {
+        Schema::create('s_request_likes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('artist');
-            $table->integer('likes');
+            $table->integer('userId');
+            $table->integer('requestId');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateSongRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('song_requests');
+        Schema::dropIfExists('s_request_likes');
     }
 }
