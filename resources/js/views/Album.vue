@@ -35,57 +35,81 @@
                 >
                     {{ album.name }}
                 </h1>
-                <div class="songComplication" style="cursor: pointer">
-                    <p
-                        class="mb-0"
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        aria-expanded="false"
-                        id="dropdownThreeDots"
-                    >
-                        <i class="bi bi-three-dots"></i>
-                    </p>
-                    <ul
-                        class="dropdown-menu"
-                        aria-labelledby="dropdownMenuClickableInside"
-                    >
-                        <li class="dropdown-item" v-if="store.state.role == 1">
-                            <div class="btn-group dropstart w-100">
-                                <p
-                                    class="dropdown-toggle m-0"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    data-bs-auto-close="outside"
-                                    style="width: 100%"
-                                >
-                                    Tags
-                                </p>
-                                <ul
-                                    class="dropdown-menu"
-                                    aria-labelledby="dropdownMenuClickableInside"
-                                >
-                                    <li
-                                        v-for="tag in store.state.tags"
-                                        :key="tag.id"
+                <div
+                    class="
+                        d-flex
+                        flex-row
+                        justify-content-center
+                        align-items-center
+                    "
+                >
+                    <i
+                        class="bi bi-heart songComplicationIcon"
+                        style="margin-right: 5px"
+                        v-if="!album.liked"
+                        @click="likeAlbum"
+                    ></i>
+                    <i
+                        class="bi bi-heart-fill"
+                        style="margin-right: 5px"
+                        v-if="album.liked"
+                        @click="likeAlbum"
+                    ></i>
+                    <div class="songComplication">
+                        <p
+                            class="mb-0"
+                            data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside"
+                            aria-expanded="false"
+                            id="dropdownThreeDots"
+                        >
+                            <i class="bi bi-three-dots"></i>
+                        </p>
+                        <ul
+                            class="dropdown-menu"
+                            aria-labelledby="dropdownMenuClickableInside"
+                        >
+                            <li
+                                class="dropdown-item"
+                                v-if="store.state.role == 1"
+                            >
+                                <div class="btn-group dropstart w-100">
+                                    <p
+                                        class="dropdown-toggle m-0"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        data-bs-auto-close="outside"
+                                        style="width: 100%"
                                     >
-                                        <label
-                                            class="dropdown-item"
-                                            style="text-transform: capitalize"
+                                        Tags
+                                    </p>
+                                    <ul
+                                        class="dropdown-menu"
+                                        aria-labelledby="dropdownMenuClickableInside"
+                                    >
+                                        <li
+                                            v-for="tag in store.state.tags"
+                                            :key="tag.id"
                                         >
-                                            <input
-                                                type="checkbox"
-                                                class="me-2"
-                                                @click="
-                                                    changeTag(tag.id, song.id)
+                                            <label
+                                                class="dropdown-item"
+                                                style="
+                                                    text-transform: capitalize;
                                                 "
-                                            />
-                                            {{ tag.name }}
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    class="me-2"
+                                                    @click="changeTag(tag.id)"
+                                                />
+                                                {{ tag.name }}
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,9 +156,31 @@ export default {
                     state.songs = response.data.songs
                 })
         })
+
+        const changeTag = (tId) => {
+            axios
+                .post('/api/album/tag', {
+                    tag: tId,
+                    album: state.album.id,
+                })
+                .then((response) => console.log(response))
+        }
+
+        const likeAlbum = () => {
+            axios
+                .post('/api/album/like', {
+                    id: state.album.id,
+                })
+                .then(() => {
+                    state.album.liked = !state.album.liked
+                })
+        }
+
         return {
             ...toRefs(state),
             store,
+            changeTag,
+            likeAlbum,
         }
     },
 }

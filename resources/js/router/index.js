@@ -11,7 +11,7 @@ import AddAlbum from '../views/AddAlbum.vue'
 import Artists from '../views/Artists.vue'
 import Artist from '../views/Artist.vue'
 import QueueSettings from '../views/QueueSettings.vue'
-import LikedSongs from '../views/LikedSongs.vue'
+import Liked from '../views/Liked.vue'
 import Album from '../views/Album.vue'
 import History from '../views/History.vue'
 import Tags from '../views/Tags.vue'
@@ -97,8 +97,8 @@ const routes = [
     },
     {
         path: '/liked',
-        name: 'LikedSongs',
-        component: LikedSongs,
+        name: 'Liked',
+        component: Liked,
         meta: {
             requiresAuth: true,
         },

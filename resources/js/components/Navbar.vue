@@ -65,7 +65,7 @@
                                 class="nav-link"
                                 href="#"
                                 active-class="activeNavbar"
-                                >Liked Songs</router-link
+                                >Liked</router-link
                             >
                         </li>
                         <li class="nav-item">

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Artist;
+use App\Models\LikedAlbum;
 use App\Models\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class AlbumController extends Controller
@@ -109,9 +111,20 @@ class AlbumController extends Controller
         $album = Album::where('name', $request->album)->first();
         $songs = SongController::fromAlbum($album->id);
 
+        if(Auth::check()){
+            $albumLiked = LikedAlbum::where('albumId', $album->id)->where('userId', Auth::user()->id)->count() > 0 ? true : false;
+            $album['liked'] = $albumLiked;
+        }
+
         return response()->json([
             'album' => $album,
             'songs' => $songs
         ]);
+    }
+
+    public function addTag(Request $request)
+    {
+        // Add tags to all songs in album
+        return $request;
     }
 }

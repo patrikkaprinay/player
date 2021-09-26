@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\DislikedSongController;
+use App\Http\Controllers\LikedAlbumController;
 use App\Http\Controllers\LikedSongController;
 use App\Http\Controllers\QueueSongController;
 use App\Http\Controllers\RuleController;
@@ -102,6 +103,10 @@ Route::post('albums/search', [AlbumController::class, 'search']);
 Route::post('album/getAlbum', [AlbumController::class, 'getAlbum']);
 
 Route::post('add/album', [AlbumController::class, 'add']);
+
+Route::post('album/tag', [AlbumController::class, 'addTag']);
+
+Route::post('album/like', [LikedAlbumController::class, 'add']);
 
 // Rules
 Route::get('rules', [RuleController::class, 'index']);

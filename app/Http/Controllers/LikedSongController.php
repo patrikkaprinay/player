@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LikedAlbum;
 use App\Models\LikedSong;
 use App\Models\Song;
 use Illuminate\Http\Request;
@@ -12,12 +13,21 @@ class LikedSongController extends Controller
     public function index()
     {
         $likedSongs = LikedSong::where('userId', Auth::user()->id)->get();
+        $likedAlbumsA = array();
 
         foreach ($likedSongs as $song) {
             $song->songId = SongController::index($song->songId);
         }
 
-        return $likedSongs;
+        $likedAlbums = LikedAlbum::where('userId', Auth::user()->id)->get();
+
+        foreach ($likedAlbums as $album) {
+            $album = $album->getAlbum();
+            array_push($likedAlbumsA, $album);
+        }
+
+
+        return response()->json(['songs' => $likedSongs, 'albums' => $likedAlbumsA]);
     }
 
     public function add(Request $request)
