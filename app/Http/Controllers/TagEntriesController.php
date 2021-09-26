@@ -49,6 +49,6 @@ class TagEntriesController extends Controller
             array_push($newSongArray, $newSong);
         }
 
-        return $newSongArray;
+        return response()->json(['songs' => $newSongArray, 'enabled' => $tag->enabled]);
     }
 }

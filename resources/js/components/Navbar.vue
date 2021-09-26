@@ -88,7 +88,7 @@
                         </li>
                         <li class="nav-item">
                             <router-link
-                                to="/requests"
+                                to="/banned"
                                 class="nav-link"
                                 href="#"
                                 active-class="activeNavbar"

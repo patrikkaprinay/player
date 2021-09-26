@@ -19,6 +19,7 @@ import Tag from '../views/Tag.vue'
 import ManageUsers from '../views/ManageUsers.vue'
 import Info from '../views/Info.vue'
 import Request from '../views/Request.vue'
+import Banned from '../views/Banned.vue'
 
 import axios from 'axios'
 
@@ -143,6 +144,11 @@ const routes = [
         path: '/requests',
         name: 'Request',
         component: Request,
+    },
+    {
+        path: '/banned',
+        name: 'Banned',
+        component: Banned,
     },
 ]
 

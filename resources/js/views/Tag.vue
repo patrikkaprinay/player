@@ -6,10 +6,16 @@
                 >Showing all songs with the '{{ name }}' tag</span
             >
         </h2>
+        <div v-if="enabled == 0" class="alert alert-danger" role="alert">
+            This tag is currently disabled!
+        </div>
         <div>
             <div v-for="song in songs" :key="song.id" class="queueSong">
                 <Song :song="song" showTag="false" />
             </div>
+        </div>
+        <div v-if="songs.length == 0">
+            <p>There are no songs associated to this tag or it doesn't exist</p>
         </div>
     </div>
 </template>
@@ -23,6 +29,7 @@ export default {
     setup(props) {
         const state = reactive({
             songs: [],
+            enabled: 1,
         })
 
         const getSongs = () => {
@@ -30,7 +37,10 @@ export default {
                 .post('/api/tag/all-songs', {
                     name: props.name,
                 })
-                .then((response) => (state.songs = response.data))
+                .then((response) => {
+                    state.songs = response.data.songs
+                    state.enabled = response.data.enabled
+                })
         }
 
         onMounted(() => {
