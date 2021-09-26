@@ -17,7 +17,15 @@
                 class="artistImage"
                 style="width: 180px; height: 180px; object-fit: cover"
             />
-            <div class="d-flex ms-2 w-100">
+            <div
+                class="
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                    ms-2
+                    w-100
+                "
+            >
                 <h1
                     style="
                         font-weight: bold;
@@ -27,6 +35,58 @@
                 >
                     {{ album.name }}
                 </h1>
+                <div class="songComplication" style="cursor: pointer">
+                    <p
+                        class="mb-0"
+                        data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside"
+                        aria-expanded="false"
+                        id="dropdownThreeDots"
+                    >
+                        <i class="bi bi-three-dots"></i>
+                    </p>
+                    <ul
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuClickableInside"
+                    >
+                        <li class="dropdown-item" v-if="store.state.role == 1">
+                            <div class="btn-group dropstart w-100">
+                                <p
+                                    class="dropdown-toggle m-0"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    data-bs-auto-close="outside"
+                                    style="width: 100%"
+                                >
+                                    Tags
+                                </p>
+                                <ul
+                                    class="dropdown-menu"
+                                    aria-labelledby="dropdownMenuClickableInside"
+                                >
+                                    <li
+                                        v-for="tag in store.state.tags"
+                                        :key="tag.id"
+                                    >
+                                        <label
+                                            class="dropdown-item"
+                                            style="text-transform: capitalize"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                class="me-2"
+                                                @click="
+                                                    changeTag(tag.id, song.id)
+                                                "
+                                            />
+                                            {{ tag.name }}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div v-if="songs.length != 0">
@@ -43,6 +103,7 @@
 <script>
 import { onMounted, reactive, toRefs } from 'vue'
 import Song from '../components/Song.vue'
+import { useStore } from 'vuex'
 
 export default {
     components: {
@@ -56,6 +117,8 @@ export default {
             name: props.name,
         })
 
+        const store = useStore()
+
         state.name = state.name.replace(/-/g, ' ')
         onMounted(() => {
             axios
@@ -67,22 +130,29 @@ export default {
 
                     state.album = response.data.album
                     state.songs = response.data.songs
-
-                    /*
-                    axios
-                        .get(`/api/artist/` + artistId + `/all`)
-                        .then((response) => {
-                            state.songs = response.data.songs
-                            state.albums = response.data.albums
-                        })
-                        */
                 })
         })
         return {
             ...toRefs(state),
+            store,
         }
     },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.songComplication {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    transition-duration: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.songComplication:hover {
+    background: #3a3a3a;
+    cursor: pointer;
+}
+</style>
