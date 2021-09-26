@@ -23,6 +23,7 @@
                 :key="tag.id"
                 :tag="tag"
                 @on-delete="loadData"
+                @on-ban="loadData"
             />
         </div>
     </div>

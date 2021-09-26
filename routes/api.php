@@ -135,6 +135,8 @@ Route::middleware('adminApi')->group(function(){
 
     Route::post('tag', [TagController::class, 'delete']);
 
+    Route::post('tag/ban', [TagController::class, 'ban']);
+
     // Users
     Route::get('users', [UserController::class, 'index']);
 

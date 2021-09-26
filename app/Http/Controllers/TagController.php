@@ -37,4 +37,16 @@ class TagController extends Controller
 
         return 'Successfully deleted';
     }
+
+    public function ban(Request $request)
+    {
+        $tagId = $request->id;
+
+        $tag = Tag::find($tagId);
+        $tag->enabled = $tag->enabled == 1 ? 0 : 1;
+
+        $tag->save();
+
+        return 'azigen';
+    }
 }
