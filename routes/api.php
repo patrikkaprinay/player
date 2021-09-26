@@ -47,6 +47,8 @@ Route::post('add/song', [SongController::class, 'add']);
 
 Route::get('songs/few', [SongController::class, 'lastfew']);
 
+Route::get('songs/banned', [SongController::class, 'banned']);
+
 // Liked Songs
 Route::get('songs/liked', [LikedSongController::class, 'index']);
 

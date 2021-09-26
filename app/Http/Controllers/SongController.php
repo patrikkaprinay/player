@@ -7,11 +7,13 @@ use App\Models\Artist;
 use App\Models\DislikedSong;
 use App\Models\LikedSong;
 use App\Models\Song;
+use App\Models\Tag;
 use App\Models\TagEntries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use PDO;
 
 class SongController extends Controller
 {
@@ -177,5 +179,39 @@ class SongController extends Controller
             // array_push($newSongs, $song);
         }
         return $songs;
+    }
+
+    public function banned()
+    {
+        $songs = Song::all();
+        $songsA = array();
+        $bannedId = array();
+
+        $tags = Tag::select('name')->get();
+
+
+        foreach ($tags as $tag) {
+            $bannedId[$tag->name] = array();
+        }
+
+        foreach ($songs as $song) {
+            $song = SongController::index($song->id);
+            array_push($songsA, ['id' => $song['id'], 'tags' =>$song['tags']]);
+        }
+
+        foreach ($songsA as $song) {
+            foreach ($song['tags'] as $tag => $tagValue) {
+                if($tagValue){
+                    $searchTag = Tag::find($tag)->enabled;
+                    $tagName = Tag::find($tag)->name;
+                    if(!$searchTag){
+                        $modSong = SongController::index($song['id']);
+                        array_push($bannedId[$tagName], $modSong);
+                    }
+                }
+            }
+        }
+
+        return $bannedId;
     }
 }
