@@ -224,7 +224,7 @@ class SongController extends Controller
         $c = 1;
         foreach ($songs as $song) {
             $count = $song->playCount;
-            $song = SongController::index($song->id);
+            $song = SongController::index($song->songId);
             $song['plays'] = $count;
             $song['order'] = $c;
             array_push($songsA, $song);
