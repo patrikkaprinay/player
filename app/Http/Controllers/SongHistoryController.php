@@ -131,12 +131,31 @@ class SongHistoryController extends Controller
 
     public function lastVFew()
     {
-        $history = SongHistory::latest()->take(8)->get();
+        $songHistories = SongHistory::orderBy('id', 'desc')->get();
 
-        foreach ($history as $song) {
+        $basic = array();
+
+
+
+        $last = 0;
+        for ($i=0; $i < count($songHistories); $i++) { 
+            if($last == $songHistories[$i]->songId){
+                $i++;
+            }else {
+                array_push($basic, $songHistories[$i]);
+                $last = $songHistories[$i]->songId;
+            }
+        }
+
+
+        $basic = array_slice($basic, 0, 8, true);
+
+
+
+        foreach ($basic as $song) {
             $song['song'] = SongController::index($song->songId);
         }
         
-        return $history;
+        return $basic;
     }
 }
