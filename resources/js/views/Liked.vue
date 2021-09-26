@@ -1,18 +1,18 @@
 <template>
     <div class="container">
         <h2 class="my-3">Liked Albums</h2>
-        <AlbumRow :albums="liked" />
+        <AlbumRow :albums="albums" size="sm" />
         <h2 class="my-3">Liked Songs</h2>
         <div class="mx-auto mt-4">
             <div
-                v-for="song in liked"
+                v-for="song in songs"
                 :key="song.id"
                 class="queueSong"
                 style="width: 600px; margin-inline: auto"
             >
                 <Song :song="song.songId" @updateSongs="getSongs" />
             </div>
-            <p v-if="!liked.length">You don't have any liked songs</p>
+            <p v-if="!songs.length">You don't have any liked songs</p>
         </div>
     </div>
 </template>
@@ -29,12 +29,14 @@ export default {
     },
     setup() {
         const state = reactive({
-            liked: [],
+            songs: [],
+            albums: [],
         })
 
         const getSongs = () => {
             axios.get('/api/songs/liked').then((response) => {
-                state.liked = response.data
+                state.songs = response.data.songs
+                state.albums = response.data.albums
             })
         }
 

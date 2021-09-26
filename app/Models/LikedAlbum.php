@@ -9,8 +9,4 @@ class LikedAlbum extends Model
 {
     use HasFactory;
 
-    public function getAlbum()
-    {
-        return $this->belongsTo(Album::class, 'albumId');
-    }
 }
