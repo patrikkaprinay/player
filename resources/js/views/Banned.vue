@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2 class="my-3">Banned songs sorted by tags</h2>
+        <h2 class="my-3">Banned tags</h2>
         <div>
             <div v-for="(songArray, index) in songs" :key="songArray.id">
                 <p
@@ -15,7 +15,6 @@
                     class="queueSong"
                 >
                     <Song :song="oneSong" />
-                    <!-- {{ oneSong.name }} -->
                 </div>
             </div>
         </div>

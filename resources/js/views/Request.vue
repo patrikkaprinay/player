@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="padding-bottom: 80px">
         <h2 class="my-3">Song Requests</h2>
         <form @submit.prevent="addRequest">
             <div class="d-flex flex-row">
@@ -29,18 +29,33 @@
         <div style="margin-top: 40px">
             <div v-for="song in songs" :key="song.id" class="requestSong">
                 <p class="mb-0">{{ song.name + ` - ` + song.artist }}</p>
-                <i
-                    class="bi bi-heart"
-                    style="font-size: 17px; margin-bottom: -3px"
-                    v-if="song.liked == 0"
-                    @click="likeRequest(song.id)"
-                ></i>
-                <i
-                    class="bi bi-heart-fill"
-                    style="font-size: 17px; margin-bottom: -3px"
-                    v-if="song.liked == 1"
-                    @click="likeRequest(song.id)"
-                ></i>
+                <div class="d-flex flex-row">
+                    <p class="mb-0 me-2" v-if="song.likes > 0">
+                        {{ song.likes }}
+                    </p>
+                    <i
+                        class="
+                            bi bi-heart
+                            d-flex
+                            justify-content-center
+                            align-items-center
+                        "
+                        style="font-size: 17px"
+                        v-if="song.liked == 0"
+                        @click="likeRequest(song.id, 1)"
+                    ></i>
+                    <i
+                        class="
+                            bi bi-heart-fill
+                            d-flex
+                            justify-content-center
+                            align-items-center
+                        "
+                        style="font-size: 17px"
+                        v-if="song.liked == 1"
+                        @click="likeRequest(song.id, 0)"
+                    ></i>
+                </div>
             </div>
         </div>
     </div>
@@ -79,7 +94,7 @@ export default {
                 })
         }
 
-        const likeRequest = (id) => {
+        const likeRequest = (id, like) => {
             axios
                 .post('/api/request/like', {
                     id,
@@ -88,6 +103,11 @@ export default {
                     state.songs.forEach((song) => {
                         if (song.id == id) {
                             song.liked = !song.liked
+                            if (like == 0) {
+                                song.likes--
+                            } else {
+                                song.likes++
+                            }
                         }
                     })
                 )
