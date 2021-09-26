@@ -20,6 +20,7 @@ import ManageUsers from '../views/ManageUsers.vue'
 import Info from '../views/Info.vue'
 import Request from '../views/Request.vue'
 import Banned from '../views/Banned.vue'
+import Charts from '../views/Charts.vue'
 
 import axios from 'axios'
 
@@ -149,6 +150,11 @@ const routes = [
         path: '/banned',
         name: 'Banned',
         component: Banned,
+    },
+    {
+        path: '/charts',
+        name: 'Charts',
+        component: Charts,
     },
 ]
 

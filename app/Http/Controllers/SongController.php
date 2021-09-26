@@ -7,6 +7,7 @@ use App\Models\Artist;
 use App\Models\DislikedSong;
 use App\Models\LikedSong;
 use App\Models\Song;
+use App\Models\SongStats;
 use App\Models\Tag;
 use App\Models\TagEntries;
 use Illuminate\Http\Request;
@@ -213,5 +214,23 @@ class SongController extends Controller
         }
 
         return $bannedId;
+    }
+
+    public function charts()
+    {
+        $songs = SongStats::orderBy('playCount', 'desc')->get();
+        $songsA = array();
+
+        $c = 1;
+        foreach ($songs as $song) {
+            $count = $song->playCount;
+            $song = SongController::index($song->id);
+            $song['plays'] = $count;
+            $song['order'] = $c;
+            array_push($songsA, $song);
+            $c++;
+        }
+
+        return $songsA;
     }
 }

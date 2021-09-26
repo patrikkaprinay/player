@@ -60,6 +60,9 @@
         <p class="mb-0" style="color: grey" v-if="when">{{ when }}</p>
     </div>
     <div class="ms-auto me-3 d-flex justify-content-center align-items-center">
+        <div v-if="song.plays" class="me-2" style="color: 6c6c6c">
+            Plays: {{ song.plays }}
+        </div>
         <div class="songComplication me-1" @click="addToQueue(song.id)">
             <i class="bi bi-list-nested songComplicationIcon"></i>
         </div>

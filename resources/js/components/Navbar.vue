@@ -97,6 +97,15 @@
                         </li>
                         <li class="nav-item">
                             <router-link
+                                to="/charts"
+                                class="nav-link"
+                                href="#"
+                                active-class="activeNavbar"
+                                >Charts</router-link
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <router-link
                                 to="/info"
                                 class="nav-link"
                                 href="#"
