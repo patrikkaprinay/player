@@ -108,6 +108,9 @@
                                     </ul>
                                 </div>
                             </li>
+                            <li class="dropdown-item" @click="wholeToQueue">
+                                Add To Queue
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -218,12 +221,24 @@ export default {
                 })
         }
 
+        const wholeToQueue = () => {
+            axios
+                .post('/api/album/queue', {
+                    id: state.album.id,
+                })
+                .then((response) => {
+                    console.log(response)
+                    store.dispatch('getToQueue')
+                })
+        }
+
         return {
             ...toRefs(state),
             store,
             changeTag,
             likeAlbum,
             shuffleAlbum,
+            wholeToQueue,
         }
     },
 }

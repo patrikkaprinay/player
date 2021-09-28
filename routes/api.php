@@ -108,6 +108,8 @@ Route::post('album/tag', [AlbumController::class, 'addTag']);
 
 Route::post('album/like', [LikedAlbumController::class, 'add']);
 
+Route::post('album/queue', [QueueSongController::class, 'album']);
+
 // Rules
 Route::get('rules', [RuleController::class, 'index']);
 

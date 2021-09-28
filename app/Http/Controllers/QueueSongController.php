@@ -226,4 +226,30 @@ class QueueSongController extends Controller
 
         return $songArray;
     }
+
+    public function album(Request $request)
+    {
+        $songs = Song::where('album', $request->id)->get();
+
+        foreach ($songs as $song) {
+            $newQueue = new QueueSong();
+            $newQueue->songNumber = $song->id;
+            if($lastQueueOrder = QueueSong::max('order')){
+                $newOrderNumber = $lastQueueOrder + 10;
+            } else {
+                $newOrderNumber = 10;
+            }
+            $newQueue->order = $newOrderNumber;
+
+            if(Auth::check()) {
+                $newQueue->addedBy = Auth::user()->id;
+            } else {
+                $newQueue->addedBy = 0;
+            }
+
+            $newQueue->save();
+        }
+
+        return $songs;
+    }
 }
