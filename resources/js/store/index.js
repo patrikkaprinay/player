@@ -20,6 +20,7 @@ export default createStore({
             currentTime: '00:00',
             albumcover: '',
             queueId: null,
+            album: '',
         },
         muted: false,
         notification: {
@@ -96,6 +97,7 @@ export default createStore({
                     payload.songNumber.album.artwork_path
                 state.currentlyPlaying.queueId = payload.id
                 state.currentlyPlaying.id = payload.songNumber.id
+                state.currentlyPlaying.album = payload.songNumber.album.name
             }
         },
         changeNotification(state, payload) {

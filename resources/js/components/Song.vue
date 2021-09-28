@@ -233,7 +233,21 @@ export default {
                 .then((response) => {
                     console.log(response)
                 })
-            state.liked = !state.liked
+            let alertText = ''
+            if (state.liked) {
+                state.liked = null
+                alertText = 'Song removed from liked songs'
+            } else if (!state.liked) {
+                state.liked = true
+                alertText = 'Song added to liked songs'
+            } else {
+                state.liked = false
+            }
+            store.dispatch('newNotification', {
+                text: alertText,
+                status: 0,
+            })
+            store.dispatch('notify')
         }
 
         const removeDislike = (id) => {

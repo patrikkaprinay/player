@@ -1,13 +1,24 @@
 <template>
     <div class="player">
         <div class="d-flex justify-content-start align-items-center w-25">
-            <img
-                :src="store.state.currentlyPlaying.albumcover"
-                style="width: 60px"
-                alt=""
-            />
+            <router-link
+                :to="`/album/` + nice(store.state.currentlyPlaying.album)"
+            >
+                <img
+                    :src="store.state.currentlyPlaying.albumcover"
+                    style="width: 60px"
+                    alt=""
+                />
+            </router-link>
             <div class="ms-3">
-                <p class="mb-0 fs-5">{{ store.state.currentlyPlaying.name }}</p>
+                <router-link
+                    :to="`/album/` + nice(store.state.currentlyPlaying.album)"
+                    class="no-underline white-onhover"
+                >
+                    <p class="mb-0 fs-5">
+                        {{ store.state.currentlyPlaying.name }}
+                    </p>
+                </router-link>
                 <router-link
                     href="#"
                     :to="`/artist/` + artistnameFormatted"
@@ -205,6 +216,14 @@ export default {
             }
         }
 
+        const nice = (name) => {
+            return name
+                .normalize('NFD')
+                .replace(/\p{Diacritic}/gu, '')
+                .toLowerCase()
+                .replace(' ', '-')
+        }
+
         function sToTime(t) {
             return (
                 padZero(parseInt((t / 60) % 60)) +
@@ -230,6 +249,7 @@ export default {
             artistnameFormatted,
             previousSong,
             padding,
+            nice,
         }
     },
 }

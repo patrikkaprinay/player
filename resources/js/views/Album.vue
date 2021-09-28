@@ -158,7 +158,7 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs } from 'vue'
+import { computed, onMounted, reactive, toRefs } from 'vue'
 import Song from '../components/Song.vue'
 import { useStore } from 'vuex'
 

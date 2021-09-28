@@ -41,6 +41,10 @@ export default {
     color: #c7c7c7;
 }
 
+.white-onhover {
+    transition-duration: 0.1s;
+}
+
 .white-onhover:hover {
     color: #9c9c9c;
 }
