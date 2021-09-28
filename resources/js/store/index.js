@@ -193,6 +193,32 @@ export default createStore({
                 .get('/api/tags')
                 .then((response) => commit('setTags', response.data))
         },
+        skipSong({ commit, dispatch, state }) {
+            axios.post('/api/history', {
+                id: state.currentlyPlaying.id,
+                played: state.currentlyPlaying.queueId,
+            })
+            axios
+                .post('/api/queue/next', {
+                    played: state.currentlyPlaying.queueId,
+                })
+                .then((response) => {
+                    if (response.data == '') {
+                        console.log('Nincs tobb zene a queue-ben')
+                        state.player.currentTime = 0
+                        commit('stopMusic')
+                    } else {
+                        setTimeout(() => {
+                            dispatch('firstQueueSong')
+                            dispatch('getToQueue')
+                        }, 200)
+                        setTimeout(() => {
+                            console.log(state.player.src)
+                            commit('playMusic')
+                        }, 300)
+                    }
+                })
+        },
     },
     modules: {},
 })

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class QueueSongController extends Controller
 {
     public function index(){
-        $queue = QueueSong::all();
+        $queue = QueueSong::orderBy('order', 'asc')->get();
 
         foreach($queue as $oneSong){
             $song = $oneSong->song;
@@ -78,7 +78,7 @@ class QueueSongController extends Controller
         }
     }
 
-    public function add(Request $request){
+    public static function add(Request $request){
         
         if(Auth::check()){
             $user = Auth::user()->id;
@@ -157,5 +157,73 @@ class QueueSongController extends Controller
         $firstInQueue->save();
 
         return response()->json(['msg'=>'Added to queue']);
+    }
+
+    public function albumShuffle(Request $request)
+    {
+        $songs = Song::where('album', $request->id)->get();
+        $songArray = array();
+        $user = Auth::user()->id;
+
+        foreach ($songs as $song) {
+            array_push($songArray, $song);
+        }
+
+        shuffle($songArray);
+
+        $firstSongfromArray = $songArray[0];
+
+        if(QueueSong::all()->count() > 1){
+            $firstTwoSongs = QueueSong::all()->sortBy('order')->take(2);
+            $firstO = $firstTwoSongs[0]->order;
+            $secondO = $firstTwoSongs[1]->order;
+            $newO = ($firstO + $secondO) / 2;
+
+            $newQueue = new QueueSong();
+            $newQueue->songNumber = $firstSongfromArray->id;
+            $newQueue->order = $newO;
+            if(Auth::check()) {
+                $newQueue->addedBy = $user;
+            } else {
+                $newQueue->addedBy = 0;
+            }
+            $newQueue->save();
+        } else {
+            $firstInQueue = new QueueSong();
+            $firstInQueue->songNumber = $firstSongfromArray->id;
+            $firstInQueue->order = 10;
+            if(Auth::check()) {
+                    $firstInQueue->addedBy = $user;
+                } else {
+                    $firstInQueue->addedBy = 0;
+                }
+    
+            $firstInQueue->save();
+        }
+
+
+        array_shift($songArray);
+
+
+        foreach ($songArray as $song) {
+            if($lastQueueOrder = QueueSong::max('order')){
+                $newOrderNumber = $lastQueueOrder + 10;
+            } else {
+                $newOrderNumber = 10;
+            }
+    
+            $newQueueSong = new QueueSong();
+            $newQueueSong->songNumber = $song->id;
+            $newQueueSong->order = $newOrderNumber;
+            if(Auth::check()) {
+                $newQueueSong->addedBy = $user;
+            } else {
+                $newQueueSong->addedBy = 0;
+            }
+            
+            $newQueueSong->save();
+        }
+
+        return $songArray;
     }
 }

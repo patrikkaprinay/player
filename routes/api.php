@@ -152,6 +152,9 @@ Route::middleware('adminApi')->group(function(){
     Route::post('user/delete', [UserController::class, 'delete']);
 
     Route::post('user/update', [UserController::class, 'update']);
+
+    // Albums
+    Route::post('album/shuffle', [QueueSongController::class, 'albumShuffle']);
 });
 
 

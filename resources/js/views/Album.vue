@@ -114,7 +114,40 @@
             </div>
         </div>
         <div v-if="songs.length != 0">
-            <h2 class="artistTitle">Songs</h2>
+            <div
+                class="
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                    flex-row
+                "
+            >
+                <h2 class="artistTitle">Songs</h2>
+                <button
+                    class="
+                        btn
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                        flex-row
+                        rounded-pill
+                        shuffle-play
+                    "
+                    v-if="store.state.role == 1"
+                    @click="shuffleAlbum"
+                >
+                    Shuffle Play<i
+                        class="
+                            bi bi-play-fill
+                            ms-2
+                            d-flex
+                            justify-content-between
+                            align-items-center
+                            flex-row
+                        "
+                    ></i>
+                </button>
+            </div>
             <div v-for="song in songs" :key="song.id">
                 <div class="queueSong mt-4">
                     <Song :song="song" />
@@ -157,6 +190,15 @@ export default {
                 })
         })
 
+        const shuffleAlbum = () => {
+            axios
+                .post('/api/album/shuffle', {
+                    id: state.album.id,
+                })
+                .then((response) => console.log(response))
+            store.dispatch('skipSong')
+        }
+
         const changeTag = (tId) => {
             axios
                 .post('/api/album/tag', {
@@ -181,6 +223,7 @@ export default {
             store,
             changeTag,
             likeAlbum,
+            shuffleAlbum,
         }
     },
 }
@@ -200,5 +243,14 @@ export default {
 .songComplication:hover {
     background: #3a3a3a;
     cursor: pointer;
+}
+
+.shuffle-play {
+    background: #21a54d;
+    color: white;
+}
+
+.shuffle-play:hover {
+    background: #1d9143;
 }
 </style>
