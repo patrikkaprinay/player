@@ -189,39 +189,20 @@ export default {
             store.dispatch('skipSong')
         }
 
-        // const skipSong = () => {
-        //     axios.post('/api/history', {
-        //         id: store.state.currentlyPlaying.id,
-        //         played: store.state.currentlyPlaying.queueId,
-        //     })
-        //     axios
-        //         .post('/api/queue/next', {
-        //             played: store.state.currentlyPlaying.queueId,
-        //         })
-        //         .then((response) => {
-        //             if (response.data == '') {
-        //                 console.log('Nincs tobb zene a queue-ben')
-        //                 store.state.player.currentTime = 0
-        //                 store.commit('stopMusic')
-        //             } else {
-        //                 setTimeout(() => {
-        //                     store.dispatch('firstQueueSong')
-        //                     store.dispatch('getToQueue')
-        //                 }, 200)
-        //                 setTimeout(() => {
-        //                     console.log(store.state.player.src)
-        //                     store.commit('playMusic')
-        //                 }, 300)
-        //             }
-        //         })
-        // }
-
         const previousSong = () => {
-            axios.get('/api/history/last').then((response) => {
-                console.log(response.data)
-                store.commit('updateAudioData', response.data)
-                play()
-            })
+            const clickX = document.querySelector('#playerSlider').value
+            const duration = store.state.player.duration
+            const newTime = (duration / 100) * clickX
+
+            if (newTime < 5) {
+                axios.get('/api/history/last').then((response) => {
+                    console.log(response.data)
+                    store.commit('updateAudioData', response.data)
+                    play()
+                })
+            } else {
+                store.state.player.currentTime = 0
+            }
         }
 
         function sToTime(t) {

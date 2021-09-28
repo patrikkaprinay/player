@@ -112,8 +112,10 @@ class SongHistoryController extends Controller
         $song = SongHistory::orderBy('id', 'desc')->first();
         $song['songNumber'] = SongController::index($song->songId);
 
-        $queueSong = QueueSong::orderBy('id')->first();
-        $queueSong->delete();
+        if(QueueSong::count() > 0){
+            $queueSong = QueueSong::orderBy('id')->first();
+            $queueSong->delete();
+        }
 
         return $song;
     }
