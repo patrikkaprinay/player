@@ -83,8 +83,8 @@ class SongHistoryController extends Controller
         if($request->id != 0){
             $songHistory = new SongHistory();
             $songHistory->songId = $request->id;
-            if($user = QueueSong::find($request->played)->first()->addedBy){
-                $songHistory->addedBy = $user;
+            if($user = QueueSong::find($request->played)){
+                $songHistory->addedBy = $user->addedBy;
             }else {
                 $songHistory->addedBy = 0;
             }
