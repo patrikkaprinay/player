@@ -94,6 +94,7 @@
                 id="autodj"
                 @change="changeSetting(5)"
                 :checked="rules[4]"
+                v-model="rules[4]"
                 :disabled="store.state.role != 1"
             />
             <div>
@@ -107,12 +108,24 @@
                     title="Don't want to add songs to the queue? Enable Auto DJ, sit back and relax, Auto DJ will take care of the songs for you"
                 ></i>
             </div>
+            <div v-if="rules[4]">
+                <label>
+                    Play songs with likes above
+                    <input
+                        type="number"
+                        min="1"
+                        style="width: 50px"
+                        v-model="rules[5]"
+                        @change="ADJLike"
+                    />
+                </label>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import { onMounted, reactive, toRefs } from 'vue'
+import { computed, onMounted, reactive, toRefs } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -132,10 +145,20 @@ export default {
                 state.rules = response.data.rules
             })
         })
+
+        const ADJLike = () => {
+            axios
+                .post('/api/autodj/like', {
+                    likes: state.rules[6],
+                })
+                .then((response) => console.log(response))
+        }
+
         return {
             ...toRefs(state),
             changeSetting,
             store,
+            ADJLike,
         }
     },
 }

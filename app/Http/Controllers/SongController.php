@@ -133,7 +133,7 @@ class SongController extends Controller
 
             $songNameFormatted = preg_replace('/\s+/', '-', strtolower(strtr($request->input('name'), $normalizeChars)));
 
-            $songName = $songNameFormatted . '.' . $request->song->extension();
+            $songName = $songNameFormatted . '.' . $request->file('song')->extension();
 
             if(!File::exists($albumPath . '/' . $songName)){
                 $request->song->move($albumPath, $songName);

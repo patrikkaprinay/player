@@ -51,5 +51,10 @@ class RuleController extends Controller
     public static function AutoDJ(){
         return Rule::find(5)->enabled == 1 ? true : false;
     } 
+
+    public function likes(Request $request)
+    {
+        $likesRule = Rule::find(5)
+    }
     
 }

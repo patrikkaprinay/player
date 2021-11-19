@@ -115,6 +115,8 @@ Route::get('rules', [RuleController::class, 'index']);
 
 Route::get('artistCooldown', [SongHistoryController::class, 'artistCooldown']);
 
+Route::post('autodj/like', [RuleController::class, 'likes']);
+
 // Song History
 Route::get('history', [SongHistoryController::class, 'index']);
 
